@@ -4,6 +4,7 @@ import { formatCurrency } from "../../utils/utils"
 import { Product } from "../../types/product.type"
 import Button from "../../components/Button"
 import { toast } from "react-toastify"
+import { useEffect } from "react"
 
 
 export default function Moderator() {
@@ -15,6 +16,9 @@ export default function Moderator() {
 
         }
     })
+    useEffect(() => {
+        refetch()
+    }, [])
     const data = product?.data
     const url = 'https://image-ecommerce.up.railway.app'
 
@@ -39,7 +43,6 @@ export default function Moderator() {
             }
         })
     }
-
     const handleReject = (productId: number) => {
         rejectProductMutation.mutate(productId, {
             onSuccess: (response) => {
@@ -78,9 +81,9 @@ export default function Moderator() {
                                 </div>
                             </div>
                         </div>
-                        {data && (
+                        {product && (
                             <div className='my-3 rounded-sm bg-white p-5 shadow'>
-                                {data.map((purchase: Product) => (
+                                {product.data.map((purchase: Product) => (
                                     <div
                                         key={purchase.id}
                                         className='mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 first:mt-0'
@@ -88,12 +91,7 @@ export default function Moderator() {
                                         <div className='col-span-4'>
                                             <div className='flex'>
                                                 <div className='flex flex-shrink-0 items-center justify-center pr-3'>
-                                                    {/* <input
-                                                                type='checkbox'
-                                                                className='h-5 w-5 accent-orange'
-                                                                checked={purchase.checked}
-                                                                onChange={handleCheck(index)}
-                                                            /> */}
+
                                                 </div>
                                                 <div className='flex-grow'>
                                                     <div className='flex'>
@@ -126,7 +124,7 @@ export default function Moderator() {
                                         <div className='col-span-8'>
                                             <div className='grid grid-cols-6 items-center'>
                                                 <div className='col-span-1'>
-                                                    <span>{purchase.shop.nameShop}</span>
+                                                    <span>{purchase?.shop?.nameShop}</span>
                                                 </div>
                                                 <div className='col-span-2'>
                                                     <div className='flex items-center justify-center'>

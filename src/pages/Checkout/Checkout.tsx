@@ -73,7 +73,10 @@ export default function Checkout() {
         }));
         buyPurchaseMutation.mutate(updatedBody, {
             onSuccess: (respone) => {
-                console.log(respone)
+                toast.success('Thành công', {
+                    position: 'top-center',
+                    autoClose: 1000
+                })
                 navigate('/')
             },
             onError: (error) => {
