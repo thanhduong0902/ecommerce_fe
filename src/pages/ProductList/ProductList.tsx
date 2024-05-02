@@ -20,8 +20,6 @@ export default function ProductList() {
         // keepPreviousData: true,
         staleTime: 3 * 60 * 1000
     })
-    console.log("productData", productsData?.data)
-
     // const { data: categoriesData } = useQuery({
     //     queryKey: ['categories'],
     //     queryFn: () => {
@@ -42,9 +40,9 @@ export default function ProductList() {
                             <AsideFilter queryConfig={queryConfig} categories={categoriesData?.data.data || []} />
                         </div> */}
                         <div className='col-span-9'>
-                            <SortProductList queryConfig={queryConfig} />
+                            {/* <SortProductList queryConfig={queryConfig} /> */}
                             <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
-                                {productsData?.data?.map((product: any) => (
+                                {productsData?.data.map((product: any) => (
                                     <div className='col-span-1' key={product.id}>
                                         <Product product={product} />
                                     </div>

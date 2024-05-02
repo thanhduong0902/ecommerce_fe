@@ -1,6 +1,6 @@
-import { Product } from './product.type'
+import { Product, Shop } from './product.type'
 
-export type PurchaseStatus = -1 | 1 | 2 | 3 | 4 | 5
+export type PurchaseStatus = "WAITE_CONFIRM" | "DELIVERING" | "CANCELLED" | "DELEVERED"
 
 export type PurchaseListStatus = PurchaseStatus | 0
 
@@ -16,6 +16,11 @@ export interface Purchase {
         weight: number,
         rate: number,
         linkImages: string,
+        shop: {
+            id: number,
+            nameShop: string,
+            linkImageAvatarShop: string
+        }
     }
 
 }

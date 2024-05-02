@@ -1,9 +1,7 @@
 export const purchasesStatus = {
-    inCart: -1,
-    all: 0,
-    waitForConfirmation: 1,
-    waitForGetting: 2,
-    inProgress: 3,
-    delivered: 4,
-    cancelled: 5
+    wait_confirm: "WAITE_CONFIRM",
+    delevering: "DELIVERING",
+    canceled: "CANCELLED",
+    delevered: "DELEVERED",
+    all: "ALL"
 } as const

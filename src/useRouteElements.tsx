@@ -12,6 +12,13 @@ import RegisterLayout from './layouts/RegisterLayout'
 // import Cart from './pages/Cart'
 import CartLayout from './layouts/CartLayout'
 import UserLayout from './pages/User/layouts/UserLayout'
+import CheckoutLayout from './layouts/CheckoutLayout'
+import Checkout from './pages/Checkout'
+import ProductShop from './pages/User/pages/ProductShop/ProductShop'
+import InfoShop from './pages/User/pages/InfoShop/InfoShop'
+import OrderShop from './pages/User/pages/Shop/OrderShop'
+// import Reviews from './pages/User/pages/Reviews'
+// import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 // import ChangePassword from './pages/User/pages/ChangePassword'
 // import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 // import NotFound from './pages/NotFound'
@@ -22,8 +29,11 @@ const Profile = lazy(() => import('./pages/User/pages/Profile'))
 const Register = lazy(() => import('./pages/Register'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Cart = lazy(() => import('./pages/Cart'))
+const Moderator = lazy(() => import('./pages/Moderator'))
 // const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'))
-// const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'))
+const Shop = lazy(() => import('./pages/User/pages/Shop'))
+const Review = lazy(() => import('./pages/User/pages/Reviews'))
+const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 /**
@@ -67,7 +77,6 @@ export default function useRouteElements() {
     {
       path: '',
       element: <RejectedRoute />,
-
       children: [
         {
           path: '',
@@ -108,6 +117,17 @@ export default function useRouteElements() {
           )
         },
         {
+          path: path.checkout,
+          element: (
+            <CheckoutLayout>
+              <Suspense>
+                <Checkout />
+              </Suspense>
+            </CheckoutLayout>
+          )
+        }
+        ,
+        {
           path: path.user,
           element: <MainLayout />,
           children: [
@@ -124,21 +144,50 @@ export default function useRouteElements() {
                   )
                 },
                 {
-                  path: path.changePassword,
+                  path: path.historyPurchase,
                   element: (
                     <Suspense>
-                      {/* <ChangePassword /> */}
+                      <HistoryPurchase />
                     </Suspense>
                   )
                 },
                 {
-                  path: path.historyPurchase,
+                  path: path.shop,
                   element: (
                     <Suspense>
-                      {/* <HistoryPurchase /> */}
+                      <Shop />
+                    </Suspense>
+                  ),
+                  children: [
+                    {
+                      path: path.infoShop,
+                      element: (
+                        <InfoShop />
+                      )
+                    },
+                    {
+                      path: path.productShop,
+                      element: (
+                        <ProductShop />
+                      )
+                    },
+                    {
+                      path: path.orderShop,
+                      element: (
+                        <OrderShop />
+                      )
+                    },
+                  ]
+                },
+                {
+                  path: path.reviews,
+                  element: (
+                    <Suspense>
+                      <Review />
                     </Suspense>
                   )
-                }
+                },
+
               ]
             }
           ]
@@ -163,6 +212,14 @@ export default function useRouteElements() {
           element: (
             <Suspense>
               <ProductList />
+            </Suspense>
+          )
+        },
+        {
+          path: path.moderator,
+          element: (
+            <Suspense>
+              <Moderator />
             </Suspense>
           )
         },

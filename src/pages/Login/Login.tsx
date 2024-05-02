@@ -42,7 +42,12 @@ export default function Login() {
                     listRoles: data.data.listRoles
                 }
                 setProfile(user)
-                navigate('/')
+                if (data.data.listRoles.includes("ROLE_MODERATOR")) {
+                    navigate('/moderator')
+                }
+                else {
+                    navigate('/')
+                }
             },
             onError: (error) => {
                 console.log(error)

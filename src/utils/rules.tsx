@@ -89,7 +89,9 @@ export const userSchema = yup.object({
     new_password: schema.fields['password'],
     confirm_password: handleConfirmPasswordYup('new_password')
 })
-
+export const shopSchema = yup.object({
+    nameShop: yup.string().max(160, 'Độ dài tối đa 160'),
+})
 export type UserSchema = yup.InferType<typeof userSchema>
 
 export type Schema = yup.InferType<typeof schema>

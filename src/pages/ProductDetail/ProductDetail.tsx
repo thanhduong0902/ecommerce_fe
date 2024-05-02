@@ -13,6 +13,7 @@ import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } 
 import Product from '../ProductList/components/Product'
 import path from '../../constants/path'
 import { Helmet } from 'react-helmet-async'
+import moment from 'moment'
 // import { convert } from 'html-to-text'
 
 export default function ProductDetail() {
@@ -106,9 +107,7 @@ export default function ProductDetail() {
                 queryClient.invalidateQueries({
                     queryKey: [
                         'purchases',
-                        {
-                            status: purchasesStatus.inCart
-                        }
+
                     ]
                 })
             }
@@ -131,6 +130,7 @@ export default function ProductDetail() {
 
     if (!product) return null
     const url = 'https://image-ecommerce.up.railway.app'
+
 
     return (
         <div className='bg-gray-200 py-6'>
@@ -274,12 +274,7 @@ export default function ProductDetail() {
                                     </svg>
                                     Thêm vào giỏ hàng
                                 </button>
-                                <button
-                                    onClick={buyNow}
-                                    className='fkex ml-4 h-12 min-w-[5rem] items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'
-                                >
-                                    Mua ngay
-                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -292,6 +287,38 @@ export default function ProductDetail() {
                         <div className='mx-4 mb-4 mt-12 text-sm leading-loose'>
                             <div>{productDetailData.data.description}</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className='mt-8'>
+                <div className='container'>
+                    <div className=' bg-white p-4 shadow'>
+                        <div className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Đánh giá</div>
+                        {product.feedBacks?.map((item: any) => (
+                            <div className='flex flex-col justify-center mb-5'>
+                                <div>
+                                    {item.comment}
+                                </div>
+                                <div>
+                                    Thời gian: {moment(item.created).format('YYYY-MM-DD HH:mm:ss')}
+                                </div>
+                                <div>
+                                    Khách hàng: {item.customer.name.lastName}
+                                </div>
+                                <div>
+                                    {[1, 2, 3, 4, 5].map((star, index) => (
+                                        <span
+                                            key={index}
+                                            style={{ color: star <= item.star ? 'gold' : 'white' }}
+                                        >
+                                            &#9733;
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                        ))}
                     </div>
                 </div>
             </div>

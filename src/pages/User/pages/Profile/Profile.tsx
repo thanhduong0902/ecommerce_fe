@@ -194,19 +194,8 @@ export default function Profile() {
                                     errorMessage={errors.address?.message}
                                 />
                             </div>
-                            Info
                         </div>
-                        <Controller
-                            control={control}
-                            name='date_of_birth'
-                            render={({ field }) => (
-                                <DateSelect
-                                    errorMessage={errors.date_of_birth?.message}
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                />
-                            )}
-                        />
+
                         <div className='mt-2 flex flex-col flex-wrap sm:flex-row'>
                             <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-right' />
                             <div className='sm:w-[80%] sm:pl-5'>
@@ -219,23 +208,7 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className='flex justify-center md:w-72 md:border-l md:border-l-gray-200'>
-                        <div className='flex flex-col items-center'>
-                            <div className='my-5 h-24 w-24'>
-                                <img
-                                    src={previewImage || getAvatarUrl(avatar)}
-                                    alt=''
-                                    className='h-full w-full rounded-full object-cover'
-                                />
-                            </div>
-                            <InputFile onChange={handleChangeFile} />
-                            <div className='mt-3 text-gray-400'>
-                                <div>Dụng lượng file tối đa 1 MB</div>
-                                <div>Định dạng:.JPEG, .PNG</div>
-                                In
-                            </div>
-                        </div>
-                    </div>
+
                 </form>
             </FormProvider>
         </div>

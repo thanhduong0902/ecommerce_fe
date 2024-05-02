@@ -21,7 +21,7 @@ export default function Header() {
     // Nên các query này sẽ không bị inactive => Không bị gọi lại => không cần thiết phải set stale: Infinity
 
     const { data: purchasesInCartData } = useQuery({
-        queryKey: ['purchases', { status: purchasesStatus.inCart }],
+        queryKey: ['purchases'],
         queryFn: () => purchaseApi.getPurchases(),
         enabled: isAuthenticated
         // queryKey: ['purchases', { status: true }],

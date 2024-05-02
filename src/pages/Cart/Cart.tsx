@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import React, { useContext, useEffect, useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import purchaseApi from '../../apis/purchase.api'
 import Button from '../../components/Button'
 import QuantityController from '../../components/QuantityController'
@@ -14,9 +14,10 @@ import { toast } from 'react-toastify'
 import { AppContext } from '../../context/app.context'
 
 export default function Cart() {
+    const navigate = useNavigate()
     const { extendedPurchases, setExtendedPurchases } = useContext(AppContext)
     const { data: purchasesInCartData, refetch } = useQuery({
-        queryKey: ['purchases', { status: purchasesStatus.inCart }],
+        queryKey: ['purchases'],
         queryFn: () => purchaseApi.getPurchases()
     })
     const updatePurchaseMutation = useMutation({
@@ -27,13 +28,13 @@ export default function Cart() {
     })
     const buyProductsMutation = useMutation({
         mutationFn: purchaseApi.buyProducts,
-        onSuccess: (data) => {
-            refetch()
-            toast.success(data.data.message, {
-                position: 'top-center',
-                autoClose: 1000
-            })
-        }
+        // onSuccess: (data) => {
+        //     refetch()
+        //     toast.success(data.data.message, {
+        //         position: 'top-center',
+        //         autoClose: 1000
+        //     })
+        // }
     })
     const deletePurchasesMutation = useMutation({
         mutationFn: purchaseApi.deletePurchase,
@@ -135,13 +136,22 @@ export default function Cart() {
     // }
 
     const handleBuyPurchases = () => {
-        // if (checkedPurchases.length > 0) {
-        //   const body = checkedPurchases.map((purchase) => ({
-        //     product: purchase.product.id,
-        //     buy_count: purchase
-        //   }))
-        //   buyProductsMutation.mutate(body)
-        // }
+        if (checkedPurchases.length > 0) {
+            const body = checkedPurchases.map(({ checked, disabled, ...purchase }) => ({
+                ...purchase
+            }));
+            buyProductsMutation.mutate(body, {
+                onSuccess: (response) => {
+                    console.log(response)
+                    navigate('/checkout', {
+                        state: {
+                            data: response.data
+                        }
+                    })
+                }
+            })
+        }
+        // navigate('/checkout')
     }
     const url = 'https://image-ecommerce.up.railway.app'
 

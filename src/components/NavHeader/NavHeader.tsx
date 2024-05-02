@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import authApi from 'src/apis/auth.api'
 import path from '../../constants/path'
 // import { purchasesStatus } from 'src/constants/purchase'
@@ -8,11 +8,14 @@ import path from '../../constants/path'
 import { getAvatarUrl } from '../../utils/utils'
 import Popover from '../Popover'
 import { AppContext } from '../../context/app.context'
+import { clearLS } from '../../utils/auth'
+import userApi from '../../apis/user.api'
+import moment from 'moment'
 // import { useTranslation } from 'react-i18next'
 // import { locales } from 'src/i18n/i18n'
 
 export default function NavHeader() {
-
+    const navigate = useNavigate()
     const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
     const queryClient = useQueryClient()
     const logoutMutation = useMutation({
@@ -25,36 +28,48 @@ export default function NavHeader() {
     })
 
     const handleLogout = () => {
-        logoutMutation.mutate()
+        setIsAuthenticated(false)
+        setProfile(null)
+        clearLS()
+        navigate('/')
+
     }
+
+    const { data: notification, refetch } = useQuery({
+        queryKey: ['productMode'],
+        queryFn: () => {
+            return userApi.getNotification()
+
+        }
+    })
+    const notificationData = notification?.data
 
     return (
         <div className='flex justify-end'>
             <Popover
-                className='flex cursor-pointer items-center py-1 hover:text-white/70'
+                className='flex cursor-pointer items-center py-1 hover:text-white/70 '
                 renderPopover={
-                    <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
-                        <div className='flex flex-col py-2 pl-3 pr-28'>
-
-                        </div>
+                    <div className='h-80 overflow-auto relative rounded-sm border border-gray-200 bg-white shadow-md flex flex-col'>
+                        {notificationData && notificationData.map((item: any) =>
+                        (<div className='flex flex-col p-2'>
+                            <p className='text-orange'>{item.title}</p>
+                            <span>{item.notification}</span>
+                            <p>Thời gian {moment(item.created).format('YYYY-MM-DD HH:mm:ss')}</p>
+                        </div>)
+                        )}
                     </div>
                 }
             >
-                <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
+                <svg xmlns="http://www.w3.org/2000/svg"
                     className='h-5 w-5'
-                >
-                    <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418'
-                    />
+                    stroke='currentColor'
+                    strokeWidth={1.5}
+                    viewBox="0 0 448 512">
+                    <path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v25.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm0 96c61.9 0 112 50.1 112 112v25.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V208c0-61.9 50.1-112 112-112zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z" />
                 </svg>
-                <svg
+
+
+                {/* <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
                     viewBox='0 0 24 24'
@@ -63,7 +78,7 @@ export default function NavHeader() {
                     className='h-5 w-5'
                 >
                     <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
-                </svg>
+                </svg> */}
             </Popover>
             {isAuthenticated && (
                 <Popover
@@ -91,9 +106,7 @@ export default function NavHeader() {
                         </div>
                     }
                 >
-                    <div className='mr-2 h-6 w-6 flex-shrink-0'>
-                        <img src={getAvatarUrl(profile?.avatar)} alt='avatar' className='h-full w-full rounded-full object-cover' />
-                    </div>
+
                     <div>{profile?.username}</div>
                 </Popover>
             )}

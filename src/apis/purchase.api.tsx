@@ -4,6 +4,10 @@ import http from '../utils/http'
 
 const URL = '/cart'
 
+const URLORDER = '/order'
+
+const URLPAY = '/wallet'
+
 interface productCart {
     productId: number;
     quantity: number;
@@ -18,8 +22,8 @@ const purchaseApi = {
             // params
         })
     },
-    buyProducts(body: { product_id: string; quantity: number }[]) {
-        return http.post<SuccessResponse<Purchase[]>>(`${URL}/buy-products`, body)
+    buyProducts(body: Purchase[]) {
+        return http.post<any>(`${URLORDER}/preview`, body)
     },
     updatePurchase(params: { cartId: number; quantity: number }) {
         console.log("update", params)
@@ -27,6 +31,23 @@ const purchaseApi = {
     },
     deletePurchase(cartId: number) {
         return http.delete<SuccessResponse<{ deleted_count: number }>>(`${URL}/delete?cartId=${cartId}`)
+    },
+    checkPay(amount: number) {
+        return http.get<any>(`${URLPAY}/checkPay?amount=${amount}`)
+    },
+    pay(body: any) {
+        console.log("body", body)
+        return http.post<any>(`${URLORDER}/order`, body)
+    },
+    getOrder(status?: string) {
+        console.log("status", status)
+        return http.get<any>(`${URLORDER}/customer/view/order/status?statusOrder=${status}`)
+    },
+    getReview() {
+        return http.get<Purchase[]>(`/feedback/get/cartToFeedback`)
+    },
+    addReview(body: any) {
+        return http.post<any>(`/feedback/add`, body)
     }
 }
 

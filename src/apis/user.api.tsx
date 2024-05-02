@@ -23,6 +23,9 @@ const userApi = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    getNotification() {
+        return http.get<any>(`/notification/getAll`)
     }
 }
 
