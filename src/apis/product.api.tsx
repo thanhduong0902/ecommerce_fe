@@ -5,10 +5,8 @@ import http from '../utils/http'
 const URL = 'auth/product/viewAll'
 const URLDetail = 'auth/product/viewdetail'
 const productApi = {
-    getProducts(params: ProductListConfig) {
-        return http.get<Product[]>(URL, {
-            params
-        })
+    getProducts(params?: string) {
+        return http.get<Product[]>(`auth/product/search?keywork=${params}`,)
     },
 
     getProductDetail(id: string) {

@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import path from '../../constants/path'
 // import useSearchProducts from 'src/hooks/useSearchProducts'
 import NavHeader from '../NavHeader'
-import useSearchProducts from '../../hooks/useSearchProducts'
+// import useSearchProducts from '../../hooks/useSearchProducts'
 
 export default function CheckoutHeader() {
-    const { onSubmitSearch, register } = useSearchProducts()
+    // const { onSubmitSearch, register } = useSearchProducts()
 
     return (
         <div className='border-b border-b-black/10'>

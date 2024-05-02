@@ -1,34 +1,44 @@
 import { useQuery } from '@tanstack/react-query'
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import path from '../../constants/path'
 import Popover from '../Popover'
 import { purchasesStatus } from '../../constants/purchase'
 import purchaseApi from '../../apis/purchase.api'
 import { formatCurrency } from '../../utils/utils'
 import NavHeader from '../NavHeader'
-import useSearchProducts from '../../hooks/useSearchProducts'
+// import useSearchProducts from '../../hooks/useSearchProducts'
 import { AppContext } from '../../context/app.context'
 
 const MAX_PURCHASES = 5
 export default function Header() {
-    const { isAuthenticated } = useContext(AppContext)
-    const { onSubmitSearch, register } = useSearchProducts()
+    const { isAuthenticated, searchValue, setSearchValue } = useContext(AppContext)
+    // const { onSubmitSearch, register } = useSearchProducts()
+    const navigate = useNavigate()
 
     // Khi chúng ta chuyển trang thì Header chỉ bị re-render
     // Chứ không bị unmount - mounting again
     // (Tất nhiên là trừ trường hợp logout rồi nhảy sang RegisterLayout rồi nhảy vào lại)
     // Nên các query này sẽ không bị inactive => Không bị gọi lại => không cần thiết phải set stale: Infinity
-
     const { data: purchasesInCartData } = useQuery({
-        queryKey: ['purchases'],
+        queryKey: ['purchases',],
         queryFn: () => purchaseApi.getPurchases(),
         enabled: isAuthenticated
         // queryKey: ['purchases', { status: true }],
         // queryFn: () => { },
         // enabled: true
     })
+    const [searchInput, setSearchInput] = useState('');
 
+    const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSearchValue(searchInput);
+        navigate("/")
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(e.target.value);
+    };
     const purchasesInCart = purchasesInCartData?.data
     const url = 'https://image-ecommerce.up.railway.app'
     return (
@@ -43,15 +53,21 @@ export default function Header() {
                             </g>
                         </svg>
                     </Link>
-                    <form className='col-span-9' onSubmit={onSubmitSearch}>
+                    <form className='col-span-9'
+                        onSubmit={handleSearchSubmit}
+                    >
                         <div className='flex rounded-sm bg-white p-1'>
                             <input
+                                onChange={handleInputChange}
+                                value={searchInput}
                                 type='text'
                                 className='flex-grow border-none bg-transparent px-3 py-2 text-black outline-none'
                                 placeholder='Free Ship Đơn Từ 0Đ'
-                                {...register('name')}
+                            // {...register('name')}
                             />
-                            <button className='flex-shrink-0 rounded-sm bg-orange px-6 py-2 hover:opacity-90'>
+                            <button className='flex-shrink-0 rounded-sm bg-orange px-6 py-2 hover:opacity-90'
+                                type='submit'
+                            >
                                 <svg
                                     xmlns='http://www.w3.org/2000/svg'
                                     fill='none'

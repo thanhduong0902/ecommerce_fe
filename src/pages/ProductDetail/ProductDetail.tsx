@@ -38,9 +38,9 @@ export default function ProductDetail() {
     )
 
     const { data: productsData } = useQuery({
-        queryKey: ['products', queryConfig],
+        queryKey: ['products'],
         queryFn: () => {
-            return productApi.getProducts(queryConfig)
+            return productApi.getProducts()
         },
         staleTime: 3 * 60 * 1000,
         enabled: Boolean(product)

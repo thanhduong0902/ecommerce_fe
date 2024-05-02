@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import path from '../../constants/path'
 // import useSearchProducts from 'src/hooks/useSearchProducts'
 import NavHeader from '../NavHeader'
-import useSearchProducts from '../../hooks/useSearchProducts'
+// import useSearchProducts from '../../hooks/useSearchProducts'
 
 export default function CartHeader() {
-    const { onSubmitSearch, register } = useSearchProducts()
+    // const { onSubmitSearch, register } = useSearchProducts()
 
     return (
         <div className='border-b border-b-black/10'>
@@ -28,13 +28,13 @@ export default function CartHeader() {
                             <div className='mx-4 h-6 w-[1px] bg-orange md:h-8' />
                             <div className='capitalize text-orange md:text-xl'>Giỏ hàng</div>
                         </Link>
-                        <form className='mt-3 md:mt-0 md:w-[50%]' onSubmit={onSubmitSearch}>
+                        <form className='mt-3 md:mt-0 md:w-[50%]'>
                             <div className='flex rounded-sm border-2 border-orange'>
                                 <input
                                     type='text'
                                     className='w-full flex-grow border-none bg-transparent px-3 py-1 text-black outline-none'
                                     placeholder='Free Ship Đơn Từ 0Đ'
-                                    {...register('name')}
+                                // {...register('name')}
                                 />
                                 <button className='flex-shrink-0 rounded-sm bg-orange px-8 py-2 hover:opacity-90'>
                                     <svg

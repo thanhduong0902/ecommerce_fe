@@ -8,14 +8,20 @@ import { ProductListConfig } from '../../types/product.type'
 import AsideFilter from './components/AsideFilter/AsideFilter'
 import Product from './components/Product/Product'
 import SortProductList from './components/SortProductList'
+import { useContext } from 'react'
+import { AppContext } from '../../context/app.context'
 
 export default function ProductList() {
     const queryConfig = useQueryConfig()
 
+    const { searchValue } = useContext(AppContext)
+
+    console.log(searchValue)
+
     const { data: productsData } = useQuery({
-        queryKey: ['products', queryConfig],
+        queryKey: ['products', searchValue],
         queryFn: () => {
-            return productApi.getProducts(queryConfig as ProductListConfig)
+            return productApi.getProducts(searchValue)
         },
         // keepPreviousData: true,
         staleTime: 3 * 60 * 1000

@@ -17,9 +17,10 @@ import { useContext } from 'react'
 import { AppContext } from '../../context/app.context'
 import Button from '../../components/Button'
 import { Helmet } from 'react-helmet-async'
+import { toast } from 'react-toastify'
 
-type FormData = Pick<Schema, 'username' | 'password' | 'confirm_password'>
-const registerSchema = schema.pick(['username', 'password', 'confirm_password'])
+type FormData = Pick<Schema, 'fistName' | 'midName' | 'lastName' | 'email' | 'username' | 'password' | 'confirm_password'>
+const registerSchema = schema.pick(['email', 'username', 'password', 'confirm_password'])
 
 export default function Register() {
     const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -30,43 +31,38 @@ export default function Register() {
         setError,
         formState: { errors }
     } = useForm<FormData>({
-        resolver: yupResolver(registerSchema)
+        // resolver: yupResolver(registerSchema)
     })
     const registerAccountMutation = useMutation({
         mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.registerAccount(body)
     })
     const onSubmit = handleSubmit((data) => {
-        const body = omit(data, ['confirm_password'])
+        const body = {
+            email: data.email,
+            username: data.username,
+            password: data.password,
+            name: {
+                fistName: data.fistName,
+                midName: data.midName,
+                lastName: data.lastName
+            }
+        }
         registerAccountMutation.mutate(body, {
             onSuccess: (data) => {
-                setIsAuthenticated(true)
+                toast.success('Đăng ký thành công', {
+                    position: 'top-center',
+                    autoClose: 1000
+                })
+                // setIsAuthenticated(true)
                 // setProfile(data.data.data.user)
-                navigate('/')
+                navigate('/login')
             },
             onError: (error) => {
-                if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<FormData, 'confirm_password'>>>(error)) {
-                    const formError = error.response?.data.data
-                    if (formError) {
-                        Object.keys(formError).forEach((key) => {
-                            setError(key as keyof Omit<FormData, 'confirm_password'>, {
-                                message: formError[key as keyof Omit<FormData, 'confirm_password'>],
-                                type: 'Server'
-                            })
-                        })
-                    }
-                    // if (formError?.email) {
-                    //   setError('email', {
-                    //     message: formError.email,
-                    //     type: 'Server'
-                    //   })
-                    // }
-                    // if (formError?.password) {
-                    //   setError('password', {
-                    //     message: formError.password,
-                    //     type: 'Server'
-                    //   })
-                    // }
-                }
+                console.log("error", error)
+                toast.error(`Email hoặc tài khoản đã tồn tại`, {
+                    position: 'top-center',
+                    autoClose: 1000
+                })
             }
         })
     })
@@ -83,12 +79,46 @@ export default function Register() {
                         <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
                             <div className='text-2xl'>Đăng ký</div>
                             <Input
+                                name='email'
+                                register={register}
+                                className='mt-2'
+                                type='input'
+                                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer '
+                                errorMessage={errors.email?.message}
+                                placeholder='Email'
+                                autoComplete='on'
+                            />
+                            <Input
                                 name='username'
                                 register={register}
                                 type='input'
-                                className='mt-8'
+                                className='mt-2'
                                 errorMessage={errors.username?.message}
-                                placeholder='Email'
+                                placeholder='Số điện thoại'
+                            />
+                            <Input
+                                name='fistName'
+                                register={register}
+                                type='input'
+                                className='mt-2'
+                                errorMessage={errors.username?.message}
+                                placeholder='Họ'
+                            />
+                            <Input
+                                name='midName'
+                                register={register}
+                                type='input'
+                                className='mt-2'
+                                errorMessage={errors.username?.message}
+                                placeholder='Đệm'
+                            />
+                            <Input
+                                name='lastName'
+                                register={register}
+                                type='input'
+                                className='mt-2'
+                                errorMessage={errors.username?.message}
+                                placeholder='Tên'
                             />
                             <Input
                                 name='password'
@@ -97,18 +127,7 @@ export default function Register() {
                                 className='mt-2'
                                 classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
                                 errorMessage={errors.password?.message}
-                                placeholder='Password'
-                                autoComplete='on'
-                            />
-
-                            <Input
-                                name='confirm_password'
-                                register={register}
-                                type='password'
-                                className='mt-2'
-                                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
-                                errorMessage={errors.confirm_password?.message}
-                                placeholder='Confirm Password'
+                                placeholder='Mật khẩu'
                                 autoComplete='on'
                             />
 
