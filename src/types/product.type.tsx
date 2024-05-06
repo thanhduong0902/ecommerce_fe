@@ -16,7 +16,6 @@ export interface Product {
     censorship?: string,
     feedBacks?: string[],
     productDescriptionDetails?: desDetail[]
-
     // image: string
     // createdAt: string
     // updatedAt: string

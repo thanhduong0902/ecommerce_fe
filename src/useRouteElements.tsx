@@ -33,6 +33,7 @@ const Moderator = lazy(() => import('./pages/Moderator'))
 // const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'))
 const Shop = lazy(() => import('./pages/User/pages/Shop'))
 const Review = lazy(() => import('./pages/User/pages/Reviews'))
+const Wallet = lazy(() => import('./pages/User/pages/Wallet'))
 const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
@@ -187,7 +188,14 @@ export default function useRouteElements() {
                     </Suspense>
                   )
                 },
-
+                {
+                  path: path.wallet,
+                  element: (
+                    <Suspense>
+                      <Wallet />
+                    </Suspense>
+                  )
+                }
               ]
             }
           ]

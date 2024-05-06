@@ -74,6 +74,20 @@ export default function UserSideNav() {
                     </div>
                     Đánh giá
                 </NavLink>
+                <NavLink
+                    to={path.wallet}
+                    className={({ isActive }) =>
+                        classNames('mt-4 flex items-center capitalize transition-colors', {
+                            'text-orange': isActive,
+                            'text-gray-600': !isActive
+                        })
+                    }
+                >
+                    <div className='mr-3 h-[22px] w-[22px]'>
+                        <img src='https://www.svgrepo.com/show/523948/wallet.svg' alt='' className='h-full w-full' />
+                    </div>
+                    Ví của tôi
+                </NavLink>
             </div>
         </div>
     )

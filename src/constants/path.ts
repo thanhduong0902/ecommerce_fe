@@ -12,6 +12,7 @@ const path = {
     checkout: '/checkout',
     shop: '/user/shop',
     reviews: '/user/reviews',
+    wallet: '/user/wallet',
     infoShop: '/user/shop/infoShop',
     productShop: '/user/shop/productShop',
     orderShop: '/user/shop/orerShop',

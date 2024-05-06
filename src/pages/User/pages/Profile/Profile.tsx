@@ -74,7 +74,7 @@ const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birt
 // Nhấn submit thì tiến hành upload lên server, nếu upload thành công thì tiến hành gọi api updateProfile
 
 export default function Profile() {
-    const { setProfile, } = useContext(AppContext)
+    const { setProfile, profile } = useContext(AppContext)
     const [file, setFile] = useState<File>()
     const token = getAccessTokenFromLS()
     const previewImage = useMemo(() => {

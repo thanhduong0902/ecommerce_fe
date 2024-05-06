@@ -67,28 +67,19 @@ export default function ProductComponent({ product }: Props) {
                             <span className='ml-1'>Đã bán</span>
                         </div>
                     </div>
-                    {product.censorship === "PASS" ? (
-                        <div className='mt-3 flex items-center justify-end'>
+                    {product.censorship === "PASS" && (<div>Đang bán</div>)}
 
-                            <div className='ml-2 text-sm'>
-                                <span className='ml-1'>Đang bán</span>
-                            </div>
-                        </div>
-                    ) : product.censorship === "REJECT" ? (
-                        <div className='mt-3 flex items-center justify-end'>
+                    {product.censorship === "REJECT" && (<div> Từ chối</div>)}
+                    {product.statusSale == true ? (<div />) :
+                        (
+                            <Button
+                                className={`mt-5 flex h-8 w-20  items-center justify-center bg-orange text-sm text-white hover:bg-orange-600 sm:ml-4 sm:mt-0 rounded-md`}
+                                onClick={handleSale}
+                            >
+                                Đăng bán
+                            </Button>
+                        )}
 
-                            <div className='ml-2 text-sm'>
-                                <span className='ml-1'>Từ chối</span>
-                            </div>
-                        </div>
-                    ) : (
-                        <Button
-                            className={`mt-5 flex h-8 w-20  items-center justify-center bg-orange text-sm text-white hover:bg-orange-600 sm:ml-4 sm:mt-0 rounded-md`}
-                            onClick={handleSale}
-                        >
-                            Đăng bán
-                        </Button>
-                    )}
 
                 </div>
             </div>

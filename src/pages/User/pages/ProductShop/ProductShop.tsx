@@ -29,6 +29,7 @@ export default function ProductShop() {
         },
         // keepPreviousData: true,
     })
+    console.log("product", productsData)
 
     const addImageMutation = useMutation({
         mutationFn: shopApi.addImageProduct,

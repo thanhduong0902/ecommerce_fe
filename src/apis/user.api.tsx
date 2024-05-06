@@ -26,6 +26,12 @@ const userApi = {
     },
     getNotification() {
         return http.get<any>(`/notification/getAll`)
+    },
+    checkBalance(idCus: number) {
+        return http.get<any>(`wallet/checkBalance?idCus=${idCus}`)
+    },
+    topUpMoney(amount: number) {
+        return http.put<any>(`wallet/topUpMoney?amount=${amount}`)
     }
 }
 
