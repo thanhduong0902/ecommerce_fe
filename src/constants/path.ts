@@ -16,7 +16,9 @@ const path = {
     infoShop: '/user/shop/infoShop',
     productShop: '/user/shop/productShop',
     orderShop: '/user/shop/orerShop',
-    moderator: '/moderator'
+    moderator: '/moderator',
+    admin: '/admin',
+    profit: '/admin/profit'
 } as const
 
 export default path

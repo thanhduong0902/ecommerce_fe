@@ -17,6 +17,7 @@ import Checkout from './pages/Checkout'
 import ProductShop from './pages/User/pages/ProductShop/ProductShop'
 import InfoShop from './pages/User/pages/InfoShop/InfoShop'
 import OrderShop from './pages/User/pages/Shop/OrderShop'
+import AdminLayout from './pages/User/layouts/AdminLayout'
 // import Reviews from './pages/User/pages/Reviews'
 // import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 // import ChangePassword from './pages/User/pages/ChangePassword'
@@ -30,6 +31,8 @@ const Register = lazy(() => import('./pages/Register'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Cart = lazy(() => import('./pages/Cart'))
 const Moderator = lazy(() => import('./pages/Moderator'))
+const Admin = lazy(() => import('./pages/Admin'))
+const Profit = lazy(() => import('./pages/Admin/ProfitStatic'))
 // const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'))
 const Shop = lazy(() => import('./pages/User/pages/Shop'))
 const Review = lazy(() => import('./pages/User/pages/Reviews'))
@@ -231,6 +234,7 @@ export default function useRouteElements() {
             </Suspense>
           )
         },
+
         {
           path: '*',
           element: (
@@ -240,7 +244,25 @@ export default function useRouteElements() {
           )
         }
       ]
-    }
+    },
+    {
+      path: path.admin,
+      element: (
+        <Suspense>
+          <AdminLayout />
+        </Suspense>
+      ),
+      // children: [
+      //   {
+      //     path: path.profit,
+      //     element: (
+      //       <Suspense>
+      //         <Profit />
+      //       </Suspense>
+      //     )
+      //   }
+      // ]
+    },
   ])
   return routeElements
 }

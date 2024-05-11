@@ -42,12 +42,21 @@ export default function Login() {
                     listRoles: data.data.listRoles
                 }
                 setProfile(user)
-                if (data.data.listRoles.includes("ROLE_MODERATOR")) {
-                    navigate('/moderator')
+                if (data.data.listRoles.includes("ROLE_ADMIN")
+                ) {
+                    navigate('/admin')
                 }
                 else {
-                    navigate('/')
+                    if (data.data.listRoles.includes("ROLE_MODERATOR")
+                    ) {
+                        navigate('/moderator')
+                    }
+                    else {
+                        navigate('/')
+                    }
                 }
+
+
             },
             onError: (error) => {
                 console.log(error)
