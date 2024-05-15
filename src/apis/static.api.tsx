@@ -1,4 +1,5 @@
 import http from "../utils/http";
+import httpFile from "../utils/httpFile";
 const staticApi = {
     profitStatic(body: any) {
         return http.post<any>('/statistics/interest', body)
@@ -16,7 +17,7 @@ const staticApi = {
         return http.post<any>('/statistics/transportFee', body)
     },
     exportStatic(body: any) {
-        return http.post<any>('/statistics/export/excel/transportFee', body)
+        return httpFile.post<any>('/statistics/export/excel/transportFee', body)
     }
 }
 
