@@ -21,7 +21,7 @@ export default function ProfitStatic() {
     // Hàm xử lý khi giá trị của select box thay đổi
     const handleTypeChange = (event: any) => {
         const { value } = event.target;
-        setBody(prevBody => ({ ...prevBody, selectedType: value }));
+        setBody(prevBody => ({ ...prevBody, type: value }));
     };
     const { data: profitStatistic, refetch } = useQuery({
         queryKey: ['profit', body],
