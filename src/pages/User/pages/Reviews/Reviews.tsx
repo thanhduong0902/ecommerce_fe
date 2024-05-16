@@ -73,6 +73,9 @@ export default function Reviews() {
                     position: 'top-center',
                     autoClose: 1000
                 })
+                setReviewContent("")
+                setRating(0)
+                refetch()
                 setIsOpen(!openModal)
             },
             onError: (err) => {
