@@ -7,8 +7,8 @@ import { CategoryScale } from 'chart.js';
 Chart.register(CategoryScale);
 export default function ProfitStatic() {
     const [body, setBody] = useState({
-        startDate: '2024-05-03',
-        endDate: '2024-05-13',
+        startDate: '2024-05-03', // 10 ngay truoc
+        endDate: '2024-05-13', // sua thanh ngay hien tai
         type: 'DATE'
     });
 
@@ -43,7 +43,6 @@ export default function ProfitStatic() {
 
             }
         ]
-
     }
 
     return (

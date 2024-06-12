@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: 'https://ecommercebe-ecommerce.up.railway.app/api',
+    baseUrl: 'https://ecn9-production.up.railway.app/api',
     maxSizeUploadAvatar: 1048576 // bytes
 }
 

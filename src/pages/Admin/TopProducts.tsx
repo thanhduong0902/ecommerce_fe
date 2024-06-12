@@ -34,7 +34,6 @@ export default function TopProducts() {
                 label: "Sản phẩm",
                 data: profitStatistic?.data.value,
                 backgroundColor: "orange",
-
             }
         ]
 

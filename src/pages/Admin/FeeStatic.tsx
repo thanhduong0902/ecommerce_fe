@@ -20,7 +20,7 @@ export default function FeeStatic() {
         setBody(prevBody => ({ ...prevBody, [name]: value }));
     };
     const downloadFile = (data: any, fileName: string) => {
-        const blob = new Blob([data], { type: "application/xml" }); // Đặt type là "application/xml" nếu file là dạng XML
+        const blob = new Blob([data], { type: "application/pdf" }); // Đặt type là "application/xml" nếu file là dạng XML
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -46,7 +46,7 @@ export default function FeeStatic() {
 
         exportMutation.mutate(body, {
             onSuccess: (respone) => {
-                downloadFile(respone.data, "transport_fee_report.xlsx")
+                downloadFile(respone.data, "transport_fee_report.pdf")
             }
         });
     };

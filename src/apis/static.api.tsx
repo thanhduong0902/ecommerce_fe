@@ -17,7 +17,8 @@ const staticApi = {
         return http.post<any>('/statistics/transportFee', body)
     },
     exportStatic(body: any) {
-        return httpFile.post<any>('/statistics/export/excel/transportFee', body)
+        console.log("body", body)
+        return httpFile.post<any>('statistics/export/pdf/transportFee', body)
     }
 }
 
