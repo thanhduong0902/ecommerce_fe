@@ -65,12 +65,12 @@ export default function Login() {
     })
 
     return (
-        <div className='bg-orange'>
+        <div className='bg-[linear-gradient(-180deg,#F181B3,#F6AECF)]'>
             <Helmet>
                 <title>Đăng nhập | Shopee Clone</title>
                 <meta name='description' content='Đăng nhập vào dự án Shopee Clone' />
             </Helmet>
-            <div className='container'>
+            <div className='container '>
                 <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-32 lg:pr-10'>
                     <div className='lg:col-span-2 lg:col-start-4'>
                         <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
@@ -96,7 +96,7 @@ export default function Login() {
                             <div className='mt-3'>
                                 <Button
                                     type='submit'
-                                    className='flex  w-full items-center justify-center bg-red-500 px-2 py-4 text-sm uppercase text-white hover:bg-red-600'
+                                    className='flex  w-full items-center justify-center bg-pink-400 px-2 py-4 text-sm uppercase text-white hover:bg-pink-500'
                                     isLoading={loginMutation.isPending}
                                     disabled={loginMutation.isPending}
                                 >

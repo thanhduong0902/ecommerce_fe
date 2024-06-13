@@ -68,7 +68,7 @@ export default function Register() {
     })
 
     return (
-        <div className='bg-orange'>
+        <div className='bg-[linear-gradient(-180deg,#F181B3,#F6AECF)]'>
             <Helmet>
                 <title>Đăng ký | Shopee Clone</title>
                 <meta name='description' content='Đăng ký tài khoản vào dự án Shopee Clone' />
@@ -133,7 +133,7 @@ export default function Register() {
 
                             <div className='mt-2'>
                                 <Button
-                                    className='flex w-full items-center justify-center bg-red-500 px-2 py-4 text-sm uppercase text-white hover:bg-red-600'
+                                    className='flex w-full items-center justify-center bg-pink-300 px-2 py-4 text-sm uppercase text-white hover:bg-pink-500'
                                     isLoading={registerAccountMutation.isPending}
                                     disabled={registerAccountMutation.isPending}
                                 >

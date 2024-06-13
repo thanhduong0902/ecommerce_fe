@@ -33,7 +33,7 @@ export default function TopShop() {
             {
                 label: "Shop",
                 data: profitStatistic?.data.value,
-                backgroundColor: "orange",
+                backgroundColor: "#4ba4f2",
 
             }
         ]
@@ -41,7 +41,7 @@ export default function TopShop() {
     }
 
     return (
-        <div className="p-5 items-center justify-center bg-gray-200 flex flex-col">
+        <div className=" p-5 items-center justify-center bg-[linear-gradient(-180deg,#FFFFFF,#F8D7E5)] flex flex-col">
             <h3>Thống kê shop</h3>
             <div className="flex">
                 <div>

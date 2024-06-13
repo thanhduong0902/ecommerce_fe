@@ -87,7 +87,7 @@ export default function ProductShop() {
         setError
     } = methods
 
-    const url = 'https://image-ecommerce.up.railway.app/'
+    const url = 'https://image-production-cd47.up.railway.app//'
 
     const handleChangeFile = async (file?: File) => {
         if (file) {

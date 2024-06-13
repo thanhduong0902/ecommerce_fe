@@ -18,7 +18,7 @@ export default function Reviews() {
         }
     })
     const purchasesInCart = purchasesInCartData?.data
-    const url = 'https://image-ecommerce.up.railway.app'
+    const url = 'https://image-production-cd47.up.railway.app'
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [selectedPurchase, setSelectedPurchase] = useState({}); // State mới để lưu trữ thông tin của đơn hàng được chọn

@@ -18,7 +18,7 @@ export default function Checkout() {
     const navigate = useNavigate()
     const location = useLocation();
     const { data } = location.state;
-    const url = 'https://image-ecommerce.up.railway.app'
+    const url = 'https://image-production-cd47.up.railway.app/'
     const [addressDelivery, setAddressDelivery] = useState({
         "city": '',
         "district": '',

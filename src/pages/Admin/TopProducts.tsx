@@ -33,14 +33,14 @@ export default function TopProducts() {
             {
                 label: "Sản phẩm",
                 data: profitStatistic?.data.value,
-                backgroundColor: "orange",
+                backgroundColor: "#7743f0",
             }
         ]
 
     }
 
     return (
-        <div className="p-5 items-center justify-center bg-gray-200 flex flex-col">
+        <div className="p-5 items-center justify-center bg-[linear-gradient(-180deg,#FFFFFF,#F8D7E5)] flex flex-col">
             <h3>Thống kê sản phẩm</h3>
             <div className="flex">
                 <div>

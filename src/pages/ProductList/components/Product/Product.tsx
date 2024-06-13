@@ -9,7 +9,8 @@ interface Props {
 }
 
 export default function Product({ product }: Props) {
-    const url = 'https://image-ecommerce.up.railway.app'
+    console.log(product)
+    const url = 'https://image-production-cd47.up.railway.app'
     return (
         <Link to={`${path.home}${generateNameId({ name: product.title, id: product.id })}`}>
             <div className='overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md'>

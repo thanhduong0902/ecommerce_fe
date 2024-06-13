@@ -20,7 +20,7 @@ export default function Moderator() {
         refetch()
     }, [])
     const data = product?.data
-    const url = 'https://image-ecommerce.up.railway.app'
+    const url = 'https://image-production-cd47.up.railway.app'
 
     const confirmProductMutation = useMutation({
         mutationFn: moderatorApi.confirmProduct,

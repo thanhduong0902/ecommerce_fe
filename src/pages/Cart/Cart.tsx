@@ -153,7 +153,7 @@ export default function Cart() {
         }
         // navigate('/checkout')
     }
-    const url = 'https://image-ecommerce.up.railway.app'
+    const url = 'https://image-production-cd47.up.railway.app'
 
 
     return (

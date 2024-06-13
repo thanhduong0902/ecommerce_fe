@@ -37,7 +37,7 @@ export default function ProductComponent({ product }: Props) {
             }
         })
     }
-    const url = 'https://image-ecommerce.up.railway.app'
+    const url = 'https://image-production-cd47.up.railway.app'
     return (
         <div>
             <div className='overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md'>

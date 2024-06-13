@@ -37,16 +37,24 @@ export default function ProfitStatic() {
             {
                 label: "Doanh thu",
                 data: profitStatistic?.data.value,
-                backgroundColor: "orange",
-                borderColor: "orange",
+                backgroundColor: "#f0324f",
+                borderColor: "#f0324f",
                 tension: 0.4, // Đặt tension ở mức từ 0 đến 1 (0 là mềm mại nhất)
 
             }
         ]
     }
+    const options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+
+            }
+        },
+    }
 
     return (
-        <div className="p-5 items-center justify-center bg-gray-200 flex flex-col">
+        <div className="p-5 items-center justify-center bg-[linear-gradient(-180deg,#FFFFFF,#F8D7E5)] flex flex-col">
             <h3>Thống kê doanh thu</h3>
             <div className="flex">
                 <div>
@@ -90,6 +98,7 @@ export default function ProfitStatic() {
             </div>
             <Line
                 data={data}
+                options={options}
             />
 
         </div>
