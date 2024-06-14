@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query"
 import staticApi from "../../apis/static.api"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import moment from "moment";
 import InputNumber from "../../components/InputNumber";
 import { toast } from "react-toastify";
+import { AppContext } from "../../context/app.context";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 export default function OrderStatic() {
-    const [targetValue, setTargetValue] = useState(5)
+    const { isAuthenticated, targetValue, setTargetValue } = useContext(AppContext)
     // Hàm xử lý khi giá trị của input ngày tháng thay đổi
     const { data: profitStatistic, refetch } = useQuery({
         queryKey: ['profit'],
@@ -112,7 +113,6 @@ export default function OrderStatic() {
     };
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let _value = Number(event.target.value)
-
         setTargetValue(_value)
     }
 

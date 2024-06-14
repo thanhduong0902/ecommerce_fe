@@ -13,6 +13,8 @@ interface AppContextInterface {
     reset: () => void
     searchValue: string
     setSearchValue: React.Dispatch<React.SetStateAction<string>>
+    targetValue: number
+    setTargetValue: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const getInitialAppContext: () => AppContextInterface = () => ({
@@ -26,7 +28,10 @@ export const getInitialAppContext: () => AppContextInterface = () => ({
     setExtendedPurchases: () => null,
     reset: () => null,
     searchValue: '',
-    setSearchValue: () => ''
+    setSearchValue: () => '',
+    targetValue: 0,
+    setTargetValue: () => null
+
 })
 
 const initialAppContext = getInitialAppContext()
@@ -48,6 +53,8 @@ export const AppProvider = ({
 
     const [searchValue, setSearchValue] = useState('')
 
+    const [targetValue, setTargetValue] = useState(0);
+
     const reset = () => {
         setIsAuthenticated(false)
         setExtendedPurchases([])
@@ -65,7 +72,9 @@ export const AppProvider = ({
                 setExtendedPurchases,
                 reset,
                 searchValue,
-                setSearchValue
+                setSearchValue,
+                targetValue,
+                setTargetValue,
             }}
         >
             {children}

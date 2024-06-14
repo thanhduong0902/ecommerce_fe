@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import UserSideNav from '../components/UserSideNav';
 import AdminSideNav from '../components/AdminSideNav';
@@ -10,6 +10,7 @@ import OrderStatic from '../../Admin/OrderStatic';
 import FeeStatic from '../../Admin/FeeStatic';
 import './ChartStyle.css'; // Import file CSS của bạn
 import Modal from "react-modal"
+import { AppContext } from '../../../context/app.context';
 const ZoomableComponent = ({ children }: any) => {
     const [hovered, setHovered] = useState(false);
 

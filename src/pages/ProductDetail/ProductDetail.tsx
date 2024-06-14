@@ -129,7 +129,7 @@ export default function ProductDetail() {
     }
 
     if (!product) return null
-    const url = 'https://image-production-cd47.up.railway.app/'
+    const url = 'https://image-production-cd47.up.railway.app'
 
 
     return (
