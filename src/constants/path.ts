@@ -10,15 +10,17 @@ const path = {
     productDetail: ':nameId',
     cart: '/cart',
     checkout: '/checkout',
-    shop: '/user/shop',
+    shop: '/admin/shop',
     reviews: '/user/reviews',
     wallet: '/user/wallet',
-    infoShop: '/user/shop/infoShop',
-    productShop: '/user/shop/productShop',
-    orderShop: '/user/shop/orerShop',
+    infoShop: '/admin/shop/infoShop',
+    productShop: '/admin/productShop',
+    orderShop: '/admin/shop/orderShop',
     moderator: '/moderator',
     admin: '/admin',
-    profit: '/admin/profit'
+    profit: '/admin/profit',
+
+    specific:'/admin/specific'
 } as const
 
 export default path

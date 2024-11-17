@@ -1,14 +1,14 @@
-import { User } from './user.type'
-import { SuccessResponse } from './utils.types'
+import { User } from "./user.type";
+import { SuccessResponse } from "./utils.types";
 
 export type AuthResponse = {
-    token: string
-    // refresh_token: string
-    expires_refresh_token: number
-    expires: number
-    username: string
-    email: string
-    listRoles: any
-}
+  token: string;
+  // refresh_token: string
+  expires_refresh_token: number;
+  expires: number;
+  username: string;
+  email: string;
+  role: string;
+};
 
-export type RefreshTokenReponse = { access_token: string }
+export type RefreshTokenReponse = { access_token: string };

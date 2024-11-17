@@ -1,0 +1,37 @@
+.nav-select {
+  background-color: #e21f2a;
+  color: white;
+  border-radius: 20px;
+  padding: 20px 10px;
+  margin-right: 10px;
+}
+
+.nav {
+  padding: 20px 10px;
+  color: black;
+  margin-right: 10px;
+}
+
+.nav-child {
+  color: black;
+}
+
+.nav-child:hover {
+  color: #e21f2a;
+}
+
+.nav-child-select {
+  color: #e21f2a;
+}
+
+.sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.sub-menu.open {
+  max-height: 500px; /* Tùy chỉnh chiều cao tối đa */
+  opacity: 1;
+}

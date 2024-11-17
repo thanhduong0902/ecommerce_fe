@@ -1,44 +1,48 @@
-import path from './constants/path'
-import { useContext, lazy, Suspense } from 'react'
-import { Navigate, Outlet, useRoutes } from 'react-router-dom'
-import { AppContext } from './context/app.context'
-import MainLayout from './layouts/MainLayout'
-import RegisterLayout from './layouts/RegisterLayout'
+import path from "./constants/path";
+import { useContext, lazy, Suspense, useEffect } from "react";
+import { Navigate, Outlet, useNavigate, useRoutes } from "react-router-dom";
+import { AppContext } from "./context/app.context";
+import MainLayout from "./layouts/MainLayout";
+import RegisterLayout from "./layouts/RegisterLayout";
 // import Login from './pages/Login'
 // import ProductList from './pages/ProductList'
 // import Profile from './pages/User/pages/Profile'
 // import Register from './pages/Register'
 // import ProductDetail from './pages/ProductDetail'
 // import Cart from './pages/Cart'
-import CartLayout from './layouts/CartLayout'
-import UserLayout from './pages/User/layouts/UserLayout'
-import CheckoutLayout from './layouts/CheckoutLayout'
-import Checkout from './pages/Checkout'
-import ProductShop from './pages/User/pages/ProductShop/ProductShop'
-import InfoShop from './pages/User/pages/InfoShop/InfoShop'
-import OrderShop from './pages/User/pages/Shop/OrderShop'
-import AdminLayout from './pages/User/layouts/AdminLayout'
+import CartLayout from "./layouts/CartLayout";
+import UserLayout from "./pages/User/layouts/UserLayout";
+import CheckoutLayout from "./layouts/CheckoutLayout";
+import Checkout from "./pages/Checkout";
+import ProductShop from "./pages/User/pages/ProductShop/ProductShop";
+import InfoShop from "./pages/User/pages/InfoShop/InfoShop";
+import OrderShop from "./pages/User/pages/Shop/OrderShop";
+import AdminLayout from "./pages/User/layouts/AdminLayout";
+import UserSideNav from "./pages/User/components/UserSideNav";
+import Specific from "./pages/Admin/Sepcific";
 // import Reviews from './pages/User/pages/Reviews'
 // import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 // import ChangePassword from './pages/User/pages/ChangePassword'
 // import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 // import NotFound from './pages/NotFound'
 
-const Login = lazy(() => import('./pages/Login'))
-const ProductList = lazy(() => import('./pages/ProductList'))
-const Profile = lazy(() => import('./pages/User/pages/Profile'))
-const Register = lazy(() => import('./pages/Register'))
-const ProductDetail = lazy(() => import('./pages/ProductDetail'))
-const Cart = lazy(() => import('./pages/Cart'))
-const Moderator = lazy(() => import('./pages/Moderator'))
-const Admin = lazy(() => import('./pages/Admin'))
-const Profit = lazy(() => import('./pages/Admin/ProfitStatic'))
+const Login = lazy(() => import("./pages/Login"));
+const ProductList = lazy(() => import("./pages/ProductList"));
+const Profile = lazy(() => import("./pages/User/pages/Profile"));
+const Register = lazy(() => import("./pages/Register"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Moderator = lazy(() => import("./pages/Moderator"));
+const Admin = lazy(() => import("./pages/Admin"));
+const Profit = lazy(() => import("./pages/Admin/ProfitStatic"));
 // const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'))
-const Shop = lazy(() => import('./pages/User/pages/Shop'))
-const Review = lazy(() => import('./pages/User/pages/Reviews'))
-const Wallet = lazy(() => import('./pages/User/pages/Wallet'))
-const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'))
-const NotFound = lazy(() => import('./pages/NotFound'))
+const Shop = lazy(() => import("./pages/User/pages/Shop"));
+const Review = lazy(() => import("./pages/User/pages/Reviews"));
+const Wallet = lazy(() => import("./pages/User/pages/Wallet"));
+const HistoryPurchase = lazy(
+  () => import("./pages/User/pages/HistoryPurchase")
+);
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 /**
  * Để tối ưu re-render thì nên ưu tiên dùng <Outlet /> thay cho {children}
@@ -66,24 +70,43 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 // </RegisterLayout>
 
 function ProtectedRoute() {
-  const { isAuthenticated } = useContext(AppContext)
-  return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
+  const { isAuthenticated } = useContext(AppContext);
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
 
 function RejectedRoute() {
-  const { isAuthenticated } = useContext(AppContext)
+  const { isAuthenticated } = useContext(AppContext);
 
-  return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 }
 
+const ProtectedAdminRoute = () => {
+  const { profile } = useContext(AppContext);
+  const isAdmin = profile?.role.includes("admin");
+
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
+};
+
 export default function useRouteElements() {
+  const { profile } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (profile?.role.includes("admin")) {
+      navigate("/admin", { replace: true }); // Điều hướng đến /admin nếu người dùng là admin
+    }
+  }, []);
   const routeElements = useRoutes([
     {
-      path: '',
+      path: "",
       element: <RejectedRoute />,
       children: [
         {
-          path: '',
+          path: "",
           element: <RegisterLayout />,
           children: [
             {
@@ -92,7 +115,7 @@ export default function useRouteElements() {
                 <Suspense>
                   <Login />
                 </Suspense>
-              )
+              ),
             },
             {
               path: path.register,
@@ -100,14 +123,14 @@ export default function useRouteElements() {
                 <Suspense>
                   <Register />
                 </Suspense>
-              )
-            }
-          ]
-        }
-      ]
+              ),
+            },
+          ],
+        },
+      ],
     },
     {
-      path: '',
+      path: "",
       element: <ProtectedRoute />,
       children: [
         {
@@ -118,7 +141,7 @@ export default function useRouteElements() {
                 <Cart />
               </Suspense>
             </CartLayout>
-          )
+          ),
         },
         {
           path: path.checkout,
@@ -128,85 +151,12 @@ export default function useRouteElements() {
                 <Checkout />
               </Suspense>
             </CheckoutLayout>
-          )
-        }
-        ,
-        {
-          path: path.user,
-          element: <MainLayout />,
-          children: [
-            {
-              path: '',
-              element: <UserLayout />,
-              children: [
-                {
-                  path: path.profile,
-                  element: (
-                    <Suspense>
-                      <Profile />
-                    </Suspense>
-                  )
-                },
-                {
-                  path: path.historyPurchase,
-                  element: (
-                    <Suspense>
-                      <HistoryPurchase />
-                    </Suspense>
-                  )
-                },
-                {
-                  path: path.shop,
-                  element: (
-                    <Suspense>
-                      <Shop />
-                    </Suspense>
-                  ),
-                  children: [
-                    {
-                      path: path.infoShop,
-                      element: (
-                        <InfoShop />
-                      )
-                    },
-                    {
-                      path: path.productShop,
-                      element: (
-                        <ProductShop />
-                      )
-                    },
-                    {
-                      path: path.orderShop,
-                      element: (
-                        <OrderShop />
-                      )
-                    },
-                  ]
-                },
-                {
-                  path: path.reviews,
-                  element: (
-                    <Suspense>
-                      <Review />
-                    </Suspense>
-                  )
-                },
-                {
-                  path: path.wallet,
-                  element: (
-                    <Suspense>
-                      <Wallet />
-                    </Suspense>
-                  )
-                }
-              ]
-            }
-          ]
-        }
-      ]
+          ),
+        },
+      ],
     },
     {
-      path: '',
+      path: "",
       element: <MainLayout />,
       children: [
         {
@@ -215,16 +165,16 @@ export default function useRouteElements() {
             <Suspense>
               <ProductDetail />
             </Suspense>
-          )
+          ),
         },
         {
-          path: '',
+          path: "",
           index: true,
           element: (
             <Suspense>
               <ProductList />
             </Suspense>
-          )
+          ),
         },
         {
           path: path.moderator,
@@ -232,37 +182,91 @@ export default function useRouteElements() {
             <Suspense>
               <Moderator />
             </Suspense>
-          )
+          ),
         },
 
         {
-          path: '*',
+          path: "*",
           element: (
             <Suspense>
               <NotFound />
             </Suspense>
-          )
-        }
-      ]
+          ),
+        },
+      ],
     },
     {
       path: path.admin,
       element: (
         <Suspense>
-          <AdminLayout />
+          <ProtectedAdminRoute />
         </Suspense>
       ),
-      // children: [
-      //   {
-      //     path: path.profit,
-      //     element: (
-      //       <Suspense>
-      //         <Profit />
-      //       </Suspense>
-      //     )
-      //   }
-      // ]
+      children: [
+        {
+          path: "",
+          element: <AdminLayout />,
+          children: [
+            {
+              path: path.profit,
+              element: (
+                <Suspense>
+                  <Profit />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.shop,
+              element: (
+                <Suspense>
+                  <InfoShop />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.productShop,
+              element: (
+                <Suspense>
+                  <ProductShop />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.specific,
+              element: (
+                <Suspense>
+                  <Specific />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.infoShop,
+              element: (
+                <Suspense>
+                  <InfoShop />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.productShop,
+              element: (
+                <Suspense>
+                  <ProductShop />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.orderShop,
+              element: (
+                <Suspense>
+                  <OrderShop />
+                </Suspense>
+              ),
+            },
+          ],
+        },
+      ],
     },
-  ])
-  return routeElements
+  ]);
+  return routeElements;
 }

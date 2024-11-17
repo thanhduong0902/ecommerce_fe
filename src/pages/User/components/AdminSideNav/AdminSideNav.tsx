@@ -1,93 +1,137 @@
-import classNames from 'classnames'
-import { useContext } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import path from '../../../../constants/path'
-import { getAvatarUrl } from '../../../../utils/utils'
-import { AppContext } from '../../../../context/app.context'
-
+import classNames from "classnames";
+import { useContext, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import path from "../../../../constants/path";
+import { getAvatarUrl } from "../../../../utils/utils";
+import { AppContext } from "../../../../context/app.context";
+import "./style.css";
+import MenuNav from "./MenuNav";
 export default function AdminSideNav() {
-    const { profile } = useContext(AppContext)
+  const location = useLocation();
+  const { profile } = useContext(AppContext);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    return (
+  const toggleSubMenu = () => {
+    setIsExpanded(!isExpanded);
+  };
+  const isParentActive = location.pathname.startsWith(path.shop);
+
+  return (
+    <div className="">
+      <div className="mt-2 gap-5 flex flex-col">
+        <NavLink
+          to={path.profit}
+          className={({ isActive }) =>
+            classNames("flex py-4 items-center capitalize transition-colors", {
+              "nav-select": isActive,
+              nav: !isActive,
+            })
+          }
+          onClick={() => setIsExpanded(false)}
+        >
+          <div className="mr-3 h-[22px] w-[22px]">
+            <img
+              src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4"
+              alt=""
+              className="h-full w-full"
+            />
+          </div>
+          Thống kê
+        </NavLink>
         <div>
-            <div className='flex items-center border-b border-b-gray-200 py-4'>
-
-                <div className='flex-grow pl-4'>
-                    <div className='mb-1 truncate font-semibold text-gray-600'>{profile?.email}</div>
-                </div>
+          <NavLink
+            to={path.shop}
+            className={({ isActive }) =>
+              classNames(
+                "flex py-4 items-center capitalize transition-colors",
+                {
+                  "nav-select": isParentActive,
+                  nav: !isParentActive,
+                }
+              )
+            }
+            onClick={toggleSubMenu}
+          >
+            <div className="mr-3 h-[22px] w-[22px]">
+              <img
+                src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4"
+                alt=""
+                className="h-full w-full"
+              />
             </div>
-            <div className='mt-7'>
-                <NavLink
-                    to={path.profit}
-                    className={({ isActive }) =>
-                        classNames('flex items-center capitalize transition-colors', {
-                            'text-orange': isActive,
-                            'text-gray-600': !isActive
-                        })
+            Quản lí sản phẩm
+          </NavLink>
+          {isExpanded && (
+            <div className={`sub-menu ${isExpanded ? "open" : ""}`}>
+              <NavLink
+                to={path.specific}
+                className={({ isActive }) =>
+                  classNames(
+                    "flex py-2 items-center capitalize transition-colors",
+                    {
+                      "nav-child-select": isActive,
+                      "nav-child": !isActive,
                     }
-                >
-                    <div className='mr-3 h-[22px] w-[22px]'>
-                        <img src='https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4' alt='' className='h-full w-full' />
-                    </div>
-                    Thống kê tiền lãi
-                </NavLink>
-                <NavLink
-                    to={path.shop}
-                    className={({ isActive }) =>
-                        classNames('mt-4 flex items-center capitalize transition-colors', {
-                            'text-orange': isActive,
-                            'text-gray-600': !isActive
-                        })
+                  )
+                }
+              >
+                Danh mục
+              </NavLink>
+              <NavLink
+                to={path.productShop}
+                className={({ isActive }) =>
+                  classNames(
+                    "flex py-2 items-center capitalize transition-colors",
+                    {
+                      "nav-child-select": isActive,
+                      "nav-child": !isActive,
                     }
-                >
-                    <div className='mr-3 h-[22px] w-[22px]'>
-                        <img src='https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4' alt='' className='h-full w-full' />
-                    </div>
-                    Shop
-                </NavLink>
-                <NavLink
-                    to={path.historyPurchase}
-                    className={({ isActive }) =>
-                        classNames('mt-4 flex items-center capitalize transition-colors', {
-                            'text-orange': isActive,
-                            'text-gray-600': !isActive
-                        })
-                    }
-                >
-                    <div className='mr-3 h-[22px] w-[22px]'>
-                        <img src='https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078' alt='' className='h-full w-full' />
-                    </div>
-                    Đơn mua
-                </NavLink>
-                <NavLink
-                    to={path.reviews}
-                    className={({ isActive }) =>
-                        classNames('mt-4 flex items-center capitalize transition-colors', {
-                            'text-orange': isActive,
-                            'text-gray-600': !isActive
-                        })
-                    }
-                >
-                    <div className='mr-3 h-[22px] w-[22px]'>
-                        <img src='https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078' alt='' className='h-full w-full' />
-                    </div>
-                    Đánh giá
-                </NavLink>
-                <NavLink
-                    to={path.wallet}
-                    className={({ isActive }) =>
-                        classNames('mt-4 flex items-center capitalize transition-colors', {
-                            'text-orange': isActive,
-                            'text-gray-600': !isActive
-                        })
-                    }
-                >
-                    <div className='mr-3 h-[22px] w-[22px]'>
-                        <img src='https://www.svgrepo.com/show/523948/wallet.svg' alt='' className='h-full w-full' />
-                    </div>
-                    Ví của tôi
-                </NavLink>
+                  )
+                }
+              >
+                Sản phẩm
+              </NavLink>
             </div>
+          )}
         </div>
-    )
+        {/* <MenuNav /> */}
+        <NavLink
+          to={path.historyPurchase}
+          className={({ isActive }) =>
+            classNames("flex py-4 items-center capitalize transition-colors", {
+              "nav-select": isActive,
+              nav: !isActive,
+            })
+          }
+        >
+          <div className="mr-3 h-[22px] w-[22px]">
+            <img
+              src="https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078"
+              alt=""
+              className="h-full w-full"
+            />
+          </div>
+          Quản lí đơn hàng
+        </NavLink>
+        <NavLink
+          to={path.reviews}
+          className={({ isActive }) =>
+            classNames("flex py-4 items-center capitalize transition-colors", {
+              "nav-select": isActive,
+              nav: !isActive,
+            })
+          }
+        >
+          <div className="mr-3 h-[22px] w-[22px]">
+            <img
+              src="https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078"
+              alt=""
+              className="h-full w-full"
+            />
+          </div>
+          Quản lí người dùng
+        </NavLink>
+      </div>
+    </div>
+  );
 }

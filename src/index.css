@@ -8,6 +8,13 @@ html {
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
+}
+
+footer {
+  /* position: fixed;
+  bottom: 0; */
+  width: 100%;
+  padding: 1rem 0;
 }
