@@ -24,14 +24,78 @@
   color: #e21f2a;
 }
 
-.sub-menu {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+/* Tùy chỉnh tiêu đề chính */
+/* Thiết lập chung cho menu item */
+.ant-menu-item {
+  font-size: 14px;
+  font-weight: bold;
+  color: #444444;
+  transition: all 0.3s;
 }
 
-.sub-menu.open {
-  max-height: 500px; /* Tùy chỉnh chiều cao tối đa */
-  opacity: 1;
+.ant-menu-item:hover {
+  color: #ffa94d; /* Màu chữ khi hover */
+  background-color: #ffe8cc; /* Thêm màu nền nhạt khi hover */
+}
+
+.ant-menu-item.ant-menu-item-selected {
+  background-color: #ffa94d; /* Màu nền cam khi được chọn */
+  color: white; /* Màu chữ khi được chọn */
+}
+
+/* Tùy chỉnh menu cha khi submenu được chọn */
+.ant-menu-submenu-open > .ant-menu-submenu-title {
+  background-color: #ffa94d; /* Nền cam khi submenu được mở */
+  color: white; /* Màu chữ */
+  transition: all 0.3s; /* Hiệu ứng mượt */
+}
+
+.ant-menu-submenu-title:hover {
+  background-color: #ffe8cc; /* Màu nền nhạt khi hover vào menu cha */
+  color: #ffa94d; /* Màu chữ hover */
+}
+
+/* Tùy chỉnh menu con */
+.ant-menu-submenu-title {
+  font-weight: bold;
+  color: white; /* Màu mặc định của menu cha */
+}
+
+.ant-menu-inline .ant-menu-submenu-title {
+  padding-left: 20px; /* Căn chỉnh menu cha */
+}
+
+/* Tùy chỉnh submenu khi item con được chọn */
+.ant-menu-item-selected::after {
+  border-right: none; /* Loại bỏ đường viền mặc định của Ant Design */
+}
+
+.ant-menu-submenu .ant-menu-item-selected {
+  background-color: #ffa94d;
+  color: white;
+}
+
+.ant-menu-submenu .ant-menu-item:hover {
+  background-color: #ffa94d;
+  color: white;
+}
+
+.ant-menu-inline .ant-menu-item {
+  padding-left: 24px; /* Căn chỉnh menu con */
+}
+
+.ant-menu-item-icon,
+.ant-menu-submenu-title > .ant-menu-item-icon {
+  font-size: 18px;
+  color: #ffa94d;
+}
+
+.ant-menu-item:hover .ant-menu-item-icon,
+.ant-menu-submenu-title:hover .ant-menu-item-icon {
+  color: #ffa94d;
+}
+
+.ant-menu-item-selected .ant-menu-item-icon,
+.ant-menu-submenu-title.ant-menu-submenu-open > .ant-menu-item-icon {
+  color: white; /* Màu icon khi được chọn */
 }

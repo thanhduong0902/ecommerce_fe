@@ -3,24 +3,32 @@ import { toast } from "react-toastify";
 import config from "../../constants/config";
 
 interface Props {
-  onChange?: (file?: File) => void;
+  onChange?: (file: File[]) => void;
 }
 
 export default function InputFile({ onChange }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileFromLocal = event.target.files?.[0];
-    if (
-      fileFromLocal &&
-      (fileFromLocal.size >= config.maxSizeUploadAvatar ||
-        !fileFromLocal.type.includes("image"))
-    ) {
-      toast.error(`Dung lượng file tối đa 1MB. Định dạng: .JPEG, .PNG`, {
-        position: "top-center",
-      });
-    } else {
-      onChange && onChange(fileFromLocal);
+    const filesFromLocal = Array.from(event.target.files || []); // Lấy tất cả file từ input
+
+    // Kiểm tra từng file
+    const validFiles = filesFromLocal.filter((file) => {
+      if (
+        file.size >= config.maxSizeUploadAvatar || // Kiểm tra kích thước file
+        !file.type.includes("image") // Kiểm tra định dạng file
+      ) {
+        toast.error(`Dung lượng file tối đa 1MB. Định dạng: .JPEG, .PNG`, {
+          position: "top-center",
+        });
+        return false; // Loại file không hợp lệ
+      }
+      return true; // Chỉ giữ file hợp lệ
+    });
+
+    // Gửi các file hợp lệ qua `onChange`
+    if (onChange) {
+      onChange(validFiles);
     }
   };
 

@@ -2,17 +2,9 @@ import React, { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import UserSideNav from "../components/UserSideNav";
 import AdminSideNav from "../components/AdminSideNav";
-import NavHeader from "../../../components/NavHeader";
-import ProfitStatic from "../../Admin/ProfitStatic";
-import TopProducts from "../../Admin/TopProducts";
-import TopShop from "../../Admin/TopShop";
-import OrderStatic from "../../Admin/OrderStatic";
-import FeeStatic from "../../Admin/FeeStatic";
+
 import "./ChartStyle.css"; // Import file CSS của bạn
-import Modal from "react-modal";
-import { AppContext } from "../../../context/app.context";
-import Headers from "../../../components/Headers";
-import Footer from "../../../components/Footer";
+
 import HeaderAdmin from "../../../components/HeaderAdmin";
 const ZoomableComponent = ({ children }: any) => {
   const [hovered, setHovered] = useState(false);

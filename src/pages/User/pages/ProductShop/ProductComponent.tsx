@@ -37,22 +37,22 @@ export default function ProductComponent({ product }: Props) {
       },
     });
   };
-  const url = "https://image-production-cd47.up.railway.app";
+
+  const url =
+    "https://foodstore-production-167c.up.railway.app/api/auth/image/";
+
   return (
     <div>
-      <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
+      <div className="overflow-hidden rounded-2xl bg-yellow-200 shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md cursor-pointer">
         <div className="relative w-full pt-[100%]">
           <img
-            src={product.main_image}
+            src={url + product.main_image}
             alt={product.title}
             className="absolute left-0 top-0 h-full w-full bg-white object-cover"
           />
         </div>
         <div className="overflow-hidden p-2">
-          <div className="min-h-[2rem] text-xs line-clamp-2">
-            {product.title}
-          </div>
-          <div className="mt-3 flex items-center">
+          <div className="mt-3 flex items-cente justify-between">
             <div className="max-w-[50%] truncate text-gray-500 line-through">
               <span className="text-xs">₫</span>
               <span className="text-sm">
@@ -66,25 +66,16 @@ export default function ProductComponent({ product }: Props) {
               </span>
             </div>
           </div>
-          <div className="mt-3 flex items-center justify-end">
+          <div className="mt-3 flex items-center justify-between">
             <ProductRating rating={product.rate} />
             <div className="ml-2 text-sm">
               <span>{formatNumberToSocialStyle(product.quantity)}</span>
               <span className="ml-1">Đã bán</span>
             </div>
           </div>
-          {/* {product.censorship === "PASS" && (<div>Đang bán</div>)}
-
-                    {product.censorship === "REJECT" && (<div> Từ chối</div>)}
-                    {product.statusSale == true ? (<div />) :
-                        (
-                            <Button
-                                className={`mt-5 flex h-8 w-20  items-center justify-center bg-orange text-sm text-white hover:bg-orange-600 sm:ml-4 sm:mt-0 rounded-md`}
-                                onClick={handleSale}
-                            >
-                                Đăng bán
-                            </Button>
-                        )} */}
+        </div>
+        <div className="min-h-[2rem] text-xs line-clamp-2 flex items-center justify-center py-4 bg-orange font-b">
+          {product.title}
         </div>
       </div>
     </div>

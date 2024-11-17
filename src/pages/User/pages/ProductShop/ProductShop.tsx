@@ -3,18 +3,17 @@ import useQueryConfig from "../../../../hooks/useQueryConfig";
 import Product from "../../../ProductList/components/Product";
 import shopApi from "../../../../apis/shop.api";
 import ProductComponent from "./ProductComponent";
-import Button from "../../../../components/Button";
 import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "../../../../components/Input";
 import InputFile from "../../../../components/InputFile";
 import { toast } from "react-toastify";
 import { Outlet } from "react-router-dom";
-import { Modal, Select, SelectProps } from "antd";
+import { Button, Modal, Select, SelectProps } from "antd";
 import specificApi from "../../../../apis/specific.api";
 
 export default function ProductShop() {
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File[]>();
   const [flavor, setFlavor] = useState<number[]>([]);
   const [category, setCategory] = useState<number[]>([]);
   const [charactics, setCharactics] = useState<number[]>([]);
@@ -127,14 +126,17 @@ export default function ProductShop() {
       setOptionsChar(newOptions);
     }
   }, [flavorData, categoryData, CharactericData]);
-  const handleChangeFile = async (file?: File) => {
+  const handleChangeFile = async (file: File[]) => {
     if (file) {
       try {
         const formData = new FormData();
-        formData.append("image", file);
+        file.forEach((file) => {
+          formData.append("images[]", file);
+        });
         const response = await addImageMutation.mutateAsync(formData);
-        console.log(linkFile);
-        setLinkFile([...linkFile, response.data.file_path]);
+        console.log(response.data);
+        const dataResponse = response.data.images.map((item: any) => item.link);
+        setLinkFile(dataResponse);
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -189,14 +191,14 @@ export default function ProductShop() {
           onClick={() => {
             setIsOpen(true);
           }}
-          className="flex h-9 items-center rounded-sm bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
+          className="flex h-9 items-center rounded-3xl bg-orange p-5 text-center text-sm text-white hover:bg-orange"
         >
           Thêm sản phẩm
         </Button>
       </div>
       {productsData && (
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-9">
+        <div className="grid grid-cols-6 gap-6">
+          <div className="col-span-10">
             <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {productsData?.data?.data?.map((product: any) => (
                 <div className="col-span-1" key={product.id}>
