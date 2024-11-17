@@ -13,7 +13,12 @@ const productApi = {
   },
 
   getProductDetail(id: string) {
-    return http.get<Product>(`${URLDetail}?productId=${id}`);
+    return http.get<Product>(`auth/products/${id}`);
+  },
+
+  editProuct(body: any) {
+    console.log("body", body);
+    return http.put<any>(`/v1/admin/product/update`, body);
   },
 };
 

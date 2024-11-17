@@ -8,6 +8,21 @@ export interface Product {
   title: string;
   description: string;
   quantity: number;
+  images: ImageProp[];
+  flavor: Specific[];
+  category: Specific[];
+  characteristics: Specific[];
+  feedbacks: FeedbackProp[];
+}
+
+export interface ImageProp {
+  id: number;
+  link: string;
+}
+
+export interface FeedbackProp {
+  id: number;
+  title: string;
 }
 
 export interface ProductResponse {

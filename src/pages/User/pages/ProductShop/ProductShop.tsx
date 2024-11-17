@@ -8,7 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import Input from "../../../../components/Input";
 import InputFile from "../../../../components/InputFile";
 import { toast } from "react-toastify";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Button, Modal, Select, SelectProps } from "antd";
 import specificApi from "../../../../apis/specific.api";
 
@@ -79,6 +79,7 @@ export default function ProductShop() {
     "https://foodstore-production-167c.up.railway.app/api/auth/image/";
 
   const [linkFile, setLinkFile] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const { data: flavorData, isLoading } = useQuery({
     queryKey: ["flavor"],
@@ -183,6 +184,12 @@ export default function ProductShop() {
   const handleChangeChar = (value: number[]) => {
     setCharactics(value);
   };
+  const location = useLocation(); // Hook để lấy đường dẫn hiện tại
+
+  const handleDetail = (id: number) => {
+    const currentPath = location.pathname;
+    navigate(`${currentPath}/${id}`);
+  };
 
   return (
     <div className="container">
@@ -198,10 +205,14 @@ export default function ProductShop() {
       </div>
       {productsData && (
         <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-10">
+          <div className="col-span-9">
             <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {productsData?.data?.data?.map((product: any) => (
-                <div className="col-span-1" key={product.id}>
+                <div
+                  className="col-span-1"
+                  key={product.id}
+                  onClick={() => handleDetail(product.id)}
+                >
                   <ProductComponent product={product} />
                 </div>
               ))}

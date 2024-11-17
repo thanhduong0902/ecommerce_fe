@@ -20,6 +20,7 @@ import OrderShop from "./pages/User/pages/Shop/OrderShop";
 import AdminLayout from "./pages/User/layouts/AdminLayout";
 import UserSideNav from "./pages/User/components/UserSideNav";
 import Specific from "./pages/Admin/Sepcific";
+import ProductDetailShop from "./pages/User/pages/ProductShop/ProductDetailShop";
 // import Reviews from './pages/User/pages/Reviews'
 // import HistoryPurchase from './pages/User/pages/HistoryPurchase'
 // import ChangePassword from './pages/User/pages/ChangePassword'
@@ -159,14 +160,14 @@ export default function useRouteElements() {
       path: "",
       element: <MainLayout />,
       children: [
-        {
-          path: path.productDetail,
-          element: (
-            <Suspense>
-              <ProductDetail />
-            </Suspense>
-          ),
-        },
+        // {
+        //   path: path.productDetail,
+        //   element: (
+        //     <Suspense>
+        //       <ProductDetail />
+        //     </Suspense>
+        //   ),
+        // },
         {
           path: "",
           index: true,
@@ -252,6 +253,14 @@ export default function useRouteElements() {
               element: (
                 <Suspense>
                   <ProductShop />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.productDetailShop,
+              element: (
+                <Suspense>
+                  <ProductDetailShop />
                 </Suspense>
               ),
             },
