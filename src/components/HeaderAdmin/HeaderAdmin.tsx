@@ -5,6 +5,7 @@ import { AppContext } from "../../context/app.context";
 import Popover from "../Popover";
 import { UserOutlined } from "@ant-design/icons";
 import { clearLS } from "../../utils/auth";
+import { Image } from "antd";
 
 export default function Header() {
   const {
@@ -30,8 +31,8 @@ export default function Header() {
       <div className="container flex flex-row justify-between">
         <div>
           <Link to="/admin">
-            <img
-              src={require("../../assets/images/Logo.png")}
+            <Image
+              src="/assets/Logo.png"
               // alt="no purchase"
               className="h-20 w-32"
             />

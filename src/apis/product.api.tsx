@@ -1,13 +1,19 @@
-import { Product, ProductList, ProductListConfig } from "../types/product.type";
+import {
+  Product,
+  ProductList,
+  ProductListConfig,
+  ProductSearch,
+} from "../types/product.type";
 import { SuccessResponse, SuccessResponseProduct } from "../types/utils.types";
 import http from "../utils/http";
 
 const URL = "auth/product/viewAll";
 const URLDetail = "auth/product/viewdetail";
 const productApi = {
-  getProducts(params?: string) {
-    return http.get<Product[]>(`admin/product/search?keywork=${params}`);
+  getProducts(searchValue?: string) {
+    return http.get<ProductSearch>(`/auth/search/text?=${searchValue}`);
   },
+
   getAllProducts() {
     return http.get<Product[]>(`v1/admin/product/getAll`);
   },

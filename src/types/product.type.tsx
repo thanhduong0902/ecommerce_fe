@@ -78,3 +78,16 @@ export interface Specific {
   id: number;
   title: string;
 }
+
+export interface Item {
+  product_id: number;
+  quantity: number;
+  price: number;
+  title: string;
+  img: string;
+}
+
+export interface ProductSearch {
+  total: number;
+  data: Product[];
+}

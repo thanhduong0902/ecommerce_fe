@@ -4,12 +4,7 @@ import { Navigate, Outlet, useNavigate, useRoutes } from "react-router-dom";
 import { AppContext } from "./context/app.context";
 import MainLayout from "./layouts/MainLayout";
 import RegisterLayout from "./layouts/RegisterLayout";
-// import Login from './pages/Login'
-// import ProductList from './pages/ProductList'
-// import Profile from './pages/User/pages/Profile'
-// import Register from './pages/Register'
-// import ProductDetail from './pages/ProductDetail'
-// import Cart from './pages/Cart'
+
 import CartLayout from "./layouts/CartLayout";
 import UserLayout from "./pages/User/layouts/UserLayout";
 import CheckoutLayout from "./layouts/CheckoutLayout";
@@ -21,11 +16,8 @@ import AdminLayout from "./pages/User/layouts/AdminLayout";
 import UserSideNav from "./pages/User/components/UserSideNav";
 import Specific from "./pages/Admin/Sepcific";
 import ProductDetailShop from "./pages/User/pages/ProductShop/ProductDetailShop";
-// import Reviews from './pages/User/pages/Reviews'
-// import HistoryPurchase from './pages/User/pages/HistoryPurchase'
-// import ChangePassword from './pages/User/pages/ChangePassword'
-// import HistoryPurchase from './pages/User/pages/HistoryPurchase'
-// import NotFound from './pages/NotFound'
+import Home from "./pages/Home";
+import About from "./pages/About";
 
 const Login = lazy(() => import("./pages/Login"));
 const ProductList = lazy(() => import("./pages/ProductList"));
@@ -104,6 +96,68 @@ export default function useRouteElements() {
   const routeElements = useRoutes([
     {
       path: "",
+      element: <MainLayout />,
+      children: [
+        {
+          path: path.product,
+          element: (
+            <Suspense>
+              <ProductList />
+            </Suspense>
+          ),
+        },
+        {
+          path: path.productDetail,
+          element: (
+            <Suspense>
+              <ProductDetail />
+            </Suspense>
+          ),
+        },
+        {
+          path: path.cart,
+          element: (
+            <Suspense>
+              <Cart />
+            </Suspense>
+          ),
+        },
+        {
+          path: path.checkout,
+          element: (
+            <Suspense>
+              <Checkout />
+            </Suspense>
+          ),
+        },
+        {
+          path: "",
+          element: (
+            <Suspense>
+              <Home />
+            </Suspense>
+          ),
+        },
+        {
+          path: path.about,
+          element: (
+            <Suspense>
+              <About />
+            </Suspense>
+          ),
+        },
+        {
+          path: "*",
+          element: (
+            <Suspense>
+              <NotFound />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+    {
+      path: "",
       element: <RejectedRoute />,
       children: [
         {
@@ -130,6 +184,7 @@ export default function useRouteElements() {
         },
       ],
     },
+
     {
       path: "",
       element: <ProtectedRoute />,
@@ -152,46 +207,6 @@ export default function useRouteElements() {
                 <Checkout />
               </Suspense>
             </CheckoutLayout>
-          ),
-        },
-      ],
-    },
-    {
-      path: "",
-      element: <MainLayout />,
-      children: [
-        // {
-        //   path: path.productDetail,
-        //   element: (
-        //     <Suspense>
-        //       <ProductDetail />
-        //     </Suspense>
-        //   ),
-        // },
-        {
-          path: "",
-          index: true,
-          element: (
-            <Suspense>
-              <ProductList />
-            </Suspense>
-          ),
-        },
-        {
-          path: path.moderator,
-          element: (
-            <Suspense>
-              <Moderator />
-            </Suspense>
-          ),
-        },
-
-        {
-          path: "*",
-          element: (
-            <Suspense>
-              <NotFound />
-            </Suspense>
           ),
         },
       ],

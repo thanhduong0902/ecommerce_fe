@@ -13,8 +13,13 @@ module.exports = {
         orange: '#FEB61B',
         yellow: '#FBD704',
         red: '#DF2328',
-        yellow1: "#F6D74A"
-      }
+        yellow1: "#F6D74A",
+        green:"#01A851"
+      },
+      fontFamily: {
+        pacifico: ['Pacifico', "sans-serif"],
+        // Add more custom font families as needed
+      },
     }
   },
   plugins: [

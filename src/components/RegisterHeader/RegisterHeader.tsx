@@ -8,7 +8,7 @@ export default function RegisterHeader() {
     <header className="py-2 bg-yellow">
       <div className="grid grid-cols-12 items-center gap-4">
         <Link to="/" className="col-span-2">
-          <img src={require("../../assets/images/Logo.png")} />
+          <img src="assets/Logo.png" />
         </Link>
         <div className="ml-5 text-xl lg:text-2xl col-span-4">
           {isRegister ? "Đăng ký" : "Đăng nhập"}

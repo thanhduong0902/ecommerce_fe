@@ -1,0 +1,18 @@
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  gap: 16px;
+}
+
+.carousel-item:hover {
+  transform: scale(1.1); /* Also apply zoom on hover for usability */
+}
+
+.focused {
+  transform: scale(1.1);
+}

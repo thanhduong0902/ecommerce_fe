@@ -6,6 +6,7 @@ import AdminSideNav from "../components/AdminSideNav";
 import "./ChartStyle.css"; // Import file CSS của bạn
 
 import HeaderAdmin from "../../../components/HeaderAdmin";
+import { Helmet } from "react-helmet-async";
 const ZoomableComponent = ({ children }: any) => {
   const [hovered, setHovered] = useState(false);
 
@@ -27,6 +28,17 @@ interface Props {
 export default function AdminLayout({ children }: Props) {
   return (
     <div>
+      <Helmet>
+        <title>Admin</title>
+        {/* <meta
+                    name='description'
+                    content={convert(product.description, {
+                        limits: {
+                            maxInputLength: 150
+                        }
+                    })}
+                /> */}
+      </Helmet>
       <div>
         <HeaderAdmin />
         <div className="h-screen">

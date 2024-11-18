@@ -13,11 +13,10 @@ interface Props {
 }
 
 export default function Product({ product }: Props) {
-  console.log(product);
-  const url = "https://image-production-cd47.up.railway.app";
+  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
     <Link
-      to={`${path.home}${generateNameId({
+      to={`${path.product}/${generateNameId({
         name: product.title,
         id: product.id,
       })}`}

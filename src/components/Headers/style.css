@@ -1,0 +1,21 @@
+.nav-item {
+  border-radius: 5px; /* Rounded corners for all links */
+  padding: 10px;
+  text-decoration: none; /* Remove underline */
+  color: black; /* Default text color */
+  transition: all 0.3s ease; /* Smooth transition for hover/active states */
+  font-size: 24px;
+}
+
+.nav-item:hover {
+  text-decoration: underline;
+}
+
+.nav-item.active {
+  background-color: #df2328; /* Highlight active link */
+  color: white; /* Change text color for active link */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  font-weight: bold; /* Emphasize active link */
+  border-radius: 16px;
+  font-size: 30px;
+}

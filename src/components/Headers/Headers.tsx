@@ -1,26 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import path from "../../constants/path";
 import Popover from "../Popover";
 import { purchasesStatus } from "../../constants/purchase";
 import purchaseApi from "../../apis/purchase.api";
 import { formatCurrency } from "../../utils/utils";
 import NavHeader from "../NavHeader";
-// import useSearchProducts from '../../hooks/useSearchProducts'
 import { AppContext } from "../../context/app.context";
+import "./style.css";
+import { SearchOutlined } from "@ant-design/icons";
 
 const MAX_PURCHASES = 5;
 export default function Header() {
-  const { isAuthenticated, searchValue, setSearchValue } =
+  const { isAuthenticated, searchValue, setSearchValue, cart, setCart } =
     useContext(AppContext);
   const navigate = useNavigate();
 
-  const { data: purchasesInCartData } = useQuery({
-    queryKey: ["purchases"],
-    queryFn: () => purchaseApi.getPurchases(),
-    enabled: isAuthenticated,
-  });
   const [searchInput, setSearchInput] = useState("");
 
   const { profile } = useContext(AppContext);
@@ -28,28 +24,23 @@ export default function Header() {
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchValue(searchInput);
-    navigate("/");
+    navigate(`/product?search=${searchInput}`);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
-  const purchasesInCart = purchasesInCartData?.data;
-  const url = "https://image-production-cd47.up.railway.app";
+  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
-    <div className="bg-yellow items-center text-white py-2">
+    <div className="sticky top-0 z-10 bg-yellow items-center text-black py-2 font-pacifico">
       <div className="container">
         <NavHeader />
-        <div className="mt-4 grid grid-cols-12 items-center gap-4">
+        <div className="grid grid-cols-12 items-center font-bold gap-4">
           <Link to="/" className="col-span-2">
-            <img
-              src={require("../../assets/images/Logo.png")}
-              // alt="no purchase"
-              // className="h-24 w-24"
-            />
+            <img src="assets/Logo.png" />
           </Link>
           <form className="col-span-4" onSubmit={handleSearchSubmit}>
-            <div className="flex rounded-sm bg-white p-1">
+            <div className="flex rounded-3xl bg-white p-1">
               <input
                 onChange={handleInputChange}
                 value={searchInput}
@@ -58,74 +49,81 @@ export default function Header() {
                 placeholder="Tìm kiếm ..."
               />
               <button
-                className="flex-shrink-0 rounded-sm bg-pink-400 px-6 py-2 hover:opacity-90"
+                className="flex-shrink-0 rounded-3xl bg-red px-6 py-2 hover:opacity-90"
                 type="submit"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
+                <SearchOutlined size={40} />
               </button>
             </div>
           </form>
-          <div>Sản phẩm</div>
+          <div className="flex flex-row col-span-5 justify-between">
+            <NavLink
+              to=""
+              className={({ isActive }) =>
+                isActive ? "nav-item active" : "nav-item"
+              }
+            >
+              Trang chủ
+            </NavLink>
+            <NavLink
+              to={path.product}
+              className={({ isActive }) =>
+                isActive ? "nav-item active" : "nav-item"
+              }
+            >
+              Sản phẩm
+            </NavLink>
+            <NavLink
+              to={path.about}
+              className={({ isActive }) =>
+                isActive ? "nav-item active" : "nav-item"
+              }
+            >
+              Giới thiệu
+            </NavLink>
+            <NavLink
+              to={path.contact}
+              className={({ isActive }) =>
+                isActive ? "nav-item active" : "nav-item"
+              }
+            >
+              Liên hệ
+            </NavLink>
+          </div>
           <div className="col-span-1 justify-self-end">
             <Popover
               renderPopover={
                 <div className="relative  max-w-[400px] rounded-sm border border-gray-200 bg-white text-sm shadow-md">
-                  {purchasesInCart && purchasesInCart.length > 0 ? (
+                  {cart && cart.length > 0 ? (
                     <div className="p-2">
                       <div className="capitalize text-gray-400">
                         Sản phẩm mới thêm
                       </div>
                       <div className="mt-5">
-                        {purchasesInCart
-                          .slice(0, MAX_PURCHASES)
-                          .map((purchase) => (
-                            <div
-                              className="mt-2 flex py-2 hover:bg-gray-100"
-                              key={purchase.id}
-                            >
-                              <div className="flex-shrink-0">
-                                <img
-                                  src={`${url + purchase.product.linkImages}`}
-                                  alt={purchase.product.title}
-                                  className="h-11 w-11 object-cover"
-                                />
-                              </div>
-                              <div className="ml-2 flex-grow overflow-hidden">
-                                <div className="truncate">
-                                  {purchase.product.title}
-                                </div>
-                              </div>
-                              <div className="ml-2 flex-shrink-0">
-                                <span className="text-orange">
-                                  ₫
-                                  {formatCurrency(
-                                    purchase.product.sellingPrice
-                                  )}
-                                </span>
-                              </div>
+                        {cart.slice(0, MAX_PURCHASES).map((purchase) => (
+                          <div
+                            className="mt-2 flex py-2 hover:bg-gray-100"
+                            key={purchase.product_id}
+                          >
+                            <div className="flex-shrink-0">
+                              <img
+                                src={`${url + purchase.img}`}
+                                alt={purchase.title}
+                                className="h-11 w-11 object-cover"
+                              />
                             </div>
-                          ))}
+                            <div className="ml-2 flex-grow overflow-hidden">
+                              <div className="truncate">{purchase.title}</div>
+                            </div>
+                            <div className="ml-2 flex-shrink-0">
+                              <span className="text-orange">
+                                ₫{formatCurrency(purchase.price)}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="mt-6 flex items-center justify-between">
-                        <div className="text-xs capitalize text-gray-500">
-                          {purchasesInCart.length > MAX_PURCHASES
-                            ? purchasesInCart.length - MAX_PURCHASES
-                            : ""}{" "}
-                          Thêm hàng vào giỏ
-                        </div>
+                      <div className="mt-6 flex items-center justify-center">
                         <Link
                           to={path.cart}
                           className="rounded-sm bg-orange px-4 py-2 capitalize text-white hover:bg-opacity-90"
@@ -137,7 +135,7 @@ export default function Header() {
                   ) : (
                     <div className="flex h-[300px] w-[300px] flex-col items-center justify-center p-2">
                       <img
-                        src={require("../../assets/images/no-product.png")}
+                        src="assets/no-product.png"
                         alt="no purchase"
                         className="h-24 w-24"
                       />

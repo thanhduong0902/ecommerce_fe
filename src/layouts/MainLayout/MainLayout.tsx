@@ -1,25 +1,24 @@
-import { memo } from 'react'
-import { Outlet } from 'react-router-dom'
-import Footer from '../../components/Footer'
-import Headers from '../../components/Headers'
+import { memo } from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "../../components/Footer";
+import Headers from "../../components/Headers";
 interface Props {
-    children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 function MainLayoutInner({ children }: Props) {
-    console.log('MainLayout')
-    return (
-        <div>
-            <div>
-                <Headers />
-                {children}
-                <Outlet />
-                <Footer />
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <div>
+        <Headers />
+        {children}
+        <Outlet />
+        <Footer />
+      </div>
+    </div>
+  );
 }
 
-const MainLayout = memo(MainLayoutInner)
+const MainLayout = memo(MainLayoutInner);
 
-export default MainLayout
+export default MainLayout;
