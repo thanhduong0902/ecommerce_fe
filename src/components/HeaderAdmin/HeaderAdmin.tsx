@@ -27,14 +27,15 @@ export default function Header() {
   const { profile } = useContext(AppContext);
 
   return (
-    <div className="bg-yellow items-center text-white py-2 border-b-2 border-orange">
+    <div className="bg-yellow font-pacifico items-center text-white py-2 border-b-2 border-orange">
       <div className="container flex flex-row justify-between">
         <div>
           <Link to="/admin">
             <Image
               src="/assets/Logo.png"
               // alt="no purchase"
-              className="h-20 w-32"
+              style={{ width: 120, height: 80 }}
+              preview={false}
             />
           </Link>
         </div>

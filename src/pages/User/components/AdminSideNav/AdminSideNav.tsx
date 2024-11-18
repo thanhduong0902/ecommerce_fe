@@ -16,7 +16,7 @@ export default function AdminSideNav() {
   };
 
   return (
-    <div className="">
+    <div className="font-pacifico">
       <MenuNav />
     </div>
   );
