@@ -188,8 +188,7 @@ export default function ProductDetailShop() {
     setCharactics(value);
   };
   if (!product) return null;
-  const url =
-    "https://foodstore-production-167c.up.railway.app/api/auth/image/";
+  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
 
   return (
     <div className="bg-white py-6">
