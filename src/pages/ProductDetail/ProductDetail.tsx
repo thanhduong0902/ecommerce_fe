@@ -75,30 +75,6 @@ export default function ProductDetail() {
     setActiveImage(img);
   };
 
-  // const handleZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-  //     const rect = event.currentTarget.getBoundingClientRect()
-  //     const image = imageRef.current as HTMLImageElement
-  //     const { naturalHeight, naturalWidth } = image
-  //     // Cách 1: Lấy offsetX, offsetY đơn giản khi chúng ta đã xử lý được bubble event
-  //     // const { offsetX, offsetY } = event.nativeEvent
-
-  //     // Cách 2: Lấy offsetX, offsetY khi chúng ta không xử lý được bubble event
-  //     const offsetX = event.pageX - (rect.x + window.scrollX)
-  //     const offsetY = event.pageY - (rect.y + window.scrollY)
-
-  //     const top = offsetY * (1 - naturalHeight / rect.height)
-  //     const left = offsetX * (1 - naturalWidth / rect.width)
-  //     image.style.width = naturalWidth + 'px'
-  //     image.style.height = naturalHeight + 'px'
-  //     image.style.maxWidth = 'unset'
-  //     image.style.top = top + 'px'
-  //     image.style.left = left + 'px'
-  // }
-
-  // const handleRemoveZoom = () => {
-  //     imageRef.current?.removeAttribute('style')
-  // }
-
   const handleBuyCount = (value: number) => {
     setBuyCount(value);
   };
@@ -124,16 +100,7 @@ export default function ProductDetail() {
   };
 
   const buyNow = async () => {
-    // const res = await addToCartMutation.mutateAsync({
-    //     buy_count: buyCount,
-    //     product_id: product?._id as string
-    // })
-    // const purchase = res.data.data
-    // navigate(path.cart, {
-    //     state: {
-    //         purchaseId: purchase._id
-    //     }
-    // })
+    
   };
 
   if (!product) return null;
@@ -188,19 +155,6 @@ export default function ProductDetail() {
                     />
                   </svg>
                 </button>
-                {/* {currentImages.map((img) => {
-                                    const isActive = img === activeImage
-                                    return (
-                                        <div className='relative w-full pt-[100%]' key={img} onMouseEnter={() => chooseActive(img)}>
-                                            <img
-                                                src={`${url + img}`}
-                                                alt={product.title}
-                                                className='absolute left-0 top-0 h-full w-full cursor-pointer bg-white object-cover'
-                                            />
-                                            {isActive && <div className='absolute inset-0 border-2 border-orange' />}
-                                        </div>
-                                    )
-                                })} */}
                 <button
                   className="absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white"
                   onClick={next}

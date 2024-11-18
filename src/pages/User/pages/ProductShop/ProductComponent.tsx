@@ -38,15 +38,14 @@ export default function ProductComponent({ product }: Props) {
     });
   };
 
-  const url =
-    "https://foodstore-production-167c.up.railway.app/api/auth/image/";
+  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
 
   return (
     <div>
       <div className="overflow-hidden rounded-2xl bg-yellow-200 shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md cursor-pointer">
         <div className="relative w-full pt-[100%]">
           <img
-            src={url + product.main_image}
+            src={`${url + product.main_image}`}
             alt={product.title}
             className="absolute left-0 top-0 h-full w-full bg-white object-cover"
           />

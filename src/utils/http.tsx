@@ -48,7 +48,6 @@ export class Http {
     });
     this.instance.interceptors.request.use(
       (config) => {
-        // Update access token in request header
         console.log(this.accessToken);
         config.headers["Authorization"] = `Bearer ${this.accessToken}`;
         return config;

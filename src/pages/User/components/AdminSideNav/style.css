@@ -75,11 +75,6 @@
   color: white;
 }
 
-.ant-menu-submenu .ant-menu-item:hover {
-  background-color: #ffa94d;
-  color: white;
-}
-
 .ant-menu-inline .ant-menu-item {
   padding-left: 24px; /* Căn chỉnh menu con */
 }

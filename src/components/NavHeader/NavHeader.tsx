@@ -91,7 +91,7 @@ export default function NavHeader() {
             </div>
           }
         >
-          <div className="text-black">{profile?.name} thao tac</div>
+          <div className="text-black">{profile?.name}</div>
         </Popover>
       )}
       {!isAuthenticated && (

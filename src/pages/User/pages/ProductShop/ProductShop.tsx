@@ -75,8 +75,7 @@ export default function ProductShop() {
     setError,
   } = methods;
 
-  const url =
-    "https://foodstore-production-167c.up.railway.app/api/auth/image/";
+  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
 
   const [linkFile, setLinkFile] = useState<string[]>([]);
   const navigate = useNavigate();
@@ -135,7 +134,6 @@ export default function ProductShop() {
           formData.append("images[]", file);
         });
         const response = await addImageMutation.mutateAsync(formData);
-        console.log(response.data);
         const dataResponse = response.data.images.map((item: any) => item.link);
         setLinkFile(dataResponse);
       } catch (error) {
@@ -330,7 +328,7 @@ export default function ProductShop() {
               {linkFile.map((image, index) => (
                 <div key={index} className="h-24 w-24">
                   <img
-                    src={url + image}
+                    src={`${url + image}`}
                     alt={`Preview ${index}`}
                     className="h-full w-full rounded-full object-cover"
                   />

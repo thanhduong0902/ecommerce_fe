@@ -10,13 +10,12 @@ export default function InputFile({ onChange }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const filesFromLocal = Array.from(event.target.files || []); // Lấy tất cả file từ input
+    const filesFromLocal = Array.from(event.target.files || []);
 
-    // Kiểm tra từng file
     const validFiles = filesFromLocal.filter((file) => {
       if (
-        file.size >= config.maxSizeUploadAvatar || // Kiểm tra kích thước file
-        !file.type.includes("image") // Kiểm tra định dạng file
+        file.size >= config.maxSizeUploadAvatar || 
+        !file.type.includes("image") 
       ) {
         toast.error(`Dung lượng file tối đa 1MB. Định dạng: .JPEG, .PNG`, {
           position: "top-center",
@@ -46,7 +45,6 @@ export default function InputFile({ onChange }: Props) {
         ref={fileInputRef}
         onChange={onFileChange}
         onClick={(event) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (event.target as any).value = null;
         }}
       />
