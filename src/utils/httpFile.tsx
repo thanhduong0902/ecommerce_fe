@@ -20,6 +20,7 @@ import {
 } from "../apis/auth.api";
 import { isAxiosExpiredTokenError, isAxiosUnauthorizedError } from "./utils";
 import { ErrorResponse } from "../types/utils.types";
+import configImg from "../constants/configimg";
 // API Purchase: 1 - 3 (bắt đầu gọi API từ giây 1 -> giây 3)
 // API Me: 2 - 5 (bắt đầu gọi API từ giây 2 -> giây 5)
 // API Refresh Token cho API purchase: 3 -  4 (sau khi API Purchase bị lỗi là bắt đầu từ giây 3)
@@ -41,15 +42,13 @@ export class Http {
       baseURL: config.baseUrl,
       timeout: 10000,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         "expire-access-token": 60 * 60 * 24, // 1 ngày
         "expire-refresh-token": 60 * 60 * 24 * 160, // 160 ngày
       },
-      responseType: "blob",
     });
     this.instance.interceptors.request.use(
       (config) => {
-        console.log("accessToken", this.accessToken);
         // Update access token in request header
         config.headers["Authorization"] = `Bearer ${this.accessToken}`;
         return config;
@@ -75,6 +74,7 @@ export class Http {
         return response;
       },
       (error: AxiosError) => {
+        console.log("loi", error);
         // Chỉ toast lỗi không phải 422 và 401
         if (
           ![
@@ -85,8 +85,7 @@ export class Http {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data: any | undefined = error.response?.data;
           const message = data?.message || error.message;
-          // toast.error(message)
-          console.log(message);
+          toast.error(message);
         }
 
         // Lỗi Unauthorized (401) có rất nhiều trường hợp

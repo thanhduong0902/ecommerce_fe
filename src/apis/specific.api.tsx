@@ -26,6 +26,9 @@ const specificApi = {
   createCharacteric(body: { title: string }) {
     return http.post<any>(`v1/admin/ccf/characteristic/create`, body);
   },
+  train() {
+    return http.get<any>(`v1/admin/product/training`);
+  },
 };
 
 export default specificApi;

@@ -16,6 +16,8 @@ interface AppContextInterface {
   reset: () => void;
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  searchImageValue: string;
+  setSearchImageValue: React.Dispatch<React.SetStateAction<string>>;
   targetValue: number;
   setTargetValue: React.Dispatch<React.SetStateAction<number>>;
   setCart: React.Dispatch<React.SetStateAction<Item[]>>;
@@ -36,6 +38,8 @@ export const getInitialAppContext: () => AppContextInterface = () => ({
   setTargetValue: () => null,
   cart: [],
   setCart: () => null,
+  searchImageValue: "",
+  setSearchImageValue: () => "",
 });
 
 const initialAppContext = getInitialAppContext();
@@ -60,6 +64,8 @@ export const AppProvider = ({
   const [profile, setProfile] = useState<User | null>(defaultValue.profile);
 
   const [searchValue, setSearchValue] = useState("");
+
+  const [searchImageValue, setSearchImageValue] = useState("");
 
   const [targetValue, setTargetValue] = useState(0);
 
@@ -87,6 +93,8 @@ export const AppProvider = ({
         setTargetValue,
         cart,
         setCart,
+        searchImageValue,
+        setSearchImageValue,
       }}
     >
       {children}

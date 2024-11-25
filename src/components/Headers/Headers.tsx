@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import path from "../../constants/path";
 import Popover from "../Popover";
@@ -9,15 +9,44 @@ import { formatCurrency } from "../../utils/utils";
 import NavHeader from "../NavHeader";
 import { AppContext } from "../../context/app.context";
 import "./style.css";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  CameraOutlined,
+  LoadingOutlined,
+  PlusOutlined,
+  SearchOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { Product } from "../../types/product.type";
+import { Button, GetProp, Modal, Upload, UploadProps, message } from "antd";
+import productApi from "../../apis/product.api";
+type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+const getBase64 = (img: FileType, callback: (url: string) => void) => {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => callback(reader.result as string));
+  reader.readAsDataURL(img);
+};
 
 const MAX_PURCHASES = 5;
+
 export default function Header() {
-  const { isAuthenticated, searchValue, setSearchValue, cart, setCart } =
-    useContext(AppContext);
+  const {
+    isAuthenticated,
+    searchValue,
+    setSearchValue,
+    setCart,
+    setSearchImageValue,
+  } = useContext(AppContext);
   const navigate = useNavigate();
+  const cart = useSelector((state: RootState) => state.cart.cart);
 
   const [searchInput, setSearchInput] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [file, setFile] = useState<any>("");
+  const [imageUrl, setImageUrl] = useState<any>("");
+  const [uploading, setUploading] = useState(false);
 
   const { profile } = useContext(AppContext);
 
@@ -27,19 +56,50 @@ export default function Header() {
     navigate(`/product?search=${searchInput}`);
   };
 
+  const handleSearchImageSubmit = async (e: any) => {
+    e.preventDefault();
+    setIsOpen(false);
+    setSearchImageValue(file);
+    setFile("");
+    setImageUrl("");
+    navigate(`/product`);
+  };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const handleFileChange = (e: any) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+
+      // Hiển thị bản xem trước nếu là hình ảnh
+      const reader = new FileReader();
+      reader.onload = () => setImageUrl(reader.result);
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  useEffect(() => {
+    setSearchImageValue("");
+    setSearchValue("");
+    setSearchInput("");
+  }, []);
+
   const url = "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
-    <div className="sticky top-0 z-10 bg-yellow items-center text-black py-2 font-pacifico">
+    <div className="sticky top-0 z-10 bg-yellow items-center text-black font-pacifico">
       <div className="container">
         <NavHeader />
         <div className="grid grid-cols-12 items-center font-bold gap-4">
           <Link to="/" className="col-span-2">
             <img src="assets/Logo.png" />
           </Link>
-          <form className="col-span-4" onSubmit={handleSearchSubmit}>
+          <form className="col-span-3" onSubmit={handleSearchSubmit}>
             <div className="flex rounded-3xl bg-white p-1">
               <input
                 onChange={handleInputChange}
@@ -49,13 +109,20 @@ export default function Header() {
                 placeholder="Tìm kiếm ..."
               />
               <button
-                className="flex-shrink-0 rounded-3xl bg-red px-6 py-2 hover:opacity-90"
+                className="flex-shrink-0 rounded-3xl bg-red px-4 py-2 hover:opacity-90"
                 type="submit"
               >
                 <SearchOutlined size={40} />
               </button>
             </div>
           </form>
+          <button
+            onClick={() => setIsOpen(true)}
+            className="col-span-1 flex-shrink-0 rounded-3xl bg-red px-4 py-2 mx-2 hover:opacity-90"
+            type="submit"
+          >
+            <CameraOutlined size={40} />
+          </button>
           <div className="flex flex-row col-span-5 justify-between">
             <NavLink
               to=""
@@ -100,28 +167,30 @@ export default function Header() {
                         Sản phẩm mới thêm
                       </div>
                       <div className="mt-5">
-                        {cart.slice(0, MAX_PURCHASES).map((purchase) => (
-                          <div
-                            className="mt-2 flex py-2 hover:bg-gray-100"
-                            key={purchase.product_id}
-                          >
-                            <div className="flex-shrink-0">
-                              <img
-                                src={`${url + purchase.img}`}
-                                alt={purchase.title}
-                                className="h-11 w-11 object-cover"
-                              />
+                        {cart
+                          .slice(0, MAX_PURCHASES)
+                          .map((purchase: Product) => (
+                            <div
+                              className="mt-2 flex py-2 hover:bg-gray-100"
+                              key={purchase.id}
+                            >
+                              <div className="flex-shrink-0">
+                                <img
+                                  src={`${url + purchase.main_image}`}
+                                  alt={purchase.title}
+                                  className="h-11 w-11 object-cover"
+                                />
+                              </div>
+                              <div className="ml-2 flex-grow overflow-hidden">
+                                <div className="truncate">{purchase.title}</div>
+                              </div>
+                              <div className="ml-2 flex-shrink-0">
+                                <span className="text-orange">
+                                  ₫{formatCurrency(purchase.selling_price)}
+                                </span>
+                              </div>
                             </div>
-                            <div className="ml-2 flex-grow overflow-hidden">
-                              <div className="truncate">{purchase.title}</div>
-                            </div>
-                            <div className="ml-2 flex-shrink-0">
-                              <span className="text-orange">
-                                ₫{formatCurrency(purchase.price)}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                          ))}
                       </div>
                       <div className="mt-6 flex items-center justify-center">
                         <Link
@@ -170,6 +239,19 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <Modal
+        open={isOpen}
+        onCancel={closeModal}
+        title="Thêm hình ảnh"
+        onOk={handleSearchImageSubmit}
+      >
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+        {imageUrl && (
+          <div style={{ margin: "20px 0" }}>
+            <img src={imageUrl} alt="Preview" style={{ width: "200px" }} />
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

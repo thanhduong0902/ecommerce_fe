@@ -17,7 +17,14 @@ import { produce } from "immer";
 import keyBy from "lodash/keyBy";
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/app.context";
-import { Item } from "../../types/product.type";
+import { Item, Product } from "../../types/product.type";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+} from "../../redux/slices/CartSlice";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -26,8 +33,8 @@ export default function Cart() {
   //     queryKey: ["purchases"],
   //     queryFn: () => purchaseApi.getPurchases(),
   //   });
+  const cart = useSelector((state: RootState) => state.cart.cart);
 
-  const { cart, setCart } = useContext(AppContext);
   const updatePurchaseMutation = useMutation({
     mutationFn: purchaseApi.updatePurchase,
     onSuccess: () => {
@@ -59,90 +66,26 @@ export default function Cart() {
   );
   const checkedPurchases = useMemo(() => cart, [cart]);
   const checkedPurchasesCount = cart.length;
-  const totalCheckedPurchasePrice = useMemo(
-    () =>
-      cart.reduce((result, current) => {
-        return result + current.price * current.quantity;
-      }, 0),
-    [cart]
-  );
-  //   const totalCheckedPurchaseSavingPrice = useMemo(
-  //     () =>
-  //       checkedPurchases.reduce((result, current) => {
-  //         return (
-  //           result +
-  //           (current.price - current.product.sellingPrice) *
-  //             current.quantity
-  //         );
-  //       }, 0),
-  //     [checkedPurchases]
-  //   );
+  const totalCheckedPurchasePrice = useMemo(() => {
+    return cart.reduce((result: number, current: Product) => {
+      return result + current.selling_price * current.quantity;
+    }, 0);
+  }, [cart]);
 
-  //   useEffect(() => {
-  //     setExtendedPurchases((prev) => {
-  //       const extendedPurchasesObject = keyBy(prev, "_id");
-  //       return (
-  //         cart?.map((purchase) => {
-  //           const isChoosenPurchaseFromLocation =
-  //             choosenPurchaseIdFromLocation === purchase.product_id;
-  //           return {
-  //             ...purchase,
-  //             disabled: false,
-  //             checked:
-  //               isChoosenPurchaseFromLocation ||
-  //               Boolean(extendedPurchasesObject[purchase.product_id]?.checked),
-  //           };
-  //         }) || []
-  //       );
-  //     });
-  //   }, [cart, choosenPurchaseIdFromLocation]);
+  const dispatch = useDispatch();
 
-  //   useEffect(() => {
-  //       return () => {
-  //           history.replaceState(null, '')
-  //       }
-  //   }, [])
-
-  const handleCheck =
-    (purchaseIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const updatedPurchases = [...extendedPurchases]; // Tạo một bản sao của mảng extendedPurchases
-
-      // Cập nhật thuộc tính checked cho sản phẩm tại vị trí purchaseIndex
-      updatedPurchases[purchaseIndex].checked = event.target.checked;
-
-      // Set state mới cho extendedPurchases
-      setExtendedPurchases(updatedPurchases);
-    };
-
-  const handleCheckAll = () => {
-    setExtendedPurchases((prev) =>
-      prev.map((purchase) => ({
-        ...purchase,
-        checked: !isAllChecked,
-      }))
-    );
+  // Hàm xử lý tăng số lượng
+  const handleIncrease = (productId: number) => {
+    dispatch(increaseQuantity(productId)); // Dispatch action tăng số lượng
   };
 
-  const handleTypeQuantity = (purchaseIndex: number) => (value: number) => {};
-
-  const handleQuantity = (
-    purchaseIndex: number,
-    value: number,
-    enable: boolean
-  ) => {
-    if (enable) {
-      const purchase = extendedPurchases[purchaseIndex];
-      //   setExtendedPurchases(
-      //     {
-
-      //     }
-      //   )
-      updatePurchaseMutation.mutate({ cartId: purchase.id, quantity: value });
-    }
+  // Hàm xử lý giảm số lượng
+  const handleDecrease = (productId: number) => {
+    dispatch(decreaseQuantity(productId)); // Dispatch action giảm số lượng
   };
 
   const handleDelete = (purchaseIndex: number) => () => {
-    const purchaseId = extendedPurchases[purchaseIndex].id;
+    const purchaseId = cart[purchaseIndex].id;
     deletePurchasesMutation.mutate(purchaseId);
   };
 
@@ -200,9 +143,9 @@ export default function Cart() {
                 </div>
                 {cart.length > 0 && (
                   <div className="my-3 rounded-sm bg-white p-5 shadow">
-                    {cart.map((purchase: Item, index) => (
+                    {cart.map((purchase: Product, index: number) => (
                       <div
-                        key={purchase.product_id}
+                        key={purchase.id}
                         className="mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 first:mt-0"
                       >
                         <div className="col-span-6">
@@ -221,20 +164,20 @@ export default function Cart() {
                                   className="h-20 w-20 flex-shrink-0"
                                   to={`${path.home}${generateNameId({
                                     name: purchase.title,
-                                    id: purchase.product_id,
+                                    id: purchase.id,
                                   })}`}
                                 >
                                   <img
                                     className="h-20 w-20"
                                     alt={purchase.title}
-                                    src={`${url + purchase.img}`}
+                                    src={`${url + purchase.main_image}`}
                                   />
                                 </Link>
                                 <div className="flex-grow px-2 pb-2 pt-1">
                                   <Link
                                     to={`${path.home}${generateNameId({
                                       name: purchase.title,
-                                      id: purchase.product_id,
+                                      id: purchase.id,
                                     })}`}
                                     className="text-left line-clamp-2"
                                   >
@@ -256,7 +199,7 @@ export default function Cart() {
                                   )}
                                 </span> */}
                                 <span className="ml-3">
-                                  ₫{formatCurrency(purchase.price)}
+                                  ₫{formatCurrency(purchase.selling_price)}
                                 </span>
                               </div>
                             </div>
@@ -265,22 +208,8 @@ export default function Cart() {
                                 max={100}
                                 value={purchase.quantity}
                                 classNameWrapper="flex items-center"
-                                onIncrease={(value) =>
-                                  handleQuantity(index, value, value >= 1)
-                                }
-                                onDecrease={(value) =>
-                                  handleQuantity(index, value, value >= 1)
-                                }
-                                onType={handleTypeQuantity(index)}
-                                onFocusOut={(value) =>
-                                  handleQuantity(
-                                    index,
-                                    value,
-                                    value >= 1 &&
-                                      value <= purchase.quantity &&
-                                      value !== cart[index].quantity
-                                  )
-                                }
+                                onIncrease={() => handleIncrease(purchase.id)} // Gọi khi tăng
+                                onDecrease={() => handleDecrease(purchase.id)} // Gọi khi giảm
                                 disabled={false}
                               />
                             </div>
@@ -288,7 +217,7 @@ export default function Cart() {
                               <span className="text-orange">
                                 ₫
                                 {formatCurrency(
-                                  purchase.price * purchase.quantity
+                                  purchase.selling_price * purchase.quantity
                                 )}
                               </span>
                             </div>

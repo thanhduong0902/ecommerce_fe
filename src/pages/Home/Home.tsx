@@ -1,6 +1,9 @@
 import { Carousel, Image } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
+import Chat from "./Chat";
+import { useMutation } from "@tanstack/react-query";
+import productApi from "../../apis/product.api";
 
 export default function Home() {
   const contentStyle: React.CSSProperties = {
@@ -66,6 +69,23 @@ export default function Home() {
       img: "/assets/banner5.png",
     },
   ];
+  useEffect(() => {
+    // const viewProducts = JSON.parse(localStorage.getItem("view_products") || "");
+    // // Chuẩn bị body cho API
+    // const formData = {
+    //   products: viewProducts, // Đưa dữ liệu từ localStorage vào body
+    // };
+    // // Gọi API và cập nhật state
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await productApi.getHotProducts(formData);
+    //     // setDataHotAdv(response.data); // Giả sử API trả về danh sách trong `response.data`
+    //   } catch (error) {
+    //     console.error("Failed to fetch data", error);
+    //   }
+    // };
+    // fetchData();
+  }, []);
   return (
     <div>
       <div className="flex flex-col gap-5 py-5 bg-orange">
@@ -138,6 +158,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Chat />
     </div>
   );
 }

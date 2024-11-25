@@ -5,7 +5,6 @@ import { schema, Schema } from "../../utils/rules";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../apis/auth.api";
 import Button from "../../components/Button";
-// import { isAxiosUnprocessableEntityError } from '../utils/utils'
 import { ErrorResponse } from "../../types/utils.types";
 import Input from "../../components/Input";
 import { useContext } from "react";

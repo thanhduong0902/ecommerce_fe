@@ -129,6 +129,7 @@ export default function ProductShop() {
   const handleChangeFile = async (file: File[]) => {
     if (file) {
       try {
+        console.log("filess", file);
         const formData = new FormData();
         file.forEach((file) => {
           formData.append("images[]", file);

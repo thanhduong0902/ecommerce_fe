@@ -6,12 +6,18 @@ import {
 } from "../types/product.type";
 import { SuccessResponse, SuccessResponseProduct } from "../types/utils.types";
 import http from "../utils/http";
+import httpFile from "../utils/httpFile";
+import httpImg from "../utils/httpimg";
 
 const URL = "auth/product/viewAll";
 const URLDetail = "auth/product/viewdetail";
 const productApi = {
   getProducts(searchValue?: string) {
     return http.get<ProductSearch>(`/auth/search/text?=${searchValue}`);
+  },
+
+  getProductAll(page?: number) {
+    return http.get<ProductSearch>(`/auth/products?page=${page}`);
   },
 
   getAllProducts() {
@@ -25,6 +31,12 @@ const productApi = {
   editProuct(body: any) {
     console.log("body", body);
     return http.put<any>(`/v1/admin/product/update`, body);
+  },
+  searchProductbyImage(body: any) {
+    return httpFile.post(`/auth/search/image`, body);
+  },
+  getHotProducts(body: any) {
+    return http.post(`auth/products`, body);
   },
 };
 

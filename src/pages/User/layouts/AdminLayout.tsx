@@ -30,14 +30,6 @@ export default function AdminLayout({ children }: Props) {
     <div>
       <Helmet>
         <title>Admin</title>
-        {/* <meta
-                    name='description'
-                    content={convert(product.description, {
-                        limits: {
-                            maxInputLength: 150
-                        }
-                    })}
-                /> */}
       </Helmet>
       <div>
         <HeaderAdmin />

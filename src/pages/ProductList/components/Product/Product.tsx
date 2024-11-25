@@ -7,12 +7,23 @@ import {
   formatNumberToSocialStyle,
   generateNameId,
 } from "../../../../utils/utils";
+import { useDispatch } from "react-redux";
+import { addTocartView } from "../../../../redux/slices/CartViewSlice";
 
 interface Props {
   product: ProductType;
 }
 
 export default function Product({ product }: Props) {
+  const dispatch = useDispatch();
+  const handleAddToCartView = () => {
+    console.log("addView");
+    dispatch(
+      addTocartView({
+        product_id: product.id,
+      })
+    ); // Gửi action thêm sản phẩm vào giỏ hàng
+  };
   const url = "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
     <Link
@@ -20,6 +31,7 @@ export default function Product({ product }: Props) {
         name: product.title,
         id: product.id,
       })}`}
+      onClick={handleAddToCartView}
     >
       <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
         <div className="relative w-full pt-[100%]">
@@ -50,7 +62,7 @@ export default function Product({ product }: Props) {
           <div className="mt-3 flex items-center justify-end">
             <ProductRating rating={product.rate} />
             <div className="ml-2 text-sm">
-              <span>{formatNumberToSocialStyle(product.quantity)}</span>
+              <span>{formatNumberToSocialStyle(product.is_selling)}</span>
               <span className="ml-1">Đã bán</span>
             </div>
           </div>

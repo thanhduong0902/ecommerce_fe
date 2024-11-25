@@ -15,6 +15,11 @@ export interface Product {
   feedbacks: FeedbackProp[];
 }
 
+export interface ProductView {
+  product_id: number;
+  view_num: number;
+}
+
 export interface ImageProp {
   id: number;
   link: string;

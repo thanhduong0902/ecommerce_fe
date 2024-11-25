@@ -28,7 +28,7 @@ const shopApi = {
     return http.put<any>(`/product/set/onsale?productId=${productId}`);
   },
   getOrder(status?: string) {
-    return http.get<any>(`/order/shop/view/order/status?statusOrder=${status}`);
+    return http.get<any>(`v1/admin/order/getAll?status=${status}`);
   },
   confirmOrder(orderId: number) {
     return http.put<any>(`/order/confirm?orderId=${orderId}`);

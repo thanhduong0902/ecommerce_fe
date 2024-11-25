@@ -52,7 +52,7 @@ const MenuNav: React.FC = () => {
       key: "2",
       icon: <CalendarOutlined />,
       label: "Quản lí đơn hàng",
-      onClick: () => handleMenuClick("2", path.infoShop),
+      onClick: () => handleMenuClick("2", path.orderShop),
     },
     {
       key: "sub1",

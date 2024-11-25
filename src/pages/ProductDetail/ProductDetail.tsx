@@ -24,6 +24,8 @@ import path from "../../constants/path";
 import { Helmet } from "react-helmet-async";
 import moment from "moment";
 import { AppContext } from "../../context/app.context";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/slices/CartSlice";
 // import { convert } from 'html-to-text'
 
 export default function ProductDetail() {
@@ -57,7 +59,8 @@ export default function ProductDetail() {
     staleTime: 3 * 60 * 1000,
     enabled: Boolean(product),
   });
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (product?.images && product.images.length > 0) {
       setActiveImage(product.images[0].link);
@@ -83,19 +86,8 @@ export default function ProductDetail() {
     setBuyCount(value);
   };
 
-  const addtoCart = (product: Item) => {
-    setCart((prevCart) => {
-      const existingItemIndex = prevCart.findIndex(
-        (item) => item.product_id === product.product_id
-      );
-      if (existingItemIndex !== -1) {
-        const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex].quantity += 1;
-        return updatedCart;
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
-    });
+  const handleAddToCart = () => {
+    dispatch(addToCart(productDetailData?.data)); // Gửi action thêm sản phẩm vào giỏ hàng
   };
 
   const buyNow = async () => {};
@@ -210,15 +202,7 @@ export default function ProductDetail() {
               </div>
               <div className="mt-8 flex items-center">
                 <button
-                  onClick={() =>
-                    addtoCart({
-                      product_id: product.id,
-                      quantity: buyCount,
-                      price: product.selling_price,
-                      title: product.title,
-                      img: product.main_image,
-                    })
-                  }
+                  onClick={handleAddToCart}
                   className="flex h-12 items-center justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5"
                 >
                   <svg

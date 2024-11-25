@@ -68,7 +68,7 @@ export default function ProductComponent({ product }: Props) {
           <div className="mt-3 flex items-center justify-between">
             <ProductRating rating={product.rate} />
             <div className="ml-2 text-sm">
-              <span>{formatNumberToSocialStyle(product.quantity)}</span>
+              <span>{formatNumberToSocialStyle(product.is_selling)}</span>
               <span className="ml-1">Đã bán</span>
             </div>
           </div>

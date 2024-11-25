@@ -8,6 +8,7 @@ export const URL_REFRESH_TOKEN = "refresh-access-token";
 
 const authApi = {
   registerAccount(body: any) {
+    console.log(body);
     return http.post<AuthResponse>(URL_REGISTER, body);
   },
   login(body: { username: string; password: string }) {

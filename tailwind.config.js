@@ -17,7 +17,7 @@ module.exports = {
         green:"#01A851"
       },
       fontFamily: {
-        pacifico: ['Pacifico', "sans-serif"],
+        pacifico: ['Roboto', "sans-serif"],
         // Add more custom font families as needed
       },
     }
