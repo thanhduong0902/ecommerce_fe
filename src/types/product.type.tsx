@@ -9,8 +9,8 @@ export interface Product {
   description: string;
   quantity: number;
   images: ImageProp[];
-  flavor: Specific[];
-  category: Specific[];
+  flavors: Specific[];
+  categories: Specific[];
   characteristics: Specific[];
   feedbacks: FeedbackProp[];
 }

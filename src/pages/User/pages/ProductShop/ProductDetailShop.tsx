@@ -43,6 +43,15 @@ export default function ProductDetailShop() {
   const [optionsCate, setOptionsCate] = useState<SelectProps["options"]>([]);
   const [optionsChar, setOptionsChar] = useState<SelectProps["options"]>([]);
 
+  useEffect(() => {
+    if (productDetailData?.data) {
+      setFlavor(productDetailData.data.flavors.map((item) => item.title));
+      setCategory(productDetailData.data.categories.map((item) => item.title));
+      setCharactics(
+        productDetailData.data.characteristics.map((item) => item.title)
+      );
+    }
+  }, []);
   const [isOpen, setIsOpen] = useState(false);
 
   const formatCurrency = (value: number) => {
@@ -67,8 +76,8 @@ export default function ProductDetailShop() {
       description: product?.description,
       is_selling: product?.is_selling,
       main_image: product?.main_image,
-      flavor: product?.flavor,
-      category: product?.category,
+      flavor: product?.flavors,
+      category: product?.categories,
       characteristics: product?.characteristics,
     },
   });
@@ -113,16 +122,6 @@ export default function ProductDetailShop() {
       onError: (errors) => {},
     });
   });
-
-  const { data: productsData } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => {
-      return productApi.getProducts();
-    },
-    staleTime: 3 * 60 * 1000,
-    enabled: Boolean(product),
-  });
-  const navigate = useNavigate();
   useEffect(() => {
     if (product?.images && product.images.length > 0) {
       setActiveImage(product.images[0].link);
@@ -480,7 +479,7 @@ export default function ProductDetailShop() {
               style={{ width: "100%" }}
               placeholder="Chọn hương vị"
               onChange={handleChange}
-              defaultValue={product.flavor?.map((item) => item.title)}
+              defaultValue={product.flavors?.map((item) => item.title)}
               options={options}
             />
             <div>Chọn loại</div>
@@ -490,7 +489,7 @@ export default function ProductDetailShop() {
               style={{ width: "100%" }}
               placeholder="Chọn loại"
               onChange={handleChangeCate}
-              defaultValue={product.category?.map((item) => item.title)}
+              defaultValue={product.categories?.map((item) => item.title)}
               options={optionsCate}
             />
             <div>Chọn tính chất</div>
