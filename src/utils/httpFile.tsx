@@ -40,7 +40,7 @@ export class Http {
     this.refreshTokenRequest = null;
     this.instance = axios.create({
       baseURL: config.baseUrl,
-      timeout: 10000,
+      timeout: 20000,
       headers: {
         "Content-Type": "multipart/form-data",
         "expire-access-token": 60 * 60 * 24, // 1 ngày
@@ -74,7 +74,6 @@ export class Http {
         return response;
       },
       (error: AxiosError) => {
-        console.log("loi", error);
         // Chỉ toast lỗi không phải 422 và 401
         if (
           ![

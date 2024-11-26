@@ -17,7 +17,6 @@ interface Props {
 export default function Product({ product }: Props) {
   const dispatch = useDispatch();
   const handleAddToCartView = () => {
-    console.log("addView");
     dispatch(
       addTocartView({
         product_id: product.id,

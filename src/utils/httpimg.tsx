@@ -40,7 +40,7 @@ export class Http {
     this.refreshTokenRequest = null;
     this.instance = axios.create({
       baseURL: configImg.baseUrl,
-      timeout: 10000,
+      timeout: 20000,
       headers: {
         "Content-Type": "multipart/form-data",
         "expire-access-token": 60 * 60 * 24, // 1 ngày

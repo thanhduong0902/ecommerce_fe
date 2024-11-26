@@ -45,6 +45,15 @@ export default function ProductDetailShop() {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    })
+      .format(value)
+      .replace("₫", "đ");
+  };
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -88,8 +97,8 @@ export default function ProductDetailShop() {
       list_price: data.list_price,
       is_selling: true,
       main_image: product?.main_image,
-      flavor: flavor,
-      category: category,
+      flavors: flavor,
+      categories: category,
       characteristics: charactics,
     };
     editProductMutation.mutate(body, {
@@ -403,6 +412,7 @@ export default function ProductDetailShop() {
                     name="title"
                     placeholder="Tên sản phẩm"
                     register={register}
+                    // value={product.title}
                   />
                 </div>
               </div>
@@ -416,6 +426,7 @@ export default function ProductDetailShop() {
                     name="quantity"
                     placeholder="Số lượng"
                     register={register}
+                    // value={product.is_selling}
                   />
                 </div>
               </div>
@@ -429,6 +440,7 @@ export default function ProductDetailShop() {
                     name="description"
                     placeholder="Mô tả"
                     register={register}
+                    // value={product.description}
                   />
                 </div>
               </div>
@@ -442,6 +454,7 @@ export default function ProductDetailShop() {
                     name="list_price"
                     placeholder="Giá gốc"
                     register={register}
+                    // value={formatCurrency(product.list_price)}
                   />
                 </div>
               </div>
@@ -455,6 +468,7 @@ export default function ProductDetailShop() {
                     name="selling_price"
                     placeholder="Giá bán"
                     register={register}
+                    // value={formatCurrency(product.selling_price)}
                   />
                 </div>
               </div>

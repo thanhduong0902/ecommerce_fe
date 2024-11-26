@@ -46,9 +46,9 @@ export default function ProductList() {
           const formData = new FormData();
           formData.append("image", searchImageValue);
           const response = await productApi.searchProductbyImage(formData);
-          data = response.data.products;
+          data = response.data.data;
           console.log("Tìm kiếm bằng hình ảnh", data);
-          setDisplayData(data); // Cập nhật dữ liệu sau khi tìm kiếm
+          setDisplayData(data);
           return;
         }
 
