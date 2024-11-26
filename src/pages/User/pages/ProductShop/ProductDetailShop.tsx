@@ -69,7 +69,7 @@ export default function ProductDetailShop() {
 
   const methods = useForm<any>({
     defaultValues: {
-      title: product?.title,
+      title: productDetailData?.data?.title,
       selling_price: product?.selling_price,
       list_price: product?.list_price,
       quantity: product?.quantity,
@@ -91,6 +91,19 @@ export default function ProductDetailShop() {
     getValues,
     setError,
   } = methods;
+
+  useEffect(() => {
+    if (productDetailData) {
+      const data = productDetailData.data;
+      setValue("title", data?.title || "");
+      setValue("selling_price", product?.selling_price || "");
+      setValue("list_price", product?.list_price || "");
+      setValue("quantity", product?.quantity || "");
+      setValue("description", product?.description || "");
+      setValue("is_selling", product?.is_selling || "");
+      setValue("main_image", product?.main_image || "");
+    }
+  }, [productDetailData, setValue]);
 
   const editProductMutation = useMutation({
     mutationFn: productApi.editProuct,
@@ -411,7 +424,6 @@ export default function ProductDetailShop() {
                     name="title"
                     placeholder="Tên sản phẩm"
                     register={register}
-                    // value={product.title}
                   />
                 </div>
               </div>
@@ -425,7 +437,6 @@ export default function ProductDetailShop() {
                     name="quantity"
                     placeholder="Số lượng"
                     register={register}
-                    // value={product.is_selling}
                   />
                 </div>
               </div>
@@ -439,7 +450,6 @@ export default function ProductDetailShop() {
                     name="description"
                     placeholder="Mô tả"
                     register={register}
-                    // value={product.description}
                   />
                 </div>
               </div>
@@ -453,7 +463,6 @@ export default function ProductDetailShop() {
                     name="list_price"
                     placeholder="Giá gốc"
                     register={register}
-                    // value={formatCurrency(product.list_price)}
                   />
                 </div>
               </div>
@@ -467,7 +476,6 @@ export default function ProductDetailShop() {
                     name="selling_price"
                     placeholder="Giá bán"
                     register={register}
-                    // value={formatCurrency(product.selling_price)}
                   />
                 </div>
               </div>
