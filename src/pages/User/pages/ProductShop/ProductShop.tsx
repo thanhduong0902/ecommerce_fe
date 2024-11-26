@@ -157,8 +157,8 @@ export default function ProductShop() {
       is_selling: true,
       images: imageObjects,
       main_image: linkFile[0],
-      flavor: flavor,
-      category: category,
+      flavors: flavor,
+      categories: category,
       characteristics: charactics,
     };
     createProductMutation.mutate(body, {
