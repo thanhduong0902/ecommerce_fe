@@ -224,6 +224,8 @@ export default function ProductShop() {
         title="Thêm sản phẩm"
         onOk={onSubmit}
         onCancel={closeModal}
+        okText="Đồng ý"
+        cancelText="Huỷ"
       >
         <FormProvider {...methods}>
           <form

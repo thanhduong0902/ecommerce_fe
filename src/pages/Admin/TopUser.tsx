@@ -8,8 +8,8 @@ import { formatCurrency } from "../../utils/utils";
 Chart.register(CategoryScale);
 export default function TopUser() {
   const [body, setBody] = useState({
-    start_date: "2024-10-03",
-    end_date: "2024-05-13",
+    start_date: "2024-11-03",
+    end_date: "2024-12-01",
     num: 10,
   });
 
@@ -27,8 +27,6 @@ export default function TopUser() {
       return staticApi.topUserStatic(body);
     },
   });
-
-  console.log("User", profitStatistic);
 
   return (
     <div className="p-5 justify-center bg-orange rounded-3xl border border-orange flex flex-col">

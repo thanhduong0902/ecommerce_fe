@@ -259,6 +259,8 @@ export default function Header() {
         onCancel={closeModal}
         title="Thêm hình ảnh"
         onOk={handleSearchImageSubmit}
+        okText="Đồng ý"
+        cancelText="Huỷ"
       >
         <input type="file" accept="image/*" onChange={handleFileChange} />
         {imageUrl && (

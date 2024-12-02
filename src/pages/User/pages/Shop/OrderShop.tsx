@@ -9,7 +9,10 @@ import shopApi from "../../../../apis/shop.api";
 import { formatCurrency } from "../../../../utils/utils";
 import Button from "../../../../components/Button";
 import { toast } from "react-toastify";
-import { Pagination, PaginationProps } from "antd";
+import { Image, Modal, Pagination, PaginationProps } from "antd";
+import { Order, OrderDetail } from "../../../../types/purchase.type";
+import moment from "moment";
+import Item from "antd/es/list/Item";
 
 const purchaseTabs = [
   { status: "WAIT_CONFIRM", name: "Chờ xác nhận" },
@@ -25,6 +28,8 @@ export default function OrderShop() {
   const status: string | undefined = queryParams.status;
   const [selectedTab, setSelectedTab] = useState(purchaseTabs[0].status);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [orderDetail, setOrderDetail] = useState<Order>();
 
   const { data: purchasesInCartData, refetch } = useQuery({
     queryKey: ["orderShop", { selectedTab, currentPage }],
@@ -33,6 +38,10 @@ export default function OrderShop() {
     },
   });
   const purchasesInCart = purchasesInCartData?.data;
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     const firstTab = document.querySelector(".tab-link") as HTMLElement; // Lấy tab đầu tiên
@@ -116,6 +125,9 @@ export default function OrderShop() {
       {tab.name}
     </Link>
   ));
+
+  const urlImage =
+    "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
     <div>
       <div className="overflow-x-auto">
@@ -136,8 +148,12 @@ export default function OrderShop() {
           <div>
             {purchasesInCart?.data?.map((purchase: any) => (
               <div
+                onClick={() => {
+                  setIsOpen(true);
+                  setOrderDetail(purchase);
+                }}
                 key={purchase.id}
-                className=" border-2 p-2 border-gray-200 mx-2 hover:bg-slate-200
+                className=" border-2 p-2 border-gray-200 mx-2 hover:bg-slate-200 cursor-pointer
                 grid grid-cols-12 gap-4 items-center justify-center rounded-2xl bg-white px-9 py-4 text-gray-800 shadow-sm mt-2"
               >
                 {/* Mã đơn hàng */}
@@ -214,6 +230,52 @@ export default function OrderShop() {
           />
         </div>
       </div>
+      <Modal
+        open={isOpen}
+        title="Chi tiết đơn hàng"
+        onCancel={closeModal}
+        okText="Đồng ý"
+        cancelText="Huỷ"
+      >
+        <div>
+          <div>
+            <span className="text-red font-bold">Mã đơn hàng</span>
+            <span className="ml-4">#{orderDetail?.id}</span>
+          </div>
+          <div className="h-0.5 w-full bg-black my-4"></div>
+          <div>
+            <span className="mr-4 text-red font-bold">Thời gian giao hàng</span>
+            {moment(orderDetail?.updated_at).format("YYYY-MM-DD HH:mm")}
+          </div>
+          <div className="h-0.5 w-full bg-black my-4"></div>
+          <div>
+            <p className="text-red font-bold">Chi tiết sản phẩm</p>
+            {orderDetail?.order_details.map((item: OrderDetail) => (
+              <div className="flex flex-row justify-between items-center ">
+                <Image
+                  width={100}
+                  height={100}
+                  preview={false}
+                  src={urlImage + item.product.main_image}
+                />
+                <div>{item.product.title}</div>
+                <div className="flex flex-row items-center">
+                  <div className="text-gray-500 line-through">
+                    ₫{formatCurrency(item.product.list_price)}
+                  </div>
+                  <div className="ml-3 text-xl font-medium text-orange">
+                    ₫{formatCurrency(item.product.selling_price)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div>
+            <p className="text-red font-bold">Ghi chú</p>
+            <div>{orderDetail?.note}</div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

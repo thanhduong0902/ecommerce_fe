@@ -4,7 +4,9 @@ import {
   CalendarOutlined,
   LinkOutlined,
   MailOutlined,
+  MessageOutlined,
   SettingOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Divider, Menu, Switch } from "antd";
 import type { GetProp, MenuProps } from "antd";
@@ -74,13 +76,13 @@ const MenuNav: React.FC = () => {
     {
       key: "5",
       label: "Quản lí người dùng",
-      icon: <AppstoreOutlined />,
+      icon: <UserOutlined />,
       onClick: () => handleMenuClick("5", path.member),
     },
     {
       key: "6",
       label: "Tin nhắn",
-      icon: <AppstoreOutlined />,
+      icon: <MessageOutlined />,
       onClick: () => handleMenuClick("6", path.message),
     },
   ];

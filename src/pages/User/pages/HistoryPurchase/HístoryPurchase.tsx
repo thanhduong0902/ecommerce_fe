@@ -248,7 +248,13 @@ export default function HistoryPurchase() {
           </div>
         </div>
       )}
-      <Modal open={isOpen} title="Chi tiết đơn hàng" onCancel={closeModal}>
+      <Modal
+        open={isOpen}
+        title="Chi tiết đơn hàng"
+        onCancel={closeModal}
+        okText="Đồng ý"
+        cancelText="Huỷ"
+      >
         <div>
           <div>
             <span>Mã đơn hàng</span>
@@ -306,6 +312,8 @@ export default function HistoryPurchase() {
         </div>
       </Modal>
       <Modal
+        okText="Đồng ý"
+        cancelText="Huỷ"
         open={isOpenReview}
         title="Đánh giá sản phẩm"
         onCancel={closeModalReview}

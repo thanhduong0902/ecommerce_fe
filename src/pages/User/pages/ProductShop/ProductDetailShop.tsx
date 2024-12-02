@@ -403,6 +403,8 @@ export default function ProductDetailShop() {
         </div>
       </div>
       <Modal
+        okText="Đồng ý"
+        cancelText="Huỷ"
         open={isOpen}
         title="Chỉnh sửa sản phẩm"
         onOk={onSubmit}

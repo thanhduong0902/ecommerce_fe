@@ -19,7 +19,7 @@ Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function RevenuewStatic() {
   const [body, setBody] = useState({
-    start_date: "2024-05-03",
+    start_date: "2024-11-03",
     end_date: "2024-12-01",
     num: 10,
   });
@@ -40,8 +40,8 @@ export default function RevenuewStatic() {
     enabled: !!body.start_date && !!body.end_date, // Only run the query if both start and end date are provided
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
+  //   if (isLoading) return <div>Loading...</div>;
+  //   if (isError) return <div>Error fetching data</div>;
 
   // Process profitStatistic data
   const labels = profitStatistic?.data?.label || [];
@@ -79,10 +79,6 @@ export default function RevenuewStatic() {
       legend: {
         position: "top",
       },
-      title: {
-        display: true,
-        text: "Biểu đồ đơn hàng và doanh số bán hàng",
-      },
     },
     scales: {
       x: {
@@ -103,6 +99,7 @@ export default function RevenuewStatic() {
         beginAtZero: true,
       },
       y2: {
+        type: "linear",
         position: "right",
         title: {
           display: true,
@@ -117,7 +114,7 @@ export default function RevenuewStatic() {
   };
 
   return (
-    <div className="p-5 justify-center border-orange rounded-3xl border flex flex-col">
+    <div className="px-5 justify-center border-orange rounded-3xl border flex flex-col">
       <h3 className="my-4 text-center">Thống kê doanh thu</h3>
       <div className="flex justify-around">
         <div>

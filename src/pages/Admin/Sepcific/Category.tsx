@@ -75,6 +75,8 @@ export default function Category() {
         onOk={handleOk}
         title="Thêm loại"
         onCancel={closeModal}
+        okText="Đồng ý"
+        cancelText="Huỷ"
       >
         <div className="mt-4">
           <label className="block text-sm font-medium text-gray-600">
