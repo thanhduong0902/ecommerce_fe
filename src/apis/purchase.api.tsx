@@ -1,4 +1,4 @@
-import { Purchase, PurchaseListStatus } from "../types/purchase.type";
+import { Order, Purchase, PurchaseListStatus } from "../types/purchase.type";
 import { SuccessResponse } from "../types/utils.types";
 import http from "../utils/http";
 
@@ -11,6 +11,10 @@ const URLPAY = "/wallet";
 interface productCart {
   productId: number;
   quantity: number;
+}
+
+interface OrderResponse {
+  data: Order[];
 }
 
 const purchaseApi = {
@@ -43,9 +47,7 @@ const purchaseApi = {
     return http.post<any>(`auth/order/create`, body);
   },
   getOrder(status?: string) {
-    return http.get<any>(
-      `${URLORDER}/customer/view/order/status?statusOrder=${status}`
-    );
+    return http.get<OrderResponse>(`v1/order/getAll?status=${status}`);
   },
   getReview() {
     return http.get<Purchase[]>(`/feedback/get/cartToFeedback`);

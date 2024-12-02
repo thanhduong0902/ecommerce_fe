@@ -75,6 +75,13 @@ const MenuNav: React.FC = () => {
       key: "5",
       label: "Quản lí người dùng",
       icon: <AppstoreOutlined />,
+      onClick: () => handleMenuClick("5", path.member),
+    },
+    {
+      key: "6",
+      label: "Tin nhắn",
+      icon: <AppstoreOutlined />,
+      onClick: () => handleMenuClick("6", path.message),
     },
   ];
 

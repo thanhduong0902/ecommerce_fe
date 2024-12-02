@@ -15,7 +15,7 @@ const path = {
     user: '/user',
     profile: '/user/profile',
     changePassword: '/user/password',
-    historyPurchase: '/user/purchase',
+    historyPurchase: '/purchase',
 
     shop: '/admin/shop',
     infoShop: '/admin/shop/infoShop',
@@ -26,6 +26,8 @@ const path = {
     profit: '/admin/profit',
     specific:'/admin/specific',
     productDetailShop: '/admin/productShop/:nameId',
+    message: '/admin/message',
+    member: '/admin/member'
 
 } as const
 

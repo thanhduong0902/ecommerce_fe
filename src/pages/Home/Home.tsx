@@ -4,6 +4,7 @@ import "./style.css";
 import Chat from "./Chat";
 import { useMutation } from "@tanstack/react-query";
 import productApi from "../../apis/product.api";
+import { Helmet } from "react-helmet-async";
 
 export default function Home() {
   const contentStyle: React.CSSProperties = {
@@ -88,6 +89,10 @@ export default function Home() {
   }, []);
   return (
     <div>
+      <Helmet>
+        <title>Trang chủ | Yummy</title>
+        <meta name="description" content="Trang chủ" />
+      </Helmet>
       <div className="flex flex-col gap-5 py-5 bg-orange">
         <div className=" font-pacifico font-bold text-5xl text-center">
           Sản phẩm nổi bật

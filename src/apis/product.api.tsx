@@ -38,6 +38,10 @@ const productApi = {
   getHotProducts(body: any) {
     return http.post(`auth/products`, body);
   },
+  reviewProduct(body: any) {
+    console.log(body);
+    return http.post(`auth/feedback/create`, body);
+  },
 };
 
 export default productApi;

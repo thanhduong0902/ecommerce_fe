@@ -22,6 +22,8 @@ interface AppContextInterface {
   setTargetValue: React.Dispatch<React.SetStateAction<number>>;
   setCart: React.Dispatch<React.SetStateAction<Item[]>>;
   cart: Item[];
+  shaking: boolean;
+  setShaking: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const getInitialAppContext: () => AppContextInterface = () => ({
@@ -40,6 +42,8 @@ export const getInitialAppContext: () => AppContextInterface = () => ({
   setCart: () => null,
   searchImageValue: "",
   setSearchImageValue: () => "",
+  shaking: false,
+  setShaking: () => "",
 });
 
 const initialAppContext = getInitialAppContext();
@@ -71,6 +75,8 @@ export const AppProvider = ({
 
   const [cart, setCart] = useState<Item[]>([]);
 
+  const [shaking, setShaking] = useState(false);
+
   const reset = () => {
     setIsAuthenticated(false);
     setExtendedPurchases([]);
@@ -95,6 +101,8 @@ export const AppProvider = ({
         setCart,
         searchImageValue,
         setSearchImageValue,
+        shaking,
+        setShaking,
       }}
     >
       {children}

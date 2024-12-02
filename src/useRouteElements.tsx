@@ -18,6 +18,8 @@ import Specific from "./pages/Admin/Sepcific";
 import ProductDetailShop from "./pages/User/pages/ProductShop/ProductDetailShop";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import UserManagement from "./pages/Admin/UserManagement";
+import Message from "./pages/Admin/Message";
 
 const Login = lazy(() => import("./pages/Login"));
 const ProductList = lazy(() => import("./pages/ProductList"));
@@ -209,6 +211,16 @@ export default function useRouteElements() {
             </CheckoutLayout>
           ),
         },
+        {
+          path: path.historyPurchase,
+          element: (
+            <MainLayout>
+              <Suspense>
+                <HistoryPurchase />
+              </Suspense>
+            </MainLayout>
+          ),
+        },
       ],
     },
     {
@@ -228,6 +240,22 @@ export default function useRouteElements() {
               element: (
                 <Suspense>
                   <Profit />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.member,
+              element: (
+                <Suspense>
+                  <UserManagement />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.message,
+              element: (
+                <Suspense>
+                  <Message />
                 </Suspense>
               ),
             },

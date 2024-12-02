@@ -12,6 +12,7 @@ import {
   Product as ProductType,
   ProductListConfig,
   Item,
+  FeedbackProp,
 } from "../../types/product.type";
 import {
   formatCurrency,
@@ -42,7 +43,9 @@ export default function ProductDetail() {
   const product = productDetailData?.data;
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const { cart, setCart } = useContext(AppContext);
+  console.log("product", product);
+
+  const { cart, setCart, setShaking } = useContext(AppContext);
 
   const queryConfig: ProductListConfig = {};
 
@@ -87,6 +90,8 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = () => {
+    setShaking(true); // Trigger shaking animation
+    setTimeout(() => setShaking(false), 500);
     dispatch(addToCart(productDetailData?.data)); // Gửi action thêm sản phẩm vào giỏ hàng
   };
 
@@ -172,7 +177,7 @@ export default function ProductDetail() {
                 </div>
                 <div className="mx-4 h-4 w-[1px] bg-gray-300"></div>
                 <div>
-                  <span>{formatNumberToSocialStyle(product.quantity)}</span>
+                  <span>{formatNumberToSocialStyle(product.total_sold)}</span>
                   <span className="ml-1 text-gray-500">Đã bán</span>
                 </div>
               </div>
@@ -270,14 +275,17 @@ export default function ProductDetail() {
             <div className="rounded bg-gray-50 p-4 text-lg capitalize text-slate-700">
               Đánh giá
             </div>
-            {product.feedbacks?.map((item: any) => (
-              <div className="flex flex-col justify-center mb-5">
-                <div>{item.comment}</div>
+            {product.feedbacks?.map((item: FeedbackProp) => (
+              <div className="flex flex-col justify-center items-start my-4 gap-2 rounded-2xl border-orange border p-4 ">
+                <div>
+                  <span className="">Nội dung : </span>
+                  {item.content}
+                </div>
                 <div>
                   Thời gian:{" "}
-                  {moment(item.created).format("YYYY-MM-DD HH:mm:ss")}
+                  {moment(item.updated_at).format("YYYY-MM-DD HH:mm:ss")}
                 </div>
-                <div>Khách hàng: {item.customer.name.lastName}</div>
+                <div>Khách hàng: {item.user.name}</div>
                 <div>
                   {[1, 2, 3, 4, 5].map((star, index) => (
                     <span

@@ -91,7 +91,7 @@ export default function ProductList() {
           <div className="items-center justify-center flex">
             <Lottie
               animationData={loading}
-              style={{ width: "200px", height: "200px" }}
+              style={{ width: "200px", height: "500px" }}
             />
           </div>
         ) : (

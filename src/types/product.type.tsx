@@ -13,6 +13,8 @@ export interface Product {
   categories: Specific[];
   characteristics: Specific[];
   feedbacks: FeedbackProp[];
+  total_sold: number;
+  star: number;
 }
 
 export interface ProductView {
@@ -27,7 +29,16 @@ export interface ImageProp {
 
 export interface FeedbackProp {
   id: number;
-  title: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  star: number;
+  user_id: number;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+  };
 }
 
 export interface ProductResponse {

@@ -9,11 +9,14 @@ import shopApi from "../../../../apis/shop.api";
 import { formatCurrency } from "../../../../utils/utils";
 import Button from "../../../../components/Button";
 import { toast } from "react-toastify";
+import { Pagination, PaginationProps } from "antd";
 
 const purchaseTabs = [
   { status: "WAIT_CONFIRM", name: "Chờ xác nhận" },
   { status: "PREPARING", name: "Chuẩn bị hàng" },
+  { status: "DELIVERING", name: "Đang giao" },
   { status: "DELIVERED", name: "Đã giao" },
+  { status: "RETURN", name: "Đơn hoàn" },
   { status: "CANCELED", name: "Đã hủy" },
 ];
 
@@ -21,11 +24,12 @@ export default function OrderShop() {
   const queryParams: { status?: string } = useQueryParams();
   const status: string | undefined = queryParams.status;
   const [selectedTab, setSelectedTab] = useState(purchaseTabs[0].status);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data: purchasesInCartData, refetch } = useQuery({
-    queryKey: ["orderShop", { selectedTab }],
+    queryKey: ["orderShop", { selectedTab, currentPage }],
     queryFn: () => {
-      return shopApi.getOrder(selectedTab);
+      return shopApi.getOrder(selectedTab, currentPage);
     },
   });
   const purchasesInCart = purchasesInCartData?.data;
@@ -42,12 +46,14 @@ export default function OrderShop() {
     // refetch({ status: tabStatus } as any);
 
     // Lấy phần tử tab được chọn
+    setCurrentPage(1);
     const selectedTabElement = document.querySelector(
       `[data-status="${tabStatus}"]`
     ) as HTMLElement;
     if (selectedTabElement) {
       selectedTabElement.focus(); // Đặt focus vào tab được chọn
     }
+    window.scrollTo(0, 0);
   };
 
   const confirmOrderMutation = useMutation({
@@ -57,6 +63,11 @@ export default function OrderShop() {
   const prepareOrderMutation = useMutation({
     mutationFn: shopApi.prepareOrder,
   });
+
+  const onChange: PaginationProps["onChange"] = (page) => {
+    window.scrollTo(0, 0);
+    setCurrentPage(page);
+  };
 
   const handleConfirm = (orderId: number) => {
     if (selectedTab === "WAITE_CONFIRM") {
@@ -192,6 +203,15 @@ export default function OrderShop() {
               </div>
             ))}
           </div>
+
+          <Pagination
+            style={{ marginTop: 20 }}
+            defaultCurrent={1}
+            current={currentPage}
+            onChange={onChange}
+            total={purchasesInCartData?.data.total}
+            align="center"
+          />
         </div>
       </div>
     </div>

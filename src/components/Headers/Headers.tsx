@@ -19,7 +19,15 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Product } from "../../types/product.type";
-import { Button, GetProp, Modal, Upload, UploadProps, message } from "antd";
+import {
+  Button,
+  GetProp,
+  Image,
+  Modal,
+  Upload,
+  UploadProps,
+  message,
+} from "antd";
 import productApi from "../../apis/product.api";
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 const getBase64 = (img: FileType, callback: (url: string) => void) => {
@@ -48,7 +56,7 @@ export default function Header() {
   const [imageUrl, setImageUrl] = useState<any>("");
   const [uploading, setUploading] = useState(false);
 
-  const { profile } = useContext(AppContext);
+  const { profile, shaking } = useContext(AppContext);
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,12 +100,12 @@ export default function Header() {
 
   const url = "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
-    <div className="sticky top-0 z-10 bg-yellow items-center text-black font-pacifico">
+    <div className="bg-yellow items-center text-black font-pacifico">
       <div className="container">
         <NavHeader />
         <div className="grid grid-cols-12 items-center font-bold gap-4">
           <Link to="/" className="col-span-2">
-            <img src="assets/Logo.png" />
+            <Image src="assets/Logo.png" preview={false} />
           </Link>
           <form className="col-span-3" onSubmit={handleSearchSubmit}>
             <div className="flex rounded-3xl bg-white p-1">
@@ -221,7 +229,9 @@ export default function Header() {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="h-8 w-8"
+                  className={`h-8 w-8 transition-transform ${
+                    shaking ? "animate-shake" : ""
+                  }`}
                 >
                   <path
                     strokeLinecap="round"
@@ -229,6 +239,11 @@ export default function Header() {
                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
                   />
                 </svg>
+                {cart.length > 0 && (
+                  <span className="absolute left-[17px] top-[-5px] rounded-full bg-white px-[9px] py-[1px] text-xs text-orange">
+                    {cart.length}
+                  </span>
+                )}
                 {/* {purchasesInCart && purchasesInCart.length > 0 && (
                                     <span className='absolute left-[17px] top-[-5px] rounded-full bg-white px-[9px] py-[1px] text-xs text-orange '>
                                         {purchasesInCart?.length}

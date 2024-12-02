@@ -1,7 +1,7 @@
 export const purchasesStatus = {
-    wait_confirm: "WAITE_CONFIRM",
-    delevering: "DELIVERING",
-    canceled: "CANCELLED",
-    delevered: "DELEVERED",
-    all: "ALL"
-} as const
+  wait_confirm: "WAIT_CONFIRM",
+  delevering: "DELIVERING",
+  canceled: "CANCEL",
+  delevered: "DELIVERED",
+  all: "ALL",
+} as const;

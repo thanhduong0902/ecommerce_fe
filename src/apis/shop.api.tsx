@@ -1,9 +1,16 @@
 import { Product, ProductResponse } from "../types/product.type";
+import { Order } from "../types/purchase.type";
 import { Shop } from "../types/shop.type";
 import http from "../utils/http";
 import httpImg from "../utils/httpimg";
 
 const URL = "/shop";
+
+export interface OrderShop {
+  total: number;
+  data: Order[];
+  last_page: number;
+}
 
 const shopApi = {
   createShop(body: any) {
@@ -27,8 +34,10 @@ const shopApi = {
   setOnSale(productId: number) {
     return http.put<any>(`/product/set/onsale?productId=${productId}`);
   },
-  getOrder(status?: string) {
-    return http.get<any>(`v1/admin/order/getAll?status=${status}`);
+  getOrder(status?: string, page?: number) {
+    return http.get<OrderShop>(
+      `v1/admin/order/getAll?status=${status}&page=${page}`
+    );
   },
   confirmOrder(orderId: number) {
     return http.put<any>(`/order/confirm?orderId=${orderId}`);
