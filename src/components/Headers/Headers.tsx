@@ -101,8 +101,7 @@ export default function Header() {
   const url = "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
     <div className="bg-yellow items-center text-black font-pacifico">
-      <div className="container">
-        <NavHeader />
+      <div className="">
         <div className="grid grid-cols-12 items-center font-bold gap-4">
           <Link to="/" className="col-span-2">
             <Image src="assets/Logo.png" preview={false} />
@@ -131,7 +130,7 @@ export default function Header() {
           >
             <CameraOutlined size={40} />
           </button>
-          <div className="flex flex-row col-span-5 justify-between">
+          <div className="flex flex-row col-span-6 gap-4 items-center">
             <NavLink
               to=""
               className={({ isActive }) =>
@@ -156,16 +155,14 @@ export default function Header() {
             >
               Giới thiệu
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to={path.contact}
               className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
               }
             >
               Liên hệ
-            </NavLink>
-          </div>
-          <div className="col-span-1 justify-self-end">
+            </NavLink> */}
             <Popover
               renderPopover={
                 <div className="relative  max-w-[400px] rounded-sm border border-gray-200 bg-white text-sm shadow-md">
@@ -251,7 +248,10 @@ export default function Header() {
                                 )} */}
               </Link>
             </Popover>
+            <NavHeader />
           </div>
+          {/* <div className="col-span-1 justify-self-end">
+          </div> */}
         </div>
       </div>
       <Modal

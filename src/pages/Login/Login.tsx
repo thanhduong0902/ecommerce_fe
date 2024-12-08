@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet-async";
 import "./style.css";
 import userApi from "../../apis/user.api";
 import { setProfileToLS } from "../../utils/auth";
+import { toast } from "react-toastify";
 
 type FormData = Pick<Schema, "username" | "password">;
 const loginSchema = schema.pick(["username", "password"]);
@@ -45,7 +46,6 @@ export default function Login() {
         getProfileMutation.mutate(token, {
           onSuccess: (profileData) => {
             setIsAuthenticated(true);
-
             setProfile(profileData.data);
             setProfileToLS(profileData.data);
             if (profileData.data.role.includes("admin")) {
@@ -55,12 +55,12 @@ export default function Login() {
             }
           },
           onError: (profileError) => {
-            console.error("Error fetching profile:", profileError);
+            toast.error(profileError.message);
           },
         });
       },
       onError: (loginError) => {
-        console.error("Error during login:", loginError);
+        toast.error(loginError.message);
       },
     });
   });

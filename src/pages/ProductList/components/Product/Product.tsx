@@ -32,7 +32,7 @@ export default function Product({ product }: Props) {
       })}`}
       onClick={handleAddToCartView}
     >
-      <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
+      <div className="overflow-hidden rounded-3xl bg-white shadow-md transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-lg">
         <div className="relative w-full pt-[100%]">
           <img
             src={`${url + product.main_image}`}

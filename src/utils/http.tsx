@@ -1,6 +1,7 @@
 import axios, { AxiosError, type AxiosInstance } from "axios";
 import HttpStatusCode from "../constants/httpStatusCode.enum";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { AuthResponse, RefreshTokenReponse } from "../types/auth.type";
 import {
   clearLS,
@@ -72,21 +73,34 @@ export class Http {
         }
         return response;
       },
-      (error: AxiosError) => {
-        // Chỉ toast lỗi không phải 422 và 401
+      async (error: AxiosError) => {
+        const originalRequest = error.config;
         if (
-          ![
-            HttpStatusCode.UnprocessableEntity,
-            HttpStatusCode.Unauthorized,
-          ].includes(error.response?.status as number)
+          error.response?.status === HttpStatusCode.Unauthorized &&
+          isAxiosExpiredTokenError(error)
         ) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data: any | undefined = error.response?.data;
-          const message = data?.message || error.message;
-          toast.error(message);
-          console.log(message);
+          // Alert và chuyển hướng
+          toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+          clearLS(); // Clear localStorage
+          window.location.href = "/"; // Redirect về trang chủ
+          return Promise.reject(error);
+        } else if (error.response?.status === HttpStatusCode.Unauthorized) {
+          await Swal.fire({
+            icon: "warning",
+            title: "Phiên đăng nhập hết hạn",
+            text: "Quay lại trang chủ để tiếp tục.",
+            confirmButtonText: "Quay lại trang chủ",
+            allowOutsideClick: false, // Không cho người dùng đóng thông báo khi click ngoài
+          });
+          clearLS(); // Clear localStorage
+          // window.location.href = "/"; // Redirect về trang chủ
+          return Promise.reject(error);
         }
 
+        // Lỗi khác
+        const data: any | undefined = error.response?.data;
+        const message = data?.message || error.message;
+        toast.error(message);
         return Promise.reject(error);
       }
     );

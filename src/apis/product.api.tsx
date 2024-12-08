@@ -42,6 +42,15 @@ const productApi = {
     console.log(body);
     return http.post(`auth/feedback/create`, body);
   },
+  filterProduct(body: {
+    filters: {
+      categories: number[];
+      characteristics: number[];
+      flavors: number[];
+    };
+  }) {
+    return http.post(`/auth/filter`, body);
+  },
 };
 
 export default productApi;

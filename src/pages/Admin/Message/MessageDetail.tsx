@@ -64,7 +64,6 @@ export default function MessageDetail(props: IMessageDetailProp) {
         }
         const channel = pusher.subscribe(`${phone}`);
         channel.bind("sendMessage", (message: any) => {
-          console.log("message", message);
           setMessageData((prev) => [...prev, message.message]);
         });
       } catch (error) {

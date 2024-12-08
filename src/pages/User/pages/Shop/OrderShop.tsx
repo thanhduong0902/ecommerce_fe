@@ -20,7 +20,7 @@ const purchaseTabs = [
   { status: "DELIVERING", name: "Đang giao" },
   { status: "DELIVERED", name: "Đã giao" },
   { status: "RETURN", name: "Đơn hoàn" },
-  { status: "CANCELED", name: "Đã hủy" },
+  { status: "CANCEL", name: "Đã hủy" },
 ];
 
 export default function OrderShop() {

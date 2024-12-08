@@ -70,6 +70,7 @@ function ProtectedRoute() {
 }
 
 function RejectedRoute() {
+
   const { isAuthenticated } = useContext(AppContext);
 
   return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
@@ -91,8 +92,10 @@ export default function useRouteElements() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (profile?.role.includes("admin")) {
-      navigate("/admin", { replace: true }); // Điều hướng đến /admin nếu người dùng là admin
+    if (profile) {
+      if (profile?.role.includes("admin")) {
+        navigate("/admin", { replace: true }); // Điều hướng đến /admin nếu người dùng là admin
+      }
     }
   }, []);
   const routeElements = useRoutes([
@@ -160,35 +163,6 @@ export default function useRouteElements() {
     },
     {
       path: "",
-      element: <RejectedRoute />,
-      children: [
-        {
-          path: "",
-          element: <RegisterLayout />,
-          children: [
-            {
-              path: path.login,
-              element: (
-                <Suspense>
-                  <Login />
-                </Suspense>
-              ),
-            },
-            {
-              path: path.register,
-              element: (
-                <Suspense>
-                  <Register />
-                </Suspense>
-              ),
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      path: "",
       element: <ProtectedRoute />,
       children: [
         {
@@ -223,6 +197,35 @@ export default function useRouteElements() {
         },
       ],
     },
+    {
+      path: "",
+      element: <RejectedRoute />,
+      children: [
+        {
+          path: "",
+          element: <RegisterLayout />,
+          children: [
+            {
+              path: path.login,
+              element: (
+                <Suspense>
+                  <Login />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.register,
+              element: (
+                <Suspense>
+                  <Register />
+                </Suspense>
+              ),
+            },
+          ],
+        },
+      ],
+    },
+
     {
       path: path.admin,
       element: (

@@ -4,7 +4,7 @@
   text-decoration: none; /* Remove underline */
   color: black; /* Default text color */
   transition: all 0.3s ease; /* Smooth transition for hover/active states */
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .nav-item:hover {
@@ -17,7 +17,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
   font-weight: bold; /* Emphasize active link */
   border-radius: 16px;
-  font-size: 30px;
+  font-size: 24px;
 }
 
 @keyframes shake {
