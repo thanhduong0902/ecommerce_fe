@@ -172,10 +172,6 @@ export default function ProductList() {
     };
     filterMutation.mutate(body, {
       onSuccess: (response) => {
-        toast.success("Thành công", {
-          position: "top-center",
-          autoClose: 1000,
-        });
         setSearchImageValue("");
         setDisplayData(response.data.data);
         setIsLoading(false);

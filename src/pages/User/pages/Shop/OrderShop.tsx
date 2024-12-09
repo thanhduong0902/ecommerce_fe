@@ -55,10 +55,8 @@ export default function OrderShop() {
   }, []); // Chỉ chạy một lần sau khi component được render
 
   const handleTabClick = (tabStatus: any) => {
-    setSelectedTab(tabStatus); // Lưu trạng thái của tab được chọn
-    // refetch({ status: tabStatus } as any);
+    setSelectedTab(tabStatus); 
 
-    // Lấy phần tử tab được chọn
     setCurrentPage(1);
     const selectedTabElement = document.querySelector(
       `[data-status="${tabStatus}"]`
