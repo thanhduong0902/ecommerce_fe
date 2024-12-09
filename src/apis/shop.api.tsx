@@ -39,8 +39,10 @@ const shopApi = {
       `v1/admin/order/getAll?status=${status}&page=${page}`
     );
   },
-  confirmOrder(orderId: number) {
-    return http.put<any>(`/order/confirm?orderId=${orderId}`);
+  confirmOrder(orderId: number, status: string) {
+    return http.put<any>(
+      `v1/admin/order/${orderId}/edit/status?status=${status}`
+    );
   },
   prepareOrder(orderId: number) {
     return http.put<any>(`/order/prepare?orderId=${orderId}`);

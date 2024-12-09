@@ -20,6 +20,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import UserManagement from "./pages/Admin/UserManagement";
 import Message from "./pages/Admin/Message";
+import Member from "./pages/User/pages/Member";
 
 const Login = lazy(() => import("./pages/Login"));
 const ProductList = lazy(() => import("./pages/ProductList"));
@@ -70,7 +71,6 @@ function ProtectedRoute() {
 }
 
 function RejectedRoute() {
-
   const { isAuthenticated } = useContext(AppContext);
 
   return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
@@ -250,7 +250,7 @@ export default function useRouteElements() {
               path: path.member,
               element: (
                 <Suspense>
-                  <UserManagement />
+                  <Member />
                 </Suspense>
               ),
             },

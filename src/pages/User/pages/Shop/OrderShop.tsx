@@ -9,7 +9,7 @@ import shopApi from "../../../../apis/shop.api";
 import { formatCurrency } from "../../../../utils/utils";
 import Button from "../../../../components/Button";
 import { toast } from "react-toastify";
-import { Image, Modal, Pagination, PaginationProps } from "antd";
+import { Image, Modal, Pagination, PaginationProps, Select } from "antd";
 import { Order, OrderDetail } from "../../../../types/purchase.type";
 import moment from "moment";
 import Item from "antd/es/list/Item";
@@ -30,6 +30,10 @@ export default function OrderShop() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [orderDetail, setOrderDetail] = useState<Order>();
+
+  const [selectStatus, setSelectStatus] = useState(selectedTab);
+
+  const handleChange = (value: string) => {};
 
   const { data: purchasesInCartData, refetch } = useQuery({
     queryKey: ["orderShop", { selectedTab, currentPage }],
@@ -65,10 +69,6 @@ export default function OrderShop() {
     window.scrollTo(0, 0);
   };
 
-  const confirmOrderMutation = useMutation({
-    mutationFn: shopApi.confirmOrder,
-  });
-
   const prepareOrderMutation = useMutation({
     mutationFn: shopApi.prepareOrder,
   });
@@ -78,9 +78,15 @@ export default function OrderShop() {
     setCurrentPage(page);
   };
 
-  const handleConfirm = (orderId: number) => {
-    if (selectedTab === "WAITE_CONFIRM") {
-      confirmOrderMutation.mutate(orderId, {
+  const confirmOrderMutation = useMutation({
+    mutationFn: ({ orderId, status }: { orderId: number; status: string }) =>
+      shopApi.confirmOrder(orderId, status),
+  });
+
+  const handleConfirm = (orderId: number, status: string) => {
+    confirmOrderMutation.mutate(
+      { orderId, status },
+      {
         onSuccess: (response) => {
           toast.success("Thành công", {
             position: "top-center",
@@ -88,19 +94,8 @@ export default function OrderShop() {
           });
           refetch();
         },
-      });
-    }
-    if (selectedTab === "PREPARE_GOODS") {
-      prepareOrderMutation.mutate(orderId, {
-        onSuccess: (response) => {
-          toast.success("Thành công", {
-            position: "top-center",
-            autoClose: 1000,
-          });
-          refetch();
-        },
-      });
-    }
+      }
+    );
   };
 
   const purchaseTabsLink = purchaseTabs.map((tab) => (
@@ -173,24 +168,22 @@ export default function OrderShop() {
 
                 {/* Thao tác */}
                 <div className="col-span-3 flex flex-col items-center gap-2 text-center">
-                  {(selectedTab === "WAIT_CONFIRM" ||
-                    selectedTab === "PREPARE_GOODS") && (
-                    <>
-                      <Button
-                        className="rounded-2xl flex h-9 w-32 items-center justify-center bg-green px-5 text-sm text-white hover:bg-green/80"
-                        type="button"
-                        onClick={() => handleConfirm(purchase.id)}
-                      >
-                        Xác nhận
-                      </Button>
-                      <Button
-                        className="flex h-9 w-32 items-center justify-center rounded-2xl bg-red px-5 text-sm text-white hover:bg-red/80"
-                        type="button"
-                      >
-                        Từ chối
-                      </Button>
-                    </>
-                  )}
+                  <Select
+                    defaultValue={selectedTab}
+                    style={{ width: 150 }}
+                    onChange={(value) => {
+                      handleConfirm(purchase.id, value); // Gọi handleConfirm khi giá trị thay đổi
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                    options={[
+                      { value: "WAIT_CONFIRM", label: "Chờ xác nhận" },
+                      { value: "PREPARING", label: "Chuẩn bị hàng" },
+                      { value: "DELIVERING", label: "Đang giao" },
+                      { value: "DELIVERED", label: "Đã giao" },
+                      { value: "RETURN", label: "Đơn hoàn" },
+                      { value: "CANCEL", label: "Đã hủy" },
+                    ]}
+                  />
                 </div>
 
                 {/* Số tiền */}
