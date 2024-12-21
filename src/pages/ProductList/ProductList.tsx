@@ -35,6 +35,7 @@ export default function ProductList() {
   const [flavor, setFlavor] = useState<number[]>([]);
   const [category, setCategory] = useState<number[]>([]);
   const [charactics, setCharactics] = useState<number[]>([]);
+  const [total, setTotal] = useState<number>(20);
 
   const [options, setOptions] = useState<SelectProps["options"]>([]);
   const [optionsCate, setOptionsCate] = useState<SelectProps["options"]>([]);
@@ -134,6 +135,7 @@ export default function ProductList() {
           console.log("Tim kiem bang text");
           const response = await productApi.getProducts(searchValue);
           data = response.data.data;
+          setTotal(data.length);
           console.log("dataSearch", data);
           setDisplayData(data);
           return;
@@ -141,6 +143,7 @@ export default function ProductList() {
         console.log("tim kiem tat ca");
         const response = await productApi.getProductAll(page);
         data = response.data.data;
+        setTotal(response.data.total);
         setDisplayData(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu:", error);
@@ -253,7 +256,7 @@ export default function ProductList() {
                       defaultPageSize={20}
                       current={page}
                       onChange={onChange}
-                      total={300}
+                      total={total}
                       align="center"
                       pageSizeOptions={[20]}
                     />
