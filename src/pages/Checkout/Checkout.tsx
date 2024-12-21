@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { removeFromCart } from "../../redux/slices/CartSlice";
 import { Input } from "antd";
+import couponApi from "../../apis/coupons.api";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -55,6 +56,37 @@ export default function Checkout() {
     }));
   };
 
+  const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCode(e.target.value); // Cập nhật giá trị state khi người dùng nhập
+  };
+
+  const [code, setCode] = useState("");
+
+  const checkCouponMutation = useMutation({
+    mutationFn: couponApi.checkCoupon,
+  });
+
+  const handleCheckCoupon = () => {
+    const bodyCart = cart.map((item: Product) => ({
+      product_id: item.id,
+      quantity: item.quantity,
+    }));
+    const body = {
+      code: code,
+      carts: bodyCart,
+    };
+    checkCouponMutation.mutate(body, {
+      onSuccess: (respone) => {
+        toast("Áp dụng mã giảm giá thành công");
+        setCouponId(respone.data.data.coupon_id);
+        setDiscount(respone.data.data.discount);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+  };
+
   const handleChangeInfo = (e: any) => {
     const { name, value } = e.target;
     setInfo((prevState) => ({
@@ -71,18 +103,15 @@ export default function Checkout() {
   };
   const [note, setNote] = useState("Can giao hang gap");
   // Hàm xử lý khi chọn phương thức thanh toán
+  const [discount, setDiscount] = useState(0);
 
   const totalAmount = useMemo(() => {
-    return cart.reduce(
-      (acc: any, item: Product) =>
-        acc + item.quantity * item.selling_price + 25000,
+    const subtotal = cart.reduce(
+      (acc: number, item: Product) => acc + item.quantity * item.selling_price,
       0
     );
-  }, [cart]);
-
-  const totalShip = useMemo(() => {
-    return cart.reduce((acc: any, item: Item) => acc + 25000, 0);
-  }, [cart]);
+    return subtotal - discount;
+  }, [cart, discount]);
 
   const buyPurchaseMutation = useMutation({
     mutationFn: purchaseApi.pay,
@@ -107,7 +136,7 @@ export default function Checkout() {
       },
       coupon_id: couponId,
       note: note,
-      discount: 0,
+      discount: discount,
       amount: totalAmount,
     };
     buyPurchaseMutation.mutate(updatedBody, {
@@ -390,7 +419,7 @@ export default function Checkout() {
               )}
             </div>
           </div>
-          {/* <div className="overflow-auto">
+          <div className="overflow-auto">
             <div className="min-w-[1000px]">
               <div className="rounded-sm bg-white px-9 py-5 text-sm capitalize shadow">
                 <div className="flex items-center mb-3 text-orange justify-start gap-10">
@@ -398,13 +427,22 @@ export default function Checkout() {
                     Nhập mã giảm giá
                   </span>
                   <Input
+                    value={code}
+                    onChange={handleChangeCode}
                     placeholder="Nhập mã giảm giá"
                     style={{ width: "200px" }}
-                  />{" "}
+                  />
+                  <Button
+                    className="rounded-3xl mt-5 flex h-10 w-52 items-center justify-center bg-green text-sm uppercase text-white hover:bg-red-600 sm:ml-4 sm:mt-0"
+                    onClick={handleCheckCoupon}
+                    // disabled={buyProductsMutation.isPending}
+                  >
+                    Áp dụng
+                  </Button>
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
           <div className="overflow-auto">
             <div className="min-w-[1000px]">
               <div className="rounded-sm bg-white px-9 py-5 text-sm capitalize shadow">
@@ -454,7 +492,7 @@ export default function Checkout() {
           <div className="sticky bottom-0 z-10 mt-8 flex flex-col rounded-sm border border-gray-100 bg-white p-5 shadow sm:flex-row sm:items-center">
             <div className="flex items-center"></div>
 
-            <div className="mt-5 flex flex-col sm:ml-auto sm:mt-0 sm:flex-row sm:items-center">
+            {/* <div className="mt-5 flex flex-col sm:ml-auto sm:mt-0 sm:flex-row sm:items-center">
               <div>
                 <div className="flex items-center sm:justify-end">
                   <div>Phí vận chuyển :</div>
@@ -463,7 +501,7 @@ export default function Checkout() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="mt-5 flex flex-col sm:ml-auto sm:mt-0 sm:flex-row sm:items-center">
               <div>
@@ -477,7 +515,6 @@ export default function Checkout() {
               <Button
                 className="rounded-3xl mt-5 flex h-10 w-52 items-center justify-center bg-orange text-sm uppercase text-white hover:bg-red-600 sm:ml-4 sm:mt-0"
                 onClick={handleBuyPurchases}
-                // disabled={buyProductsMutation.isPending}
               >
                 Xác nhận
               </Button>

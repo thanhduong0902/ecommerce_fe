@@ -30,6 +30,10 @@ const couponApi = {
   getCoupon() {
     return http.get<Coupon[]>("v1/admin/coupon/getAll");
   },
+  checkCoupon(body: any) {
+    console.log(body);
+    return http.post<any>("auth/coupon/check", body);
+  },
 };
 
 export default couponApi;
