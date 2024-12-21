@@ -2,10 +2,9 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #2566ab;
   color: #fff;
   border: none;
-  padding: 10px 15px;
+  padding: 5px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
@@ -13,8 +12,8 @@
 
 .chat-modal {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 80px;
+  right: 100px;
   width: 300px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

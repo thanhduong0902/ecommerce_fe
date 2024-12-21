@@ -16,3 +16,20 @@
 .focused {
   transform: scale(1.1);
 }
+
+.hot {
+  background-image: url("../../assets/bg-yellow.jpg");
+  background-size: cover; /* Làm cho hình nền bao phủ toàn bộ phần tử */
+  background-repeat: no-repeat; /* Ngăn hình nền lặp lại */
+  background-position: center center; /* Canh giữa hình nền */
+  width: 100%; /* Đảm bảo chiều rộng full */
+}
+
+.discount {
+  background-image: url("../../assets/bg-green.jpg");
+  background-size: cover; /* Làm cho hình nền bao phủ toàn bộ phần tử */
+  background-repeat: no-repeat; /* Ngăn hình nền lặp lại */
+  background-position: center center; /* Canh giữa hình nền */
+  width: 100%; /* Đảm bảo chiều rộng full */
+}
+

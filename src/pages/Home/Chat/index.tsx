@@ -3,7 +3,8 @@ import "./style.css"; // Bạn có thể tạo file CSS riêng để quản lý 
 import { AppContext } from "../../../context/app.context";
 import Pusher from "pusher-js";
 import { Message } from "../../../apis/chat.api";
-
+import Lottie from "lottie-react";
+import phone from "../../../animation/phone.json";
 const Chat = () => {
   const handleSendMessage = async () => {
     if (newMessage.trim()) {
@@ -96,7 +97,10 @@ const Chat = () => {
     <div>
       {/* Nút chat nhỏ ở góc phải */}
       <button className="chat-button" onClick={() => setIsOpen(!isOpen)}>
-        Chat
+        <Lottie
+          animationData={phone}
+          style={{ width: "100px", height: "100px" }}
+        />
       </button>
 
       {/* Modal chat */}

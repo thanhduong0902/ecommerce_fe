@@ -96,7 +96,7 @@ export default function Checkout() {
     const updatedBody = {
       carts: bodyCart,
       address: {
-        detail: "Số 5 Phạm Văn Đồng",
+        detail: Object.values(addressDelivery).join(", "),
       },
       payment_option: selectedPayment,
       user: {

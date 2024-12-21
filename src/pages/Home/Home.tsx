@@ -5,6 +5,7 @@ import Chat from "./Chat";
 import { useMutation } from "@tanstack/react-query";
 import productApi from "../../apis/product.api";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const contentStyle: React.CSSProperties = {
@@ -30,6 +31,8 @@ export default function Home() {
     if (current === 5) setCurrentSlide(0);
     else setCurrentSlide(current + 1);
   };
+
+  const navigation = useNavigate();
 
   const dataHotAdv = [
     {
@@ -93,7 +96,7 @@ export default function Home() {
         <title>Trang chủ | Yummy</title>
         <meta name="description" content="Trang chủ" />
       </Helmet>
-      <div className="flex flex-col gap-5 py-5 bg-orange">
+      <div className="flex flex-col gap-5 py-5 hot">
         <div className=" font-pacifico font-bold text-5xl text-center">
           Sản phẩm nổi bật
         </div>
@@ -119,14 +122,19 @@ export default function Home() {
             ))}
           </Carousel>
         </div>
-        <div className="font-pacifico text-4xl text-center ">Xem thêm</div>
+        <div
+          className="font-pacifico text-4xl text-center font-bold text-amber-800 hover:cursor-pointer "
+          onClick={() => navigation("/product")}
+        >
+          Xem thêm
+        </div>
       </div>
 
-      <div className="flex flex-col gap-5 py-5 bg-green">
-        <div className=" font-pacifico font-bold text-5xl text-center">
+      <div className="flex flex-col gap-5 py-10 discount">
+        <div className="font-pacifico font-bold text-6xl text-center my-5 text-white">
           Khuyến mãi
         </div>
-        <div className="flex flex-row items-start gap-6 mx-10 justify-center">
+        <div className="flex flex-row items-start gap-6 mx-10 justify-center my-10">
           <div className="bg-white flex flex-col gap-10 rounded-3xl p-5">
             <Image
               src="/assets/banner3.png"
