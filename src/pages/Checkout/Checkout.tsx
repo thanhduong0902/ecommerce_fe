@@ -23,6 +23,7 @@ import { Item, Product } from "../../types/product.type";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { removeFromCart } from "../../redux/slices/CartSlice";
+import { Input } from "antd";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -389,11 +390,26 @@ export default function Checkout() {
               )}
             </div>
           </div>
+          {/* <div className="overflow-auto">
+            <div className="min-w-[1000px]">
+              <div className="rounded-sm bg-white px-9 py-5 text-sm capitalize shadow">
+                <div className="flex items-center mb-3 text-orange justify-start gap-10">
+                  <span className="text-orange-500 text-2xl">
+                    Nhập mã giảm giá
+                  </span>
+                  <Input
+                    placeholder="Nhập mã giảm giá"
+                    style={{ width: "200px" }}
+                  />{" "}
+                </div>
+              </div>
+            </div>
+          </div> */}
           <div className="overflow-auto">
             <div className="min-w-[1000px]">
               <div className="rounded-sm bg-white px-9 py-5 text-sm capitalize shadow">
                 <div className="flex items-center mb-3 text-orange justify-between">
-                  <span className="text-orange-500">
+                  <span className="text-orange-500 text-2xl">
                     Phương thức thanh toán
                   </span>
                   <div className="flex items-center">

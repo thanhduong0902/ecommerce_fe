@@ -6,6 +6,7 @@ import {
   MailOutlined,
   MessageOutlined,
   SettingOutlined,
+  TagsOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Divider, Menu, Switch } from "antd";
@@ -84,6 +85,12 @@ const MenuNav: React.FC = () => {
       label: "Tin nhắn",
       icon: <MessageOutlined />,
       onClick: () => handleMenuClick("6", path.message),
+    },
+    {
+      key: "7",
+      label: "Mã giảm giá",
+      icon: <TagsOutlined />,
+      onClick: () => handleMenuClick("7", path.coupons),
     },
   ];
 

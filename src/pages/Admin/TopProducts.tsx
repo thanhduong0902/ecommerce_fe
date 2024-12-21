@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
 import { CategoryScale } from "chart.js";
+import Lottie from "lottie-react";
+import wait from "../../animation/wait.json";
 Chart.register(CategoryScale);
 export default function TopProducts() {
   const [body, setBody] = useState({
-    start_date: "2024-05-03",
-    end_date: "2024-12-01",
+    start_date: "2024-12-01",
+    end_date: new Date().toISOString().split("T")[0], // Lấy ngày hiện tại
     num: 10,
   });
 
@@ -20,7 +22,11 @@ export default function TopProducts() {
 
   // Hàm xử lý khi giá trị của select box thay đổi
 
-  const { data: profitStatistic, refetch } = useQuery({
+  const {
+    data: profitStatistic,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["topProduct", body],
     queryFn: () => {
       return staticApi.topProductStatic(body);
@@ -66,7 +72,16 @@ export default function TopProducts() {
           />
         </div>
       </div>
-      <Bar data={data} />
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <Lottie
+            animationData={wait}
+            style={{ width: "200px", height: "200px" }}
+          />
+        </div>
+      ) : (
+        <Bar data={data} />
+      )}
     </div>
   );
 }

@@ -135,7 +135,7 @@ export default function Home() {
           Khuyến mãi
         </div>
         <div className="flex flex-row items-start gap-6 mx-10 justify-center my-10">
-          <div className="bg-white flex flex-col gap-10 rounded-3xl p-5">
+          <div className="bg-white flex flex-col gap-10 rounded-3xl p-5 w-1/2">
             <Image
               src="/assets/banner3.png"
               preview={false}
@@ -143,16 +143,12 @@ export default function Home() {
               style={{ width: "100%", objectFit: "contain" }}
             />
             <div className="font-bold">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor.
+              Giảm giá chớp nhoáng, lấy deal hời liền tay
             </div>
-            <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor.
-            </div>
+            <div>Giảm giá 10% cho hoá đơn từ 100.000</div>
             <div className="text-orange font-bold">Xem thêm</div>
           </div>
-          <div className="bg-white flex flex-col gap-10 rounded-3xl p-5">
+          <div className="bg-white flex flex-col gap-10 rounded-3xl p-5 w-1/2">
             <Image
               src="/assets/banner3.png"
               preview={false}

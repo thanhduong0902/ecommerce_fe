@@ -37,6 +37,14 @@
   color: #ffa94d; /* Màu chữ khi hover */
   background-color: #ffe8cc; /* Thêm màu nền nhạt khi hover */
 }
+.ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: #ffa94d; /* Màu nền cam khi được chọn */
+  color: white;
+}
+.ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: #ffa94d; /* Màu nền cam khi được chọn */
+  color: white;
+}
 
 .ant-menu-item.ant-menu-item-selected {
   background-color: #ffa94d; /* Màu nền cam khi được chọn */

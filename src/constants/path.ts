@@ -27,7 +27,8 @@ const path = {
     specific:'/admin/specific',
     productDetailShop: '/admin/productShop/:nameId',
     message: '/admin/message',
-    member: '/admin/member'
+    member: '/admin/member',
+    coupons:'/admin/coupons'
 
 } as const
 

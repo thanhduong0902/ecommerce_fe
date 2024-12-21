@@ -3,14 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import staticApi from "../../apis/static.api";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Legend, Tooltip, Title } from "chart.js";
 import { Chart } from "react-chartjs-2";
-
+import Lottie from "lottie-react";
+import wait from "../../animation/wait.json"
 // Register necessary Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Legend, Tooltip, Title);
 
 export default function RevenuewStatic() {
   const [body, setBody] = useState({
     start_date: "2024-11-03",
-    end_date: "2024-12-01",
+    end_date: new Date().toISOString().split("T")[0], // Lấy ngày hiện tại
     num: 10,
   });
 
@@ -177,9 +178,22 @@ export default function RevenuewStatic() {
           />
         </div>
       </div>
-      {labels.length > 0 && (
+      {
+        isLoading ? (
+          <div className="flex items-center justify-center">
+          <Lottie 
+          animationData={wait}
+          style={{ width: "200px", height: "200px" }}
+          />
+          </div>
+        ) : (
+          <>
+                {labels.length > 0 && (
         <Chart type='bar' data={data} options={options} />
-      ) }
+      ) }</>
+        )
+      }
+
     </div>
   );
 }

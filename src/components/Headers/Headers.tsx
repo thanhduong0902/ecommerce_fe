@@ -219,7 +219,7 @@ export default function Header() {
                 </div>
               }
             >
-              <Link to="/" className="relative">
+              <div className="relative">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -246,7 +246,7 @@ export default function Header() {
                                         {purchasesInCart?.length}
                                     </span>
                                 )} */}
-              </Link>
+              </div>
             </Popover>
             <NavHeader />
           </div>

@@ -9,7 +9,7 @@ Chart.register(CategoryScale);
 export default function TopUser() {
   const [body, setBody] = useState({
     start_date: "2024-11-03",
-    end_date: "2024-12-01",
+    end_date: new Date().toISOString().split("T")[0], // Lấy ngày hiện tại
     num: 10,
   });
 

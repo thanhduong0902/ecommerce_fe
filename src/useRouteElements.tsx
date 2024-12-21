@@ -21,6 +21,7 @@ import About from "./pages/About";
 import UserManagement from "./pages/Admin/UserManagement";
 import Message from "./pages/Admin/Message";
 import Member from "./pages/User/pages/Member";
+import Coupons from "./pages/Admin/Coupons";
 
 const Login = lazy(() => import("./pages/Login"));
 const ProductList = lazy(() => import("./pages/ProductList"));
@@ -251,6 +252,14 @@ export default function useRouteElements() {
               element: (
                 <Suspense>
                   <Member />
+                </Suspense>
+              ),
+            },
+            {
+              path: path.coupons,
+              element: (
+                <Suspense>
+                  <Coupons />
                 </Suspense>
               ),
             },

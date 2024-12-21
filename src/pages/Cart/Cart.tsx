@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 import {
   decreaseQuantity,
   increaseQuantity,
+  removeFromCart,
 } from "../../redux/slices/CartSlice";
 
 export default function Cart() {
@@ -84,9 +85,8 @@ export default function Cart() {
     dispatch(decreaseQuantity(productId)); // Dispatch action giảm số lượng
   };
 
-  const handleDelete = (purchaseIndex: number) => () => {
-    const purchaseId = cart[purchaseIndex].id;
-    deletePurchasesMutation.mutate(purchaseId);
+  const handleDelete = (productId: number) => () => {
+    dispatch(removeFromCart(productId));
   };
 
   //   const handleBuyPurchases = () => {
@@ -223,7 +223,7 @@ export default function Cart() {
                             </div>
                             <div className="col-span-1">
                               <button
-                                onClick={handleDelete(index)}
+                                onClick={handleDelete(purchase.id)}
                                 className="bg-none text-black transition-colors hover:text-orange"
                               >
                                 Xóa
@@ -300,7 +300,7 @@ export default function Cart() {
             </div>
             <div className="mt-5 text-center">
               <Link
-                to={path.home}
+                to={path.product}
                 className="rounded-sm bg-orange px-10 py-2 uppercase text-white transition-all hover:bg-orange/80"
               >
                 Mua ngay

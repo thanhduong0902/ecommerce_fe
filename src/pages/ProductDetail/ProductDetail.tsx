@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import ProductRating from "../../components/ProductRating";
 import QuantityController from "../../components/QuantityController";
 import { purchasesStatus } from "../../constants/purchase";
+import wait from "../../animation/wait.json";
 import {
   Product as ProductType,
   ProductListConfig,
@@ -27,6 +28,7 @@ import moment from "moment";
 import { AppContext } from "../../context/app.context";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/CartSlice";
+import Lottie from "lottie-react";
 // import { convert } from 'html-to-text'
 
 export default function ProductDetail() {
@@ -34,7 +36,7 @@ export default function ProductDetail() {
   const [buyCount, setBuyCount] = useState(1);
   const { nameId } = useParams();
   const id = getIdFromNameId(nameId as string);
-  const { data: productDetailData } = useQuery({
+  const { data: productDetailData, isLoading } = useQuery({
     queryKey: ["product", id],
     queryFn: () => productApi.getProductDetail(id as string),
   });
@@ -96,6 +98,16 @@ export default function ProductDetail() {
   };
 
   const buyNow = async () => {};
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Lottie
+          animationData={wait}
+          style={{ width: "400px", height: "400px" }}
+        />
+      </div>
+    );
 
   if (!product) return null;
   const url = "https://pushimage-production.up.railway.app/api/auth/image/";
