@@ -229,70 +229,66 @@ export default function ProductShop() {
       >
         <FormProvider {...methods}>
           <form
-            className="mt-2 flex flex-col  md:flex-col md:items-start"
+            className="mt-2 flex flex-col md:flex-col md:items-start"
             onSubmit={onSubmit}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {" "}
-              <div className="mt-2 flex flex-col flex-wrap sm:flex-row ">
-                <div className="truncate pt-3 capitalize sm:text-left w-2/6">
+            <div className="flex flex-col w-full">
+              <div className="flex flex-col gap-2">
+                <div className="truncate capitalize sm:text-left">
                   Tên sản phẩm
                 </div>
-                <div className="sm:pl-5 w-4/6">
+                <div className="w-full">
                   <Input
-                    classNameInput="w-full justify-items-end rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                    classNameInput="w-full justify-items-start rounded-2xl border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
                     name="title"
                     placeholder="Tên sản phẩm"
                     register={register}
                   />
                 </div>
               </div>
-              <div className="mt-2 flex flex-col flex-wrap sm:flex-row ">
-                <div className="truncate pt-3 capitalize sm:text-left w-2/6">
-                  Số lượng
-                </div>
-                <div className="sm:pl-5 w-4/6">
+              <div className="flex flex-col gap-2">
+                <div className="truncate capitalize sm:text-left">Số lượng</div>
+                <div className="w-full">
                   <Input
-                    classNameInput="w-full justify-items-end rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                    classNameInput="w-full justify-items-start rounded-2xl border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
                     name="quantity"
                     placeholder="Số lượng"
                     register={register}
                   />
                 </div>
               </div>
-              <div className="mt-2 flex flex-col flex-wrap sm:flex-row ">
-                <div className="truncate pt-3 capitalize sm:text-left w-2/6">
+              <div className="flex flex-col gap-1 w-full">
+                <div className="truncate pt-3 capitalize sm:text-left">
                   Mô tả
                 </div>
-                <div className="sm:pl-5 w-4/6">
-                  <Input
-                    classNameInput="w-full justify-items-end rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
-                    name="description"
-                    placeholder="Mô tả"
-                    register={register}
+                <div className="w-full">
+                  <textarea
+                    className="h-20 orange-border w-full rounded-2xl border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                    placeholder="Nhập nội dung..."
+                    {...register("description")}
                   />
                 </div>
               </div>
-              <div className="mt-2 flex flex-col flex-wrap sm:flex-row ">
-                <div className="truncate pt-3 capitalize sm:text-left w-2/6">
+              <div className="flex flex-col gap-1 w-full">
+                <div className="truncate pt-3 capitalize sm:text-left">
                   Giá gốc
                 </div>
-                <div className="sm:pl-5 w-4/6">
+                <div className="w-full">
                   <Input
-                    classNameInput="w-full justify-items-end rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                    classNameInput="w-full justify-items-start rounded-2xl border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
                     name="list_price"
                     placeholder="Giá gốc"
                     register={register}
                   />
                 </div>
               </div>
-              <div className="mt-2 flex flex-col flex-wrap sm:flex-row ">
-                <div className="truncate pt-3 capitalize sm:text-left w-2/6">
+              <div className="flex flex-col gap-1 w-full">
+                <div className="truncate pt-3 capitalize sm:text-left">
                   Giá bán
                 </div>
-                <div className="sm:pl-5 w-4/6">
+                <div className="w-full">
                   <Input
-                    classNameInput="w-full justify-items-end rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                    classNameInput="w-full justify-items-start rounded-2xl border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
                     name="selling_price"
                     placeholder="Giá bán"
                     register={register}

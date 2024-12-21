@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 // import { omit } from 'lodash'
 
 // Import chỉ mỗi function omit
+import "./style.css";
 import omit from "lodash/omit";
 
 import { schema, Schema } from "../../utils/rules";
@@ -74,7 +75,7 @@ export default function Register() {
   });
 
   return (
-    <div className="bg-orange">
+    <div className="bg-login">
       <Helmet>
         <title>Đăng ký | Shopee Clone</title>
         <meta
@@ -86,7 +87,7 @@ export default function Register() {
         <div className="grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-32 lg:pr-10">
           <div className="lg:col-span-2 lg:col-start-4">
             <form
-              className="rounded bg-white p-10 shadow-sm rounded-3xl"
+              className="rounded bg-yellow p-10 shadow-sm rounded-3xl"
               onSubmit={onSubmit}
               noValidate
             >

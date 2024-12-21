@@ -95,7 +95,7 @@ export default function Login() {
               className="mt-2"
               classNameEye="absolute right-[10px] h-5 w-5 cursor-pointer top-[12px]"
               errorMessage={errors.password?.message}
-              placeholder="Password"
+              placeholder="Mật khẩu"
               autoComplete="on"
             />
             <div className="mt-3">
