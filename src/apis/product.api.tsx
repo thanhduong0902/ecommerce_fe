@@ -13,7 +13,7 @@ const URL = "auth/product/viewAll";
 const URLDetail = "auth/product/viewdetail";
 const productApi = {
   getProducts(searchValue?: string) {
-    return http.get<ProductSearch>(`/auth/search/text?=${searchValue}`);
+    return http.get<ProductSearch>(`/auth/search/text?keyword=${searchValue}`);
   },
 
   getProductAll(page?: number) {
