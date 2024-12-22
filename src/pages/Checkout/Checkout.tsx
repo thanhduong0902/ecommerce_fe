@@ -22,9 +22,10 @@ import { error } from "console";
 import { Item, Product } from "../../types/product.type";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { removeFromCart } from "../../redux/slices/CartSlice";
+import { clearCart, removeFromCart } from "../../redux/slices/CartSlice";
 import { Input } from "antd";
 import couponApi from "../../apis/coupons.api";
+import { useDispatch } from "react-redux";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ export default function Checkout() {
     mutationFn: couponApi.checkCoupon,
   });
 
+  const dispatch = useDispatch();
   const handleCheckCoupon = () => {
     const bodyCart = cart.map((item: Product) => ({
       product_id: item.id,
@@ -150,7 +152,8 @@ export default function Checkout() {
             position: "top-center",
             autoClose: 1000,
           });
-          localStorage.removeItem("cart");
+          dispatch(clearCart());
+
           navigate("/");
         }
       },

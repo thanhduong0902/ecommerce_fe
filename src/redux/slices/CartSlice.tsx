@@ -50,6 +50,11 @@ const cartSlice = createSlice({
       }
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
+    clearCart: (state) => {
+      state.cart = []; // Xóa toàn bộ sản phẩm trong giỏ hàng
+      // Xóa giỏ hàng trong `localStorage` để đồng bộ
+      localStorage.removeItem("cart");
+    },
   },
 });
 
@@ -59,5 +64,6 @@ export const {
   updateCart,
   increaseQuantity,
   decreaseQuantity,
+  clearCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;
