@@ -9,7 +9,14 @@ import Input from "../../../../components/Input";
 import InputFile from "../../../../components/InputFile";
 import { toast } from "react-toastify";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Button, Modal, Select, SelectProps } from "antd";
+import {
+  Button,
+  Modal,
+  Pagination,
+  PaginationProps,
+  Select,
+  SelectProps,
+} from "antd";
 import specificApi from "../../../../apis/specific.api";
 
 export default function ProductShop() {
@@ -17,6 +24,13 @@ export default function ProductShop() {
   const [flavor, setFlavor] = useState<number[]>([]);
   const [category, setCategory] = useState<number[]>([]);
   const [charactics, setCharactics] = useState<number[]>([]);
+
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState<number>(20);
+
+  const onChange: PaginationProps["onChange"] = (page) => {
+    setPage(page);
+  };
 
   const queryConfig = useQueryConfig();
   const [isOpen, setIsOpen] = useState(false);
@@ -194,6 +208,7 @@ export default function ProductShop() {
     <div className="container">
       <div className="flex justify-center my-5">
         <Button
+          disabled={createProductMutation.isPending}
           onClick={() => {
             setIsOpen(true);
           }}
@@ -203,20 +218,33 @@ export default function ProductShop() {
         </Button>
       </div>
       {productsData && (
-        <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-9">
-            <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {productsData?.data?.data?.map((product: any) => (
-                <div
-                  className="col-span-1"
-                  key={product.id}
-                  onClick={() => handleDetail(product.id)}
-                >
-                  <ProductComponent product={product} />
-                </div>
-              ))}
+        <div className="flex flex-col items-center">
+          <div className="grid grid-cols-6 gap-6">
+            <div className="col-span-9">
+              <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {productsData?.data?.data
+                  ?.slice((page - 1) * 20, page * 20) // Hiển thị 20 sản phẩm trên mỗi trang
+                  .map((product: any) => (
+                    <div
+                      className="col-span-1"
+                      key={product.id}
+                      onClick={() => handleDetail(product.id)}
+                    >
+                      <ProductComponent product={product} />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
+          <Pagination
+            style={{ marginTop: 20 }}
+            defaultPageSize={20}
+            current={page}
+            onChange={onChange}
+            total={productsData.data.total}
+            align="center"
+            pageSizeOptions={[20]}
+          />
         </div>
       )}
       <Modal

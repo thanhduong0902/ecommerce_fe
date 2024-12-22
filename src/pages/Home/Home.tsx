@@ -156,13 +156,9 @@ export default function Home() {
               style={{ width: "100%", objectFit: "contain" }}
             />
             <div className="font-bold">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor.
+              Giảm giá chớp nhoáng, lấy deal hời liền tay
             </div>
-            <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor.
-            </div>
+            <div>Giảm giá 10% cho hoá đơn từ 100.000</div>
             <div className="text-orange font-bold">Xem thêm</div>
           </div>
         </div>

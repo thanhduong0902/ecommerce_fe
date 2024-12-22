@@ -73,7 +73,7 @@ export default function ProductComponent({ product }: Props) {
             </div>
           </div>
         </div>
-        <div className="min-h-[2rem] text-xs line-clamp-2 flex items-center justify-center py-4 bg-orange font-b">
+        <div className="h-20 px-2 text-xs line-clamp-2 flex items-center justify-center py-4 bg-orange font-b">
           {product.title}
         </div>
       </div>

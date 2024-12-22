@@ -143,7 +143,7 @@ export default function Checkout() {
       onSuccess: (respone) => {
         if (selectedPayment === "MOMO_ATM") {
           // console.log(respone.data);
-          window.location.href = respone.data.data.payUrl;
+          window.open(respone.data.data.payUrl, "_blank");
           localStorage.removeItem("cart");
         } else if (selectedPayment === "PAYCASH") {
           toast.success("Thành công", {

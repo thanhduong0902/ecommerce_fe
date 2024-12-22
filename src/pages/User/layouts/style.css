@@ -1,0 +1,28 @@
+.main {
+  transition: all 0.25s ease-in;
+  overflow: hidden;
+  position: relative;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 30;
+}
+
+.sidenav {
+  top: 102px;
+  height: calc(100% - 70px);
+  position: fixed;
+  margin-top: 0;
+  width: 17rem;
+}
+
+.content {
+  margin-left: 17rem;
+  /* margin-top: 102px; */
+  padding-top: 102px;
+  max-height: calc(100% - 100px);
+  overflow: hidden;
+}
