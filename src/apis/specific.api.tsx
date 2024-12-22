@@ -1,4 +1,5 @@
 import {
+  Menu,
   Product,
   ProductList,
   ProductListConfig,
@@ -10,6 +11,9 @@ import http from "../utils/http";
 const specificApi = {
   getFlavor() {
     return http.get<Specific[]>(`auth/flavor/getAll`);
+  },
+  getDataSpecifc() {
+    return http.get<Menu>(`auth/getFilterTitle`);
   },
   createFlavor(body: { title: string }) {
     return http.post<any>(`v1/admin/ccf/flavor/create`, body);

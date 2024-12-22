@@ -95,6 +95,12 @@ export interface Specific {
   title: string;
 }
 
+export interface Menu {
+  categories: Specific[];
+  characteristics: Specific[];
+  flavors: Specific[];
+}
+
 export interface Item {
   product_id: number;
   quantity: number;

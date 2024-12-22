@@ -93,6 +93,7 @@ export default function Header() {
   };
 
   useEffect(() => {
+    setImageUrl("");
     setSearchImageValue("");
     setSearchValue("");
     setSearchInput("");
