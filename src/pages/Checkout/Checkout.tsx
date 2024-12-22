@@ -143,17 +143,21 @@ export default function Checkout() {
     };
     buyPurchaseMutation.mutate(updatedBody, {
       onSuccess: (respone) => {
-        if (selectedPayment === "MOMO_ATM") {
+        if (
+          selectedPayment === "MOMO_ATM" ||
+          selectedPayment === "MOMO_QRCODE"
+        ) {
           // console.log(respone.data);
           window.open(respone.data.data.payUrl, "_blank");
           localStorage.removeItem("cart");
+          dispatch(clearCart());
+          navigate("/");
         } else if (selectedPayment === "PAYCASH") {
           toast.success("Thành công", {
             position: "top-center",
             autoClose: 1000,
           });
           dispatch(clearCart());
-
           navigate("/");
         }
       },

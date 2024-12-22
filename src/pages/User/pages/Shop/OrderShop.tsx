@@ -55,7 +55,7 @@ export default function OrderShop() {
   }, []); // Chỉ chạy một lần sau khi component được render
 
   const handleTabClick = (tabStatus: any) => {
-    setSelectedTab(tabStatus); 
+    setSelectedTab(tabStatus);
 
     setCurrentPage(1);
     const selectedTabElement = document.querySelector(
@@ -122,7 +122,7 @@ export default function OrderShop() {
   const urlImage =
     "https://pushimage-production.up.railway.app/api/auth/image/";
   return (
-    <div>
+    <div className="container">
       <div className="overflow-x-auto">
         <div className="min-w-[700px]">
           {/* Sticky header */}

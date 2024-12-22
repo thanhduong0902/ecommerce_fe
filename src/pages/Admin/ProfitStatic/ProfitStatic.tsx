@@ -10,7 +10,7 @@ import TopUser from "../TopUser";
 Chart.register(CategoryScale);
 export default function ProfitStatic() {
   return (
-    <div className="grid h-screen grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-3 gap-4 p-4">
       {/* Cột 1: RevenueStatic và TopProducts */}
       <div className="col-span-2 grid grid-rows-2 gap-4">
         {/* RevenueStatic (Hàng 1) */}

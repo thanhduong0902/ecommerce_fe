@@ -76,7 +76,11 @@ const Member: React.FC = () => {
       </p>
     );
   }
-  return <Table<Account> columns={columns} dataSource={memberData} />;
+  return (
+    <div className="container">
+      <Table<Account> columns={columns} dataSource={memberData} />
+    </div>
+  );
 };
 
 export default Member;

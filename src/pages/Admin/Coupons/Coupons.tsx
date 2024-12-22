@@ -139,7 +139,7 @@ const Coupons: React.FC = () => {
     console.log("Selected Date:", dateString);
   };
   return (
-    <>
+    <div className="container">
       <div className="p-4">
         <div className="flex gap-3">
           <div className="text-3xl text-orange font-bold py-3">Mã giảm giá</div>
@@ -240,7 +240,7 @@ const Coupons: React.FC = () => {
           </form>
         </FormProvider>
       </Modal>
-    </>
+    </div>
   );
 };
 
