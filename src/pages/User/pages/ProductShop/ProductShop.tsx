@@ -18,6 +18,7 @@ import {
   SelectProps,
 } from "antd";
 import specificApi from "../../../../apis/specific.api";
+import { Specific } from "../../../../types/product.type";
 
 export default function ProductShop() {
   const [file, setFile] = useState<File[]>();
@@ -94,52 +95,36 @@ export default function ProductShop() {
   const [linkFile, setLinkFile] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  const { data: flavorData, isLoading } = useQuery({
-    queryKey: ["flavor"],
+  const { data: menuData } = useQuery({
+    queryKey: ["menu"],
     queryFn: () => {
-      return specificApi.getFlavor();
-    },
-  });
-
-  const { data: CharactericData } = useQuery({
-    queryKey: ["Characteric"],
-    queryFn: () => {
-      return specificApi.getCharacterics();
-    },
-  });
-
-  const { data: categoryData } = useQuery({
-    queryKey: ["category"],
-    queryFn: () => {
-      return specificApi.getCategory();
+      return specificApi.getDataSpecifc();
     },
   });
 
   useEffect(() => {
-    if (flavorData) {
-      const newOptions = flavorData?.data?.map((item) => ({
-        label: item.title,
-        value: item.id,
-      }));
-      setOptions(newOptions);
-    }
-
-    if (categoryData) {
-      const newOptions = categoryData?.data?.map((item) => ({
+    if (menuData) {
+      const newOptions = menuData?.data?.categories.map((item: Specific) => ({
         label: item.title,
         value: item.id,
       }));
       setOptionsCate(newOptions);
-    }
 
-    if (CharactericData) {
-      const newOptions = CharactericData?.data.map((item) => ({
+      const newOptions1 = menuData?.data?.flavors.map((item: Specific) => ({
         label: item.title,
         value: item.id,
       }));
-      setOptionsChar(newOptions);
+      setOptions(newOptions1);
+
+      const newOptions2 = menuData?.data?.characteristics.map(
+        (item: Specific) => ({
+          label: item.title,
+          value: item.id,
+        })
+      );
+      setOptionsChar(newOptions2);
     }
-  }, [flavorData, categoryData, CharactericData]);
+  }, [menuData]);
   const handleChangeFile = async (file: File[]) => {
     if (file) {
       try {
