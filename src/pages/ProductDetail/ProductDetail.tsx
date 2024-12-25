@@ -110,7 +110,7 @@ export default function ProductDetail() {
     );
 
   if (!product) return null;
-  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
+  const url = "http://127.0.0.1:8081/api/auth/image/";
 
   return (
     <div className="bg-gray-200 py-6">

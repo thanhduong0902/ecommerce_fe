@@ -91,7 +91,7 @@ export default function ProductShop() {
     reset,
   } = methods;
 
-  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
+  const url = "http://127.0.0.1:8081/api/auth/image/";
 
   const [linkFile, setLinkFile] = useState<string[]>([]);
   const navigate = useNavigate();
@@ -172,10 +172,11 @@ export default function ProductShop() {
         });
         reset();
         refetch();
-        setOptions([]);
-        setOptionsCate([]);
+        setFlavor([]);
+        setCategory([]);
         setCharactics([]);
         setIsOpen(!isOpen);
+        setLinkFile([])
       },
     });
   });
@@ -324,6 +325,7 @@ export default function ProductShop() {
               style={{ width: "100%" }}
               placeholder="Chọn hương vị"
               onChange={handleChange}
+              value={flavor}
               options={options}
             />
             <div>Chọn loại</div>
@@ -333,6 +335,7 @@ export default function ProductShop() {
               style={{ width: "100%" }}
               placeholder="Chọn loại"
               onChange={handleChangeCate}
+              value={category}
               options={optionsCate}
             />
             <div>Chọn tính chất</div>
@@ -342,6 +345,7 @@ export default function ProductShop() {
               style={{ width: "100%" }}
               placeholder="Chọn tính chất"
               onChange={handleChangeChar}
+              value={charactics}
               options={optionsChar}
             />
             <div className="mt-2 flex flex-wrap items-center gap-4">

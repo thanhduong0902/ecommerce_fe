@@ -120,7 +120,7 @@ export default function OrderShop() {
   ));
 
   const urlImage =
-    "https://pushimage-production.up.railway.app/api/auth/image/";
+    "http://127.0.0.1:8081/api/auth/image/";
   return (
     <div className="container">
       <div className="overflow-x-auto">

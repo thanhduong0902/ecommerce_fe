@@ -99,7 +99,7 @@ export default function Header() {
     setSearchInput("");
   }, []);
 
-  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
+  const url = "http://127.0.0.1:8081/api/auth/image/";
   return (
     <div className="bg-yellow items-center text-black font-pacifico">
       <div className="">

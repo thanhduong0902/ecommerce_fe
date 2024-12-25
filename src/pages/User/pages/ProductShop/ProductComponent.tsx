@@ -38,7 +38,7 @@ export default function ProductComponent({ product }: Props) {
     });
   };
 
-  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
+  const url = "http://127.0.0.1:8081/api/auth/image/";
 
   return (
     <div>
@@ -68,7 +68,7 @@ export default function ProductComponent({ product }: Props) {
           <div className="mt-3 flex items-center justify-between">
             <ProductRating rating={product.rate} />
             <div className="ml-2 text-sm">
-              <span>{formatNumberToSocialStyle(product.is_selling)}</span>
+              <span>{formatNumberToSocialStyle(product.total_sold)}</span>
               <span className="ml-1">Đã bán</span>
             </div>
           </div>

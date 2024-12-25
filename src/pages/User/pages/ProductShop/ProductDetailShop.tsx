@@ -209,7 +209,7 @@ export default function ProductDetailShop() {
     setCharactics(value);
   };
   if (!product) return null;
-  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
+  const url = "http://127.0.0.1:8081/api/auth/image/";
 
   return (
     <div className="bg-white py-6">
@@ -303,7 +303,7 @@ export default function ProductDetailShop() {
                 </div>
                 <div className="mx-4 h-4 w-[1px] bg-gray-300"></div>
                 <div>
-                  <span>{formatNumberToSocialStyle(product.quantity)}</span>
+                  <span>{formatNumberToSocialStyle(product.total_sold)}</span>
                   <span className="ml-1 text-gray-500">Đã bán</span>
                 </div>
               </div>

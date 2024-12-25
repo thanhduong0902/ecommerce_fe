@@ -109,7 +109,7 @@ export default function HistoryPurchase() {
   };
 
   const urlImage =
-    "https://pushimage-production.up.railway.app/api/auth/image/";
+    "http://127.0.0.1:8081/api/auth/image/";
 
   const purchaseTabsLink = purchaseTabs.map((tab) => (
     <Link

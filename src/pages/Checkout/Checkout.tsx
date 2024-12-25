@@ -33,7 +33,7 @@ export default function Checkout() {
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { profile } = useContext(AppContext);
 
-  const url = "https://pushimage-production.up.railway.app/api/auth/image/";
+  const url = "http://127.0.0.1:8081/api/auth/image/";
   const [addressDelivery, setAddressDelivery] = useState({
     city: "",
     district: "",

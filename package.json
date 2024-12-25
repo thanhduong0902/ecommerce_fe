@@ -2,7 +2,7 @@
   "name": "shopee",
   "version": "0.1.0",
   "private": true,
-  "proxy": ["https://foodstoresbibe-production.up.railway.app","https://foodstoresbibe-production.up.railway.app"],
+ 
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
     "@floating-ui/react": "^0.26.12",
