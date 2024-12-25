@@ -25,7 +25,7 @@ export default function Specific() {
     }
   };
   return (
-    <div className="container">
+    <div className="container ml-5">
       <Flavor />
       <Category />
       <Characteric />

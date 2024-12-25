@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: 'https://foodstore-production-167c.up.railway.app/api',
+    baseUrl: 'http://13.54.3.150/api',
     maxSizeUploadAvatar: 1048576 // bytes
 }
 
