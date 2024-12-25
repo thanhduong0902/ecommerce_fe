@@ -45,6 +45,7 @@ export class Http {
         "Content-Type": "application/json",
         "expire-access-token": 60 * 60 * 24, // 1 ngày
         "expire-refresh-token": 60 * 60 * 24 * 160, // 160 ngày
+        "Access-Control-Allow-Origin": "*", // Allow all origins (use cautiously)
       },
     });
     this.instance.interceptors.request.use(

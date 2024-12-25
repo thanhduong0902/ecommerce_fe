@@ -88,6 +88,7 @@ export default function ProductShop() {
     watch,
     getValues,
     setError,
+    reset,
   } = methods;
 
   const url = "https://pushimage-production.up.railway.app/api/auth/image/";
@@ -133,9 +134,12 @@ export default function ProductShop() {
         file.forEach((file) => {
           formData.append("images[]", file);
         });
+
         const response = await addImageMutation.mutateAsync(formData);
         const dataResponse = response.data.images.map((item: any) => item.link);
-        setLinkFile(dataResponse);
+
+        // Merge the existing `linkFile` array with the new array `dataResponse`
+        setLinkFile((prevLinkFile) => [...prevLinkFile, ...dataResponse]);
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -166,7 +170,11 @@ export default function ProductShop() {
           position: "top-center",
           autoClose: 1000,
         });
+        reset();
         refetch();
+        setOptions([]);
+        setOptionsCate([]);
+        setCharactics([]);
         setIsOpen(!isOpen);
       },
     });
@@ -203,9 +211,9 @@ export default function ProductShop() {
         </Button>
       </div>
       {productsData && (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col p-5">
           <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-9">
+            <div className="col-span-10">
               <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {productsData?.data?.data
                   ?.slice((page - 1) * 20, page * 20) // Hiển thị 20 sản phẩm trên mỗi trang
