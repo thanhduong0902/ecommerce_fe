@@ -162,10 +162,10 @@ export default function OrderShop() {
       purchase.status_pay === "paycash"
         ? "bg-blue-200 border-blue-400 hover:bg-blue-300 hover:border-blue-500"
         : purchase.status_pay === "paid"
-        ? "bg-green-200 border-green-400 hover:bg-green-300 hover:border-green-500"
+        ? "bg-lime-200 border-lime-400 hover:bg-lime-300 hover:border-lime-500"
         : purchase.status_pay === "pending"
-        ? "bg-yellow-200 border-yellow-400 hover:bg-yellow-300 hover:border-yellow-500"
-        : "bg-red-200 border-red-400 hover:bg-red-300 hover:border-red-500"
+        ? "bg-amber-200 border-amber-400 hover:bg-amber-300 hover:border-amber-500"
+        : "bg-rose-200 border-rose-400 hover:bg-rose-300 hover:border-rose-500"
     }`}
               >
                 {/* Mã đơn hàng */}
