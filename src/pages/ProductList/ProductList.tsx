@@ -111,7 +111,10 @@ export default function ProductList() {
 
   useEffect(() => {
     const viewProduct = localStorage.getItem("view_products");
-    getProductSuggest.mutate(viewProduct, {
+    const body = {
+      view_products: viewProduct,
+    };
+    getProductSuggest.mutate(body, {
       onSuccess: (response) => {
         console.log(response.data);
         setSuggestProduct(response.data.data);
