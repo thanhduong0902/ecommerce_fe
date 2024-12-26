@@ -45,8 +45,6 @@ export default function ProductDetail() {
   const product = productDetailData?.data;
   const imageRef = useRef<HTMLImageElement>(null);
 
-  console.log("product", product);
-
   const { cart, setCart, setShaking } = useContext(AppContext);
 
   const queryConfig: ProductListConfig = {};
@@ -153,6 +151,25 @@ export default function ProductDetail() {
                     />
                   </svg>
                 </button>
+                {currentImages.map((img) => {
+                  const isActive = img.link === activeImage;
+                  return (
+                    <div
+                      className="relative w-full pt-[100%]"
+                      key={img.id}
+                      onMouseEnter={() => chooseActive(img.link)}
+                    >
+                      <img
+                        src={`${url + img.link}`}
+                        alt={product.title}
+                        className="absolute left-0 top-0 h-full w-full cursor-pointer bg-white object-cover"
+                      />
+                      {isActive && (
+                        <div className="absolute inset-0 border-2 border-orange" />
+                      )}
+                    </div>
+                  );
+                })}
                 <button
                   className="absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white"
                   onClick={next}
