@@ -24,6 +24,10 @@ const productApi = {
     return http.get<Product[]>(`v1/admin/product/getAll`);
   },
 
+  getSuggestProducts(body: any) {
+    return http.post<ProductSearch>(`/auth/products`, body);
+  },
+
   getProductDetail(id: string) {
     return http.get<Product>(`auth/products/${id}`);
   },

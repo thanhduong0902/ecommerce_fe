@@ -42,6 +42,8 @@ export default function ProductList() {
     useContext(AppContext);
 
   const [displayData, setDisplayData] = useState<ProductType[]>([]);
+  const [suggestProduct, setSuggestProduct] = useState<ProductType[]>([]);
+
   const prevSearchImageValue = useRef(searchImageValue);
   const prevSearchValue = useRef(searchValue);
 
@@ -103,6 +105,20 @@ export default function ProductList() {
     mutationFn: productApi.filterProduct,
   });
 
+  const getProductSuggest = useMutation({
+    mutationFn: productApi.getSuggestProducts,
+  });
+
+  useEffect(() => {
+    const viewProduct = localStorage.getItem("view_products");
+    getProductSuggest.mutate(viewProduct, {
+      onSuccess: (response) => {
+        console.log(response.data);
+        setSuggestProduct(response.data.data);
+      },
+    });
+  }, []);
+
   const handleFilter = (body: any) => {
     setIsLoading(true);
     filterMutation.mutate(body, {
@@ -136,6 +152,23 @@ export default function ProductList() {
             {displayData && (
               <>
                 <Filter onFilter={handleFilter} />
+
+                {suggestProduct && (
+                  <div className="border-2 border-orange rounded-xl p-2">
+                    <div className="font-pacifico font-bold text-xl text-center p-3 text-green">
+                      Sản phẩm gợi ý
+                    </div>
+                    <div className="col-span-10 row-span-1">
+                      <div className="mt-6 flex gap-6 overflow-x-auto whitespace-nowrap p-3">
+                        {suggestProduct?.map((product: ProductType) => (
+                          <div className="flex-shrink-0 w-64" key={product.id}>
+                            <Product product={product} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="grid grid-cols-5 gap-10 py-10">
                   {/* <div className="col-span-3">
                   <AsideFilter queryConfig={queryConfig} categories={[]} />
