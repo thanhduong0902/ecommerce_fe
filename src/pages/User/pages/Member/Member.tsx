@@ -77,8 +77,10 @@ const Member: React.FC = () => {
     );
   }
   return (
-    <div className="container">
-      <Table<Account> columns={columns} dataSource={memberData} />
+    <div className="container py-5">
+      <div className="rounded-lg border-orange border-2">
+        <Table<Account> columns={columns} dataSource={memberData} />
+      </div>
     </div>
   );
 };

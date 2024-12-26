@@ -26,14 +26,14 @@ export default function AdminLayout({ children }: Props) {
       <div className="header">
         <HeaderAdmin />
       </div>
-      <div className="w-full overflow-hidden opacity-100">
+      <div className="w-full grid grid-cols-5 overflow-hidden opacity-100 ">
         {/* SideNav */}
-        <div className="w-1/5 pl-10 border-r-2 border-orange sidenav">
+        <div className="col-span-1 h-screen pl-10 border-r-2 border-orange pt-24">
           <AdminSideNav />
         </div>
 
         {/* Nội dung */}
-        <div className="w-4/5 lg:col-span-8 content">
+        <div className="col-span-4 h-screen content pt-24 overflow-auto">
           <Outlet />
         </div>
       </div>

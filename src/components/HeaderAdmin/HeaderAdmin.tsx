@@ -27,7 +27,7 @@ export default function Header() {
   const { profile } = useContext(AppContext);
 
   return (
-    <div className="bg-yellow font-pacifico items-center text-white py-2 border-b-2 border-orange ">
+    <div className="bg-yellow h-24 font-pacifico items-center text-white py-2 border-b-2 border-orange ">
       <div className="container flex flex-row justify-between">
         <div>
           <Link to="/admin">

@@ -149,7 +149,7 @@ const Coupons: React.FC = () => {
           />
         </div>
 
-        <div className="rounded-lg border-orange border-2">
+        <div className="rounded-xl border-orange border-2">
           <Table<Coupon> columns={columns} dataSource={memberData} />
         </div>
       </div>

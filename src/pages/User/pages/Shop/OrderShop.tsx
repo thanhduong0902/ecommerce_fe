@@ -9,7 +9,7 @@ import shopApi from "../../../../apis/shop.api";
 import { formatCurrency } from "../../../../utils/utils";
 import Button from "../../../../components/Button";
 import { toast } from "react-toastify";
-import { Image, Modal, Pagination, PaginationProps, Select } from "antd";
+import { Image, Modal, Pagination, PaginationProps, Select, Spin } from "antd";
 import { Order, OrderDetail } from "../../../../types/purchase.type";
 import moment from "moment";
 import Item from "antd/es/list/Item";
@@ -35,13 +35,19 @@ export default function OrderShop() {
 
   const handleChange = (value: string) => {};
 
-  const { data: purchasesInCartData, refetch } = useQuery({
+  const {
+    data: purchasesInCartData,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["orderShop", { selectedTab, currentPage }],
     queryFn: () => {
       return shopApi.getOrder(selectedTab, currentPage);
     },
   });
   const purchasesInCart = purchasesInCartData?.data;
+
+  console.log(purchasesInCart);
 
   function closeModal() {
     setIsOpen(false);
@@ -119,8 +125,13 @@ export default function OrderShop() {
     </Link>
   ));
 
-  const urlImage =
-    "http://127.0.0.1:8081/api/auth/image/";
+  const urlImage = "http://127.0.0.1:8081/api/auth/image/";
+
+  if (isLoading) {
+    return (
+      <Spin size="large" style={{ display: "block", margin: "20px auto" }} />
+    );
+  }
   return (
     <div className="container">
       <div className="overflow-x-auto">
@@ -146,8 +157,14 @@ export default function OrderShop() {
                   setOrderDetail(purchase);
                 }}
                 key={purchase.id}
-                className=" border-2 p-2 border-gray-200 mx-2 hover:bg-slate-200 cursor-pointer
-                grid grid-cols-12 gap-4 items-center justify-center rounded-2xl bg-white px-9 py-4 text-gray-800 shadow-sm mt-2"
+                className={`border-2 p-2 mx-2 cursor-pointer grid grid-cols-12 gap-4 items-center justify-center rounded-2xl px-9 py-4 text-gray-800 shadow-sm mt-2
+    ${
+      purchase.status_pay === "paycash"
+        ? "bg-blue-200 border-blue-400 hover:bg-blue-300 hover:border-blue-500"
+        : purchase.status_pay === "paid"
+        ? "bg-green-200 border-green-400 hover:bg-green-300 hover:border-green-500"
+        : "bg-red-200 border-red-400 hover:bg-red-300 hover:border-red-500"
+    }`}
               >
                 {/* Mã đơn hàng */}
                 <div className="col-span-1 truncate text-center">
@@ -186,24 +203,34 @@ export default function OrderShop() {
 
                 {/* Số tiền */}
                 <div className="col-span-4 text-right">
-                  <div className="mb-2">
+                  <div className="my-2">
                     <span>Tổng tiền sản phẩm:</span>
-                    <span className="ml-4 text-orange">
+                    <span className="ml-4 text-amber-700">
                       ₫{formatCurrency(purchase.amount)}
                     </span>
                   </div>
-                  <div className="mb-2">
+                  <div className="my-2">
                     <span>Tổng giá tiền:</span>
-                    <span className="ml-4 text-xl text-orange">
+                    <span className="ml-4 text-amber-700">
                       ₫{formatCurrency(purchase.amount)}
+                    </span>
+                  </div>
+                  <div className="my-2">
+                    <span>Phương thức thanh toán:</span>
+                    <span className="ml-4 text-amber-700">
+                      {purchase.payment_option === "PAYCASH"
+                        ? "Tiền mặt"
+                        : "Ví Điện tử"}
                     </span>
                   </div>
                   <div>
-                    <span>Phương thức thanh toán:</span>
-                    <span className="ml-4 text-orange">
-                      {purchase.paymentOption === "PAYCASH"
-                        ? "Tiền mặt"
-                        : "Ví Điện tử"}
+                    <span>Trạng thái thanh toán:</span>
+                    <span className="ml-4 text-amber-700">
+                      {purchase.status_pay === "paycash"
+                        ? "Chưa thanh toán"
+                        : purchase.status_pay === "paid"
+                        ? "Đã thanh toán"
+                        : "Lỗi thanh toán"}
                     </span>
                   </div>
                 </div>

@@ -14,12 +14,9 @@ import specificApi from "../../../apis/specific.api";
 export default function Specific() {
   const handleTrain = async () => {
     try {
-      // Gửi yêu cầu GET đến API
       const response = await specificApi.train();
-      // Thông báo thành công nếu cần
       toast.success("Training thành công!");
     } catch (error) {
-      // Xử lý lỗi
       console.error("Lỗi khi gọi API train:", error);
       alert("Đã xảy ra lỗi khi training.");
     }
