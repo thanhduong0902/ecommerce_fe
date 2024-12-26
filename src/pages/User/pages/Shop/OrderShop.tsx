@@ -163,6 +163,8 @@ export default function OrderShop() {
         ? "bg-blue-200 border-blue-400 hover:bg-blue-300 hover:border-blue-500"
         : purchase.status_pay === "paid"
         ? "bg-green-200 border-green-400 hover:bg-green-300 hover:border-green-500"
+        : purchase.status_pay === "pending"
+        ? "bg-yellow-200 border-yellow-400 hover:bg-yellow-300 hover:border-yellow-500"
         : "bg-red-200 border-red-400 hover:bg-red-300 hover:border-red-500"
     }`}
               >
@@ -230,6 +232,8 @@ export default function OrderShop() {
                         ? "Chưa thanh toán"
                         : purchase.status_pay === "paid"
                         ? "Đã thanh toán"
+                        : purchase.status_pay === "pending"
+                        ? "Chưa thanh toán"
                         : "Lỗi thanh toán"}
                     </span>
                   </div>
