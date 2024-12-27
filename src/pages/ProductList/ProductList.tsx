@@ -110,14 +110,32 @@ export default function ProductList() {
   });
 
   useEffect(() => {
+    // Lấy dữ liệu từ localStorage
     const viewProduct = localStorage.getItem("view_products");
-    const body = {
-      view_products: viewProduct,
-    };
+    let parsedViewProduct = [];
+
+    // Chuyển dữ liệu về mảng, xử lý lỗi nếu có
+    try {
+      parsedViewProduct = viewProduct ? JSON.parse(viewProduct) : [];
+      if (!Array.isArray(parsedViewProduct)) {
+        console.error("Dữ liệu trong view_products không phải là mảng.");
+        parsedViewProduct = [];
+      }
+    } catch (error) {
+      console.error("Lỗi khi parse view_products:", error);
+      parsedViewProduct = [];
+    }
+
+    // Tạo body và gọi API
+    const body = { view_products: parsedViewProduct };
+
     getProductSuggest.mutate(body, {
       onSuccess: (response) => {
         console.log(response.data);
         setSuggestProduct(response.data.data);
+      },
+      onError: (error) => {
+        console.error("Lỗi khi lấy sản phẩm gợi ý:", error);
       },
     });
   }, []);
